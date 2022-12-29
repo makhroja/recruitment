@@ -1,0 +1,22 @@
+[
+    {
+        "model-name": "Position",
+        "resource-file": "positions.json"
+    },
+    {
+        "model-name": "Unit",
+        "resource-file": "units.json"
+    },
+    {
+        "model-name": "UserDetail",
+        "resource-file": "user_details.json"
+    },
+    {
+        "model-name": "Job",
+        "resource-file": "jobs.json"
+    },
+    {
+        "model-name": "JobDetail",
+        "resource-file": "job_details.json"
+    }
+]

@@ -1,0 +1,1 @@
+        {!! $errors->first('[% field_name %]', '<small class="invalid-feedback" role="alert">:message</small>') !!}

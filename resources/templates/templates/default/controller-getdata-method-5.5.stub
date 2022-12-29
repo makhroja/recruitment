@@ -1,0 +1,19 @@
+    
+    /**
+     * Get the request's data from the request.
+     *
+     * [% request_name_comment %]
+     * @return array
+     */
+    [% visibility_level %] function [% model_name_singular_variable %]Validator($request)
+    {
+        $validator =  Validator::make($request, [
+[% validation_rules %] 
+        ]);
+
+        return $validator;
+
+[% file_snippet %]
+[% boolean_snippet %]
+[% string_to_null_snippet %]
+    }

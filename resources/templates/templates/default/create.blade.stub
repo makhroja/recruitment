@@ -1,0 +1,45 @@
+@extends('layout.master')
+@section('title', '[% model_name_class %] Create')
+@section('content')
+    <div>
+        <h4 class="mb-3 mb-md-0">[% model_name_class %] Create</h4>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12 grid-margin stretch-card">
+            <div class="card">
+                <div class="card-header">
+                    <a href="{{ URL::previous() }}" type="button" title="Back" class="btn btn-sm btn-dark btn-icon-text">
+                        <i class="btn-icon-prepend" data-feather="arrow-left"></i>
+                        Back
+                    </a>
+                </div>
+
+                <div class="card-body">
+                    @if ($errors->any())
+                        <ul class="alert alert-danger">
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    @endif
+
+                    <form method="POST" action="{{ route('[% model_name_plural_variable %].store') }}"
+                        accept-charset="UTF-8" id="[% form_id %]" name="[% form_name %]" class="form-horizontal"[%
+                        upload_files %]>
+                        {{ csrf_field() }}
+                        @include ('[% form_view_name %]', ['[% model_name_singular_variable %]' => null])
+
+                        <div class="form-group">
+                            <div class="col-md-offset-2 col-md-10">
+                                <input class="btn btn-sm btn-outline-primary" type="submit" value="[% add %]">
+                            </div>
+                        </div>
+
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </div>
+@endsection
