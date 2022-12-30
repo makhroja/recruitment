@@ -19,3 +19,8 @@ function getJobId($uuid)
 {
   return App\Models\Job::where('uuid', $uuid)->first();
 }
+
+function getUnitId($uuid)
+{
+  return App\Models\Unit::where('uuid', $uuid)->first();
+}

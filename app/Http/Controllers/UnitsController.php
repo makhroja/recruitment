@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Models\Position;
 use App\Models\Unit;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -133,7 +134,25 @@ class UnitsController extends Controller
             ->make(true);
     }
 
+    public function getPositionJson($uuid = '')
+    {
+        $position = Position::where('unit_id', getUnitId($uuid)->id)->get();
 
+        return DataTables::of($position)
+            ->addIndexColumn()
+
+            ->addColumn('action', function ($row) {
+                $btn = '<button href="javascript:void(0)" data-id="' . $row->uuid . '" data-original-title="Show" class="btn btn-outline-primary btn-icon show"><i class="feather icon-eye"></i></button>';
+
+                $btn = $btn . ' <button href="javascript:void(0)" data-id="' . $row->uuid . '" data-original-title="Edit" class="btn btn-outline-success btn-icon edit"><i class="feather icon-edit"></i></button>';
+
+                $btn = $btn . ' <button href="javascript:void(0)" data-name="' . $row->name . '" data-id="' . $row->uuid . '" data-original-title="Delete" class="btn btn-outline-danger btn-icon delete"><i class="feather icon-trash"></i></button>';
+
+                return $btn;
+            })
+            ->rawColumns(['action'])
+            ->make(true);
+    }
 
     /**
      * Get the request's data from the request.

@@ -1,10 +1,7 @@
 @extends('layout.master')
 @section('title', '[% model_name_class %] Detail')
 @push('plugin-styles')
-    <!-- CSS -->
-    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/alertify.min.css" />
-    <!-- Default theme -->
-    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/default.min.css" />
+
 @endpush
 
 @section('content')
@@ -15,15 +12,8 @@
     <div class="row">
         <div class="col-md-12 grid-margin stretch-card">
             <div class="card">
-                <div class="card-body">
-                    <dl class="dl-horizontal">
-                        [% table_rows %]
-                    </dl>
-                </div>
-                <div class="card-footer">
+                <div class="card-header">
                     <div class="pull-right">
-
-
                         <div class="btn-group" role="group">
                             <a href="{{ URL::previous() }}"
                                 class="btn btn-sm btn-outline-dark" title="[% show_all_models %]">
@@ -45,9 +35,14 @@
                                 <span class="feather icon-trash" aria-hidden="true"></span>
                             </a>
                         </div>
-
                     </div>
                 </div>
+                <div class="card-body">
+                    <dl class="dl-horizontal">
+                        [% table_rows %]
+                    </dl>
+                </div>
+
             </div>
         </div>
     </div>

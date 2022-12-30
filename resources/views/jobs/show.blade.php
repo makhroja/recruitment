@@ -103,7 +103,7 @@
                             </a>
 
                             <a data-name="{{ $job->name }}" data-id="{{ $job->uuid }}"
-                                class="btn btn-sm delete btn-outline-danger" title="Delete Job">
+                                class="btn btn-sm deleteShow btn-outline-danger" title="Delete Job">
                                 <span class="feather icon-trash" aria-hidden="true"></span>
                             </a>
                         </div>
@@ -119,7 +119,7 @@
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Tambah Detail</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -271,6 +271,74 @@
                                 swal({
                                     icon: 'info',
                                     title: data.Success
+                                });
+                            },
+                            error: function(data) {
+                                // window.location.reload()
+                                console.log('Error:', data);
+                                swal({
+                                    icon: 'info',
+                                    title: 'Something went wrong!'
+                                });
+                            }
+                        });
+                    } else {
+                        // 
+                    }
+                });
+            });
+
+            /*
+             *End Document Ready
+             */
+        });
+    </script>
+    <script type="text/javascript">
+        $(function() {
+            //ajax setup
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta [name="csrf-token"]').attr('content')
+                }
+            });
+
+
+            $('body').on('click', '.deleteShow', function() {
+                var name = $(this).data("name");
+                swal({
+                    title: 'Anda Yakin?',
+                    text: "Menghapus Data " + name,
+                    icon: 'warning',
+                    buttons: true,
+                    dangerMode: true,
+                    reverseButtons: false,
+                    buttons: {
+                        confirm: 'Ya',
+                        cancel: 'Tidak'
+                    },
+                }).then((willDelete) => {
+                    if (willDelete) {
+                        var uuid = $(this).data("id");
+                        var token = $("meta[name='csrf-token']").attr("content");
+                        var url = "{{ URL::previous() }}";
+                        $.ajax({
+                            url: "{{ url('/jobDetails') }}" +
+                                '/' +
+                                uuid,
+                            type: 'delete',
+                            dataType: "JSON",
+                            data: {
+                                "uuid": uuid,
+                                "_token": token,
+                            },
+                            success: function(data) {
+                                console.log('Success:', data);
+                                swal('Poof! Lowongan berhasil dihapus!', {
+                                    icon: 'info',
+                                }).then(ok => {
+                                    if (ok) {
+                                        window.location.href = url;
+                                    }
                                 });
                             },
                             error: function(data) {

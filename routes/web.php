@@ -57,6 +57,7 @@ Route::group([
      'prefix' => '',
 ], function () {
      Route::get('/units/getUnitJson', 'UnitsController@getUnitJson')->name('unit.getUnitJson');
+     Route::get('/positions/getPositionJson/{uuid}', 'UnitsController@getPositionJson')->name('unit.getPositionJson');
 
      #Route resource dibawah
      Route::resource('/units', UnitsController::class);
@@ -84,7 +85,7 @@ Route::group([
      'prefix' => '',
 ], function () {
      Route::get('/jobs/getJobJson', 'JobsController@getJobJson')->name('job.getJobJson');
-     Route::get('/jobs/getJobDetailJson/{jobDetailsId}', 'JobsController@getJobDetailJson')->name('getJobDetailJson');
+     Route::get('/jobs/getJobDetailJson/{jobDetailsId}', 'JobsController@getJobDetailJson')->name('job.getJobDetailJson');
 
      #Route resource dibawah
      Route::resource('/jobs', JobsController::class);

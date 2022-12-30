@@ -1,4 +1,4 @@
-        <input type="hidden" value="fromJob" name="method">
+        <input type="hidden" value="{{ $method }}" name="method">
         <div class="form-group {{ $errors->has('job_id') ? 'has-error' : '' }}">
             <label for="job_id" class="col-md-2 control-label">Job</label>
             <div class="col-md-10">

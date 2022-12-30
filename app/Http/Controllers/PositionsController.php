@@ -32,6 +32,7 @@ class PositionsController extends Controller
 
     public function store(Request $request)
     {
+        // dd($request->all());
         try {
             $request = $request->merge([
                 'uuid' => Str::uuid()->getHex(),
@@ -42,8 +43,14 @@ class PositionsController extends Controller
 
                 Position::create($request->all());
 
-                return redirect('positions.index')
-                    ->withSuccess('Position berhasil dibuat.');
+                #redirect to Unit Show
+                if ($request->method == 'fromUnit') {
+                    $uuid = Unit::findOrFail($request->unit_id)->uuid;
+                    return redirect()->route('units.show', $uuid)
+                        ->with(['success' => 'Position berhasil dibuat.']);
+                }
+                return redirect()->route('positions.index')
+                    ->with(['success' => 'Position berhasil dibuat.']);
             }
             return back()
                 ->withErrors($validator)
@@ -67,9 +74,19 @@ class PositionsController extends Controller
     public function edit($uuid)
     {
         $position = Position::where('uuid', $uuid)->first();
-        $units = Unit::pluck('uuid', 'id')->all();
+        $units = Unit::pluck('nama', 'id')->all();
 
-        return view('positions.edit', compact('position', 'units'));
+        #untuk membedakan edit dari view job
+        $uuid = explode("=", $uuid);
+        if ($uuid[0] == 'uuid') {
+            $position = Position::where('uuid', $uuid[1])->first();
+            $method = 'fromJob';
+        } else {
+            $position = Position::where('uuid', $uuid)->first();
+            $method = '';
+        }
+
+        return view('positions.edit', compact('position', 'units', 'method'));
     }
 
 
@@ -82,9 +99,15 @@ class PositionsController extends Controller
 
                 $position = Position::where('uuid', $uuid)->first();
                 $position->update($request->all());
+                #redirect to unit show
+                if ($request->method == 'fromJob') {
+                    $unitId = Unit::findOrFail($request->unit_id)->uuid;
+                    return redirect()->route('units.show', $unitId)
+                        ->with(['success' => 'Posisi berhasil simpan.']);
+                }
 
-                return redirect('positions.index')
-                    ->with(['success' => 'Position berhasil simpan.']);
+                return redirect()->route('positions.index')
+                    ->with(['success' => 'Posisi berhasil simpan.']);
             }
             return back()
                 ->withErrors($validator)
