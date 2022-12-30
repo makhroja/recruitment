@@ -76,18 +76,27 @@ class JobDetailsController extends Controller
 
     public function edit($uuid)
     {
-        $jobDetail = JobDetail::where('uuid', $uuid)->first();
         $jobs = Job::pluck('judul', 'id')->all();
         $units = Unit::pluck('nama', 'id')->all();
         $positions = Position::pluck('nama', 'id')->all();
 
-        return view('job_details.edit', compact('jobDetail', 'jobs', 'units', 'positions'));
+        #untuk membedakan edit dari view job
+        $uuid = explode("=", $uuid);
+        if ($uuid[0] == 'uuid') {
+            $jobDetail = JobDetail::where('uuid', $uuid[1])->first();
+            $method = 'fromJob';
+        } else {
+            $jobDetail = JobDetail::where('uuid', $uuid)->first();
+            $method = '';
+        }
+
+        return view('job_details.edit', compact('jobDetail', 'jobs', 'units', 'positions', 'method'));
     }
 
 
     public function update($uuid, Request $request)
     {
-        dd($request->all());
+        // dd($request->all());
         try {
             $validator = $this->jobDetailValidator($request->all());
 
@@ -103,7 +112,7 @@ class JobDetailsController extends Controller
                 }
 
                 return redirect(['success' => 'jobDetails.index'])
-                    ->with(['success' => 'JobDetail berhasil simpan.']);
+                    ->with(['success' => 'Detail lowongan berhasil simpan.']);
             }
             return back()
                 ->withErrors($validator)

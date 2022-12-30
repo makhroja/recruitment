@@ -228,7 +228,7 @@
 
             table.on('click', '.edit', function() {
                 var uuid = $(this).data("id");
-                var url = "{{ url('/jobDetails') }}" + '/' + uuid + '/edit/';
+                var url = "{{ url('/jobDetails') }}" + '/' + 'uuid' + '=' + uuid + '/edit/';
                 window.open(url, "_self")
             });
 
