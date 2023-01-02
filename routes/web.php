@@ -14,7 +14,7 @@
 use App\Models\Unit;
 
 Route::get('/', function () {
-     return view('test');
+     return view('dashboard');
 });
 
 Route::group(['prefix' => 'error'], function () {
