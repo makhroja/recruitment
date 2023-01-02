@@ -53,4 +53,15 @@ class User extends Authenticatable
      * @var array
      */
     protected $casts = [];
+
+
+    /**
+     * Get the user associated with the User
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function userDetail()
+    {
+        return $this->belongsTo('App\Models\UserDetail', 'user_id');
+    }
 }

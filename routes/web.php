@@ -11,10 +11,8 @@
 |
 */
 
-use App\Models\Unit;
-
 Route::get('/', function () {
-     return view('dashboard');
+     return view('user_details.biodata');
 });
 
 Route::group(['prefix' => 'error'], function () {
@@ -56,6 +54,15 @@ Route::group([
 Route::group([
      'prefix' => '',
 ], function () {
+     Route::get('/userDetail/getUserDetailJson', 'userDetailsController@getuserDetailJson')->name('userDetail.getuserDetailJson');
+
+     #Route resource dibawah
+     Route::resource('/userDetails', UserDetailsController::class);
+});
+
+Route::group([
+     'prefix' => '',
+], function () {
      Route::get('/units/getUnitJson', 'UnitsController@getUnitJson')->name('unit.getUnitJson');
      Route::get('/positions/getPositionJson/{uuid}', 'UnitsController@getPositionJson')->name('unit.getPositionJson');
 
@@ -70,15 +77,6 @@ Route::group([
 
      #Route resource dibawah
      Route::resource('/positions', PositionsController::class);
-});
-
-Route::group([
-     'prefix' => '',
-], function () {
-     Route::get('/userDetails/getuserDetailJson', 'userDetailsController@getuserDetailJson')->name('userDetail.getuserDetailJson');
-
-     #Route resource dibawah
-     Route::resource('/userDetails', userDetailsController::class);
 });
 
 Route::group([

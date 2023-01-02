@@ -16,7 +16,7 @@
         <div class="col-md-12 grid-margin stretch-card">
             <div class="card">
                 <div class="card-body">
-                    <dl class="dl-horizontal">>
+                    <dl class="dl-horizontal">
                         <dt>Name</dt>
                         <dd>{{ $user->name }}</dd>
                         <dt>Email</dt>
@@ -26,8 +26,7 @@
                         <dt>Role</dt>
                         <dd>{{ $user->role }}</dd>
                         <dt>Status</dt>
-                        <dd>{{ $user->status }}</dd>
-
+                        <dd>{{ $user->status == 1 ? 'Aktive' : 'Inactive' }}</dd>
                     </dl>
                 </div>
                 <div class="card-footer">

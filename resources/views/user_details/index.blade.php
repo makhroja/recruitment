@@ -28,6 +28,10 @@
                             <thead>
                                 <tr>
                                     <th>No</th>
+                                    <th>Nama Lengkap</th>
+                                    <th>Tgl Lahir</th>
+                                    <th>Pendidikan</th>
+                                    <th>Instansi</th>
                                     <th></th>
                                 </tr>
                             </thead>
@@ -66,7 +70,7 @@
                 scrollX: true,
                 // select: true,
                 // select: 'single',
-                ajax: "{{ url('/userDetails/getUserDetailJson') }}",
+                ajax: "{{ url('/userDetail/getUserDetailJson') }}",
                 order: [
                     [1, 'asc']
                 ],
@@ -75,7 +79,7 @@
                     orderable: false
                 }, {
                     width: "2%",
-                    targets: [0]
+                    targets: [0, 5]
                 }, {
                     //buat wrap text
                     render: function(data, type, full, meta) {
@@ -90,6 +94,22 @@
                 columns: [{
                         data: 'DT_RowIndex',
                         name: 'DT_RowIndex'
+                    },
+                    {
+                        data: 'nama_lengkap',
+                        name: 'nama_lengkap'
+                    },
+                    {
+                        data: 'tgl_lahir',
+                        name: 'tgl_lahir'
+                    },
+                    {
+                        data: 'pendidikan',
+                        name: 'pendidikan'
+                    },
+                    {
+                        data: 'instansi',
+                        name: 'instansi'
                     },
                     {
                         data: 'action',

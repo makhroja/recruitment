@@ -25,6 +25,12 @@
                     <span class="link-title">Data User</span>
                 </a>
             </li>
+            <li class="nav-item {{ active_class(['userDetails']) }}">
+                <a href="{{ url('/userDetails') }}" class="nav-link">
+                    <i class="link-icon" data-feather="user"></i>
+                    <span class="link-title">Data User Details</span>
+                </a>
+            </li>
             <li class="nav-item {{ active_class(['units']) }}">
                 <a href="{{ url('/units') }}" class="nav-link">
                     <i class="link-icon" data-feather="hard-drive"></i>

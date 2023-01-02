@@ -40,7 +40,7 @@ class [% controller_name %] [% controller_extends %]
              [% model_name_class %]::create($request->all());
 
             return redirect('[% model_name_plural_variable %].index')
-                ->with(['success' => '[% model_name_class %] berhasil dibuat.');
+                ->with(['success' => '[% model_name_class %] berhasil dibuat.']);
         }
         return back()
             ->withErrors($validator)

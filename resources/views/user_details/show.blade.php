@@ -1,54 +1,91 @@
 @extends('layout.master')
 @section('title', 'UserDetail Detail')
 @push('plugin-styles')
-    <!-- CSS -->
-    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/alertify.min.css" />
-    <!-- Default theme -->
-    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/default.min.css" />
 @endpush
 
 @section('content')
     <div>
-        <h4 class="mb-3 mb-md-0">UserDetail Detail</h4>
+        <h4 class="mb-3 mb-md-0">User Detail</h4>
     </div>
 
     <div class="row">
         <div class="col-md-12 grid-margin stretch-card">
             <div class="card">
                 <div class="card-body">
-                    <dl class="dl-horizontal">
-                        <dt>Uuid</dt>
-                        <dd>{{ $userDetail->uuid }}</dd>
-                        <dt>User</dt>
-                        <dd>{{ optional($userDetail->user)->name }}</dd>
-                        <dt>Nama Lengkap</dt>
-                        <dd>{{ $userDetail->nama_lengkap }}</dd>
-                        <dt>Jk</dt>
-                        <dd>{{ $userDetail->jk }}</dd>
-                        <dt>Tgl Lahir</dt>
-                        <dd>{{ $userDetail->tgl_lahir }}</dd>
-                        <dt>Tempat Lahir</dt>
-                        <dd>{{ $userDetail->tempat_lahir }}</dd>
-                        <dt>Agama</dt>
-                        <dd>{{ $userDetail->agama }}</dd>
-                        <dt>Alamat</dt>
-                        <dd>{{ $userDetail->alamat }}</dd>
-                        <dt>No Hp</dt>
-                        <dd>{{ $userDetail->no_hp }}</dd>
-                        <dt>Pendidikan</dt>
-                        <dd>{{ $userDetail->pendidikan }}</dd>
-                        <dt>Instansi</dt>
-                        <dd>{{ $userDetail->instansi }}</dd>
-                        <dt>Jurusan</dt>
-                        <dd>{{ $userDetail->jurusan }}</dd>
-                        <dt>Foto</dt>
-                        <dd>{{ $userDetail->foto }}</dd>
-                        <dt>Status</dt>
-                        <dd>{{ $userDetail->status }}</dd>
-                        <dt>Is Aktif</dt>
-                        <dd>{{ $userDetail->is_aktif ? 'Yes' : 'No' }}</dd>
 
-                    </dl>
+                    <body>
+                        <table style="width: 100%" class="table table-bordered">
+                            <tbody>
+                                <tr>
+                                    {{-- <td width="25%">
+                                        <img src="https://www.rsuharapanibu.co.id/wp-content/uploads/2022/05/logo.png">
+                                    </td> --}}
+                                    <td style="width: 75%" class="text-center">
+                                        <h4 style="color: rgb(14, 142, 247)">RUMAH SAKIT UMUM HARAPAN IBU PURBALINGGA
+                                        </h4>
+                                        <p>JL. May. Jend. Soengkono KM.1, JL. Soekarno-Hatta No.2, Telp. (0281) 892222 /
+                                            892277 Fax (0281) 893031 </p>
+                                        <p>Email : rsuhipbg@yahoo.co.id Website : <a
+                                                href="http://www.rsuharapanibu.co.id/">www.rsuharapanibu.co.id</a></p>
+                                        <p>PURBALINGGA</p>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <br>
+                        <br>
+                        <h4 style="text-align:center;">BIODATA PELAMAR</h4>
+                        <div class="card-body">
+                            <table class="table table-bordered">
+                                <tr height="30px !important;">
+                                    <td width="30%">Nama</td>
+                                    <td> {{ $userDetail->nama_lengkap == '' ? 'belum diisi' : $userDetail->nama_lengkap }}
+                                    </td>
+                                </tr>
+                                <tr height="30px !important;">
+                                    <td>Jenis Kelamin</td>
+                                    <td>
+                                        {{ $userDetail->jk == '' ? 'belum diisi' : $userDetail->jk }}
+                                    </td>
+                                </tr>
+                                <tr height="30px !important;">
+                                    <td>Tempat, Tanggal lahir</td>
+                                    <td>
+                                        {{ $userDetail->tempat_lahir }},{{ $userDetail->tgl_lahir == '' ? 'belum diisi' : $userDetail->tgl_lahir }}
+                                    </td>
+                                </tr>
+                                <tr height="30px !important;">
+                                    <td width="40%">Agama</td>
+                                    <td> {{ $userDetail->agama == '' ? 'belum diisi' : $userDetail->agama }}</td>
+                                </tr>
+                                <tr height="30px !important;">
+                                    <td>Alamat</td>
+                                    <td> {{ $userDetail->alamat == '' ? 'belum diisi' : $userDetail->alamat }}</td>
+                                </tr>
+                                <tr height="30px !important;">
+                                    <td>Nomor hp</td>
+                                    <td> {{ $userDetail->no_hp == '' ? 'belum diisi' : $userDetail->no_hp }}</td>
+                                </tr>
+                                <tr height="30px !important;">
+                                    <td width="40%">email</td>
+                                    <td> {{ $userDetail->user->email == '' ? 'belum diisi' : $userDetail->user->email }}
+                                    </td>
+                                </tr>
+                                <tr height="30px !important;">
+                                    <td width="40%">Ijazah Terakhir</td>
+                                    <td> {{ $userDetail->pendidikan == '' ? 'belum diisi' : $userDetail->pendidikan }}</td>
+                                </tr>
+                                <tr height="30px !important;">
+                                    <td>Nama Sekolah / Universitas</td>
+                                    <td> {{ $userDetail->instansi == '' ? 'belum diisi' : $userDetail->instansi }}</td>
+                                </tr>
+                                <tr height="30px !important;">
+                                    <td>jurusan / Prodi</td>
+                                    <td> {{ $userDetail->jurusan == '' ? 'belum diisi' : $userDetail->jurusan }}</td>
+                                </tr>
+                            </table>
+                        </div>
+                    </body>
                 </div>
                 <div class="card-footer">
                     <div class="pull-right">
