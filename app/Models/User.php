@@ -62,6 +62,6 @@ class User extends Authenticatable
      */
     public function userDetail()
     {
-        return $this->belongsTo('App\Models\UserDetail', 'user_id');
+        return $this->hasOne('App\Models\UserDetail');
     }
 }

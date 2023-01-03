@@ -40,42 +40,42 @@ class JobsController extends Controller
 
     public function store(Request $request)
     {
-        try {
-            $request = $request->merge([
-                'uuid' => Str::uuid()->getHex(),
-                'status' => 0,
-            ]);
+        // try {
+        $request = $request->merge([
+            'uuid' => Str::uuid()->getHex(),
+            'status' => 0,
+        ]);
 
-            $validator = $this->jobValidator($request->all());
+        $validator = $this->jobValidator($request->all());
 
-            if ($validator->passes()) {
+        if ($validator->passes()) {
 
-                $fileName = date('d-m-Y') . '_' . time() . '.' . $request['file']->extension();
+            $fileName = date('d-m-Y') . '_' . time() . '.' . $request['file']->extension();
 
-                if ($request['file'] != null) {
+            if ($request['file'] != null) {
 
-                    $request['file']->move(public_path('/assets/uploads/job-attachment/'), $fileName);
+                $request['file']->move(public_path('/assets/uploads/job-attachment/'), $fileName);
 
-                    $request = $request->merge([
-                        'lampiran' => $fileName
-                    ]);
-                }
-
-                $job = Job::create($request->all());
-
-                // dd($request->all());
-
-                return redirect()->route('jobs.index')
-                    ->withSuccess('Job berhasil dibuat.');
+                $request = $request->merge([
+                    'lampiran' => $fileName
+                ]);
             }
-            return back()
-                ->withErrors($validator)
-                ->withInput();
-        } catch (Exception $exception) {
 
-            return back()->withInput()
-                ->withErrors(['unexpected_error' => 'Unexpected error occurred while trying to process your request.']);
+            $job = Job::create($request->all());
+
+            storeSchedule($job->id);
+
+            return redirect()->route('jobs.index')
+                ->withSuccess('Job berhasil dibuat.');
         }
+        return back()
+            ->withErrors($validator)
+            ->withInput();
+        // } catch (Exception $exception) {
+
+        //     return back()->withInput()
+        //         ->withErrors(['unexpected_error' => 'Unexpected error occurred while trying to process your request.']);
+        // }
     }
 
 

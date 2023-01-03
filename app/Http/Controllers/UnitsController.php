@@ -43,7 +43,7 @@ class UnitsController extends Controller
 
             Unit::create($request->all());
 
-            return redirect('units.index')
+            return redirect()->route('units.index')
                 ->with(['success' => 'Unit berhasil dibuat.']);
         }
         return back()
@@ -84,8 +84,8 @@ class UnitsController extends Controller
             $unit = Unit::where('uuid', $uuid)->first();
             $unit->update($request->all());
 
-            return redirect('units.index')
-                ->withSuccess(['Unit berhasil simpan.']);
+            return redirect()->route('units.index')
+                ->with(['success' => 'Unit berhasil simpan.']);
         }
         return back()
             ->withErrors($validator)

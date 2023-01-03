@@ -10,10 +10,20 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
+Auth::routes(['register' => false]);
+
+Route::post('/register', 'UserRegisterController@create')->name('post.register');
+Route::get('/register', 'UserRegisterController@index')->name('register');
 
 Route::get('/', function () {
-     return view('user_details.biodata');
+     return view('index');
 });
+
+Route::get('/lowongan', function () {
+     $jobs = App\Models\Job::paginate(4);
+     return view('guest.lowongan', compact('jobs'));
+});
+
 
 Route::group(['prefix' => 'error'], function () {
      Route::get('404', function () {
@@ -29,6 +39,8 @@ Route::get('/clear-all', function () {
      Artisan::call('route:clear');
      Artisan::call('config:clear');
      Artisan::call('view:clear');
+     Artisan::call('event:clear');
+     Artisan::call('optimize:clear');
      return "All is cleared";
 });
 
@@ -37,13 +49,39 @@ Route::get('/clear-all', function () {
 //     return View::make('pages.error.404');
 // })->where('page', '.*');
 
-Auth::routes();
+/**
+ * Check Role For Redirect
+ */
+Route::get('/home', function () {
+     return CheckRole();
+})->name('home')->middleware(['auth']);
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::group([ #admin|
+     'middleware' => ['role:administrator', 'auth',],
+], function () {
+     Route::get('/admin', 'AdminController@dashboard')->name('admin');
+});
 
+Route::group([ #karu|
+     'middleware' => ['role:karu', 'auth',],
+], function () {
+     Route::get('/karu', function () {
+          return view('karu.dashboard');
+     })->name('karu');
+});
+
+Route::group([ #peserta|
+     'middleware' => ['role:peserta', 'auth',],
+], function () {
+     Route::get('/dashboard', function () {
+          return view('peserta.dashboard');
+     })->name('peserta');
+});
 
 Route::group([
-     'prefix' => '',
+     'middleware' => [
+          'role:administrator', 'auth',
+     ],
 ], function () {
      Route::get('/users/getUserJson', 'UsersController@getUserJson')->name('user.getUserJson');
 
@@ -52,7 +90,9 @@ Route::group([
 });
 
 Route::group([
-     'prefix' => '',
+     'middleware' => [
+          'role:administrator|peserta', 'auth',
+     ],
 ], function () {
      Route::get('/userDetail/getUserDetailJson', 'userDetailsController@getuserDetailJson')->name('userDetail.getuserDetailJson');
 
@@ -61,7 +101,9 @@ Route::group([
 });
 
 Route::group([
-     'prefix' => '',
+     'middleware' => [
+          'role:administrator', 'auth',
+     ],
 ], function () {
      Route::get('/units/getUnitJson', 'UnitsController@getUnitJson')->name('unit.getUnitJson');
      Route::get('/positions/getPositionJson/{uuid}', 'UnitsController@getPositionJson')->name('unit.getPositionJson');
@@ -71,7 +113,9 @@ Route::group([
 });
 
 Route::group([
-     'prefix' => '',
+     'middleware' => [
+          'role:administrator', 'auth',
+     ],
 ], function () {
      Route::get('/positions/getPositionJson', 'PositionsController@getPositionJson')->name('position.getPositionJson');
 
@@ -80,7 +124,9 @@ Route::group([
 });
 
 Route::group([
-     'prefix' => '',
+     'middleware' => [
+          'role:administrator', 'auth',
+     ],
 ], function () {
      Route::get('/jobs/getJobJson', 'JobsController@getJobJson')->name('job.getJobJson');
      Route::get('/jobs/getJobDetailJson/{jobDetailsId}', 'JobsController@getJobDetailJson')->name('job.getJobDetailJson');
@@ -90,7 +136,9 @@ Route::group([
 });
 
 Route::group([
-     'prefix' => '',
+     'middleware' => [
+          'role:administrator', 'auth',
+     ],
 ], function () {
      Route::get('/jobDetails/getJobDetailJson', 'JobDetailsController@getJobDetailJson')->name('job.getJobDetailJson');
 
@@ -98,11 +146,26 @@ Route::group([
      Route::resource('/jobDetails', JobDetailsController::class);
 });
 
+Route::group([
+     'middleware' => [
+          'role:administrator', 'auth',
+     ],
+], function () {
+     Route::get('/schedules/getScheduleJson/{uuid}', 'SchedulesController@getScheduleJson')->name('scheduleJson');
+
+     #Route resource dibawah
+     Route::resource('/schedules', SchedulesController::class);
+});
+
 // Khusus Select2
 Route::group([
-     'prefix' => '',
+     'middleware' => [
+          'role:administrator', 'auth',
+     ],
 ], function () {
      Route::get('/getUnitLists', 'Select2Controller@getUnitLists')->name('getUnitLists');
      Route::get('/getUserLists', 'Select2Controller@getUserLists')->name('getUserLists');
      Route::get('/getPositionLists', 'Select2Controller@getPositionLists')->name('getPositionLists');
 });
+
+Route::get('/reload-captcha', 'UserRegisterController@reloadCaptcha');

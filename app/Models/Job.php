@@ -88,4 +88,9 @@ class Job extends Model
     {
         return $this->hasMany('App\Models\JobDetail', 'job_id');
     }
+
+    public function schedule()
+    {
+        return $this->hasMany('App\Models\Schedule', 'job_id');
+    }
 }

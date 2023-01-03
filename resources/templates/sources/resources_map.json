@@ -18,5 +18,9 @@
     {
         "model-name": "JobDetail",
         "resource-file": "job_details.json"
+    },
+    {
+        "model-name": "Schedule",
+        "resource-file": "schedules.json"
     }
 ]

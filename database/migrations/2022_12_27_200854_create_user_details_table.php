@@ -21,11 +21,13 @@ class CreateUserDetailsTable extends Migration
             $table->date('tgl_lahir')->nullable();
             $table->string('tempat_lahir')->nullable();
             $table->string('agama')->nullable();
-            $table->string('alamat')->nullable();
-            $table->integer('no_hp')->nullable();
+            $table->text('alamat_sekarang')->nullable();
+            $table->text('alamat_ktp')->nullable();
+            $table->string('no_hp')->nullable();
             $table->string('pendidikan')->nullable();
             $table->string('instansi')->nullable();
             $table->string('jurusan')->nullable();
+            $table->string('tahun_lulus')->nullable();
             $table->string('foto')->nullable();
             $table->integer('status')->default(0);
             $table->boolean('is_aktif')->default(0);

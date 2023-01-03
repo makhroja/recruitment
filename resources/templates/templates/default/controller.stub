@@ -39,7 +39,7 @@ class [% controller_name %] [% controller_extends %]
 
              [% model_name_class %]::create($request->all());
 
-            return redirect('[% model_name_plural_variable %].index')
+            return redirect()->route('[% model_name_plural_variable %].index')
                 ->with(['success' => '[% model_name_class %] berhasil dibuat.']);
         }
         return back()
@@ -81,7 +81,7 @@ class [% controller_name %] [% controller_extends %]
                 $[% model_name_singular_variable %] = [% model_name_class %]::where('uuid', $uuid)->first();
                 $[% model_name_singular_variable %]->update($request->all());
 
-                return redirect('[% model_name_plural_variable %].index')
+                return redirect()->route('[% model_name_plural_variable %].index')
                     ->with(['success' => '[% model_name_class %] berhasil simpan.']);
             }
             return back()

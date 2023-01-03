@@ -19,7 +19,7 @@
                 <div class="card-body">
                     <form method="POST" action="{{ route('userDetails.update', $userDetail->uuid) }}"
                         id="edit_user_detail_form" name="edit_user_detail_form" accept-charset="UTF-8"
-                        class="form-horizontal">
+                        class="form-horizontal" enctype="multipart/form-data">
                         {{ csrf_field() }}
                         <input name="_method" type="hidden" value="PUT">
                         @include ('user_details.form', [

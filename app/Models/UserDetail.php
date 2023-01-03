@@ -35,14 +35,18 @@ class UserDetail extends Model
         'tgl_lahir',
         'tempat_lahir',
         'agama',
-        'alamat',
+        'alamat_sekarang',
+        'alamat_ktp',
         'no_hp',
         'pendidikan',
         'instansi',
         'jurusan',
+        'tahun_lulus',
         'foto',
         'status',
-        'is_aktif'
+        'is_aktif',
+        'created_at',
+        'updated_at'
     ];
 
     /**

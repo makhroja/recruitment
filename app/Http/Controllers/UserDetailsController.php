@@ -75,25 +75,56 @@ class UserDetailsController extends Controller
 
     public function update($uuid, Request $request)
     {
-        try {
-            $validator = $this->userDetailValidator($request->all());
+        // try {
+        $validator = $this->userDetailValidator($request->all());
 
-            if ($validator->passes()) {
+        if ($validator->passes()) {
 
-                $userDetail = UserDetail::where('uuid', $uuid)->first();
-                $userDetail->update($request->all());
+            $userDetail = UserDetail::where('uuid', $uuid)->first();
 
-                return redirect('userDetails.index')
-                    ->withSuccess(['UserDetail berhasil simpan.']);
+            /**Start Image Function */
+            if ($request['image'] != null) {
+                $imageName = \Str::uuid()->getHex() . '.' . $request->image->extension();
+
+                $request['image']->move(public_path('/assets/uploads/foto/'), $imageName);
+
+                $request->merge([
+                    'foto' => $imageName,
+                ]);
+
+                if ($userDetail->foto != null) {
+                    $imageFile = public_path('/assets/uploads/foto/') . $userDetail->foto;
+
+
+                    if (\File::exists($imageFile)) {
+
+                        \File::delete($imageFile); // If $file is path to old image
+
+                    } else {
+                        return Response::json('File not exist.');
+                    }
+                }
+            }
+            /**End Image Function */
+
+
+            $userDetail->update($request->all());
+
+            if (getRole() == 'administrator') {
+                return redirect()->route('userDetails.index')
+                    ->with(['success' => 'User Detail berhasil simpan.']);
             }
             return back()
-                ->withErrors($validator)
-                ->withInput();
-        } catch (Exception $exception) {
-
-            return back()->withInput()
-                ->withErrors(['unexpected_error' => 'Unexpected error occurred while trying to process your request.']);
+                ->with(['success' => 'User Detail berhasil simpan.']);
         }
+        return back()
+            ->withErrors($validator)
+            ->withInput();
+        // } catch (Exception $exception) {
+
+        //     return back()->withInput()
+        //         ->withErrors(['unexpected_error' => 'Unexpected error occurred while trying to process your request.']);
+        // }
     }
 
 
@@ -144,21 +175,20 @@ class UserDetailsController extends Controller
     protected function userDetailValidator($request)
     {
         $validator =  Validator::make($request, [
-            'uuid' => 'string|min:1|nullable',
-            'user_id' => 'nullable',
-            'nama_lengkap' => 'string|min:1|nullable',
-            'jk' => 'string|min:1|nullable',
-            'tgl_lahir' => 'date_format:Y-m-d|nullable',
-            'tempat_lahir' => 'string|min:1|nullable',
-            'agama' => 'string|min:1|nullable',
-            'alamat' => 'string|min:1|nullable',
-            'no_hp' => 'string|min:1|nullable',
-            'pendidikan' => 'string|min:1|nullable',
-            'instansi' => 'string|min:1|nullable',
-            'jurusan' => 'string|min:1|nullable',
-            'foto' => 'string|min:1|nullable',
-            'status' => 'string|min:1|nullable',
-            'is_aktif' => 'boolean|nullable',
+            'nama_lengkap' => 'string|min:1|required',
+            'jk' => 'string|min:1|required',
+            'tgl_lahir' => 'date_format:Y-m-d|required',
+            'tempat_lahir' => 'string|required',
+            'agama' => 'string|required',
+            'alamat_ktp' => 'string|required',
+            'alamat_sekarang' => 'string|required',
+            'no_hp' => 'string|required',
+            'pendidikan' => 'string|required',
+            'instansi' => 'string|required',
+            'jurusan' => 'string|required',
+            'tahun_lulus' => 'integer|required',
+            'image' => 'mimes:jpeg,jpg,png|max:512',
+            'is_aktif' => 'boolean',
         ]);
 
         return $validator;

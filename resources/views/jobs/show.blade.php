@@ -160,7 +160,7 @@
                     <embed id="srcLampiran" src="" frameborder="0" width="100%" height="400px">
 
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-sm btn-danger" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-sm btn-danger" data-dismiss="modal">Tutup</button>
                     </div>
                 </div>
 

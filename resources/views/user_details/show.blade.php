@@ -34,54 +34,64 @@
                         </table>
                         <br>
                         <br>
-                        <h4 style="text-align:center;">BIODATA PELAMAR</h4>
+                        <h4 style="text-align:center;">BIODATA</h4>
                         <div class="card-body">
                             <table class="table table-bordered">
                                 <tr height="30px !important;">
-                                    <td width="30%">Nama</td>
+                                    <td class="bg-secondary text-white" width="25%">Nama</td>
                                     <td> {{ $userDetail->nama_lengkap == '' ? 'belum diisi' : $userDetail->nama_lengkap }}
                                     </td>
                                 </tr>
                                 <tr height="30px !important;">
-                                    <td>Jenis Kelamin</td>
+                                    <td class="bg-secondary text-white">Jenis Kelamin</td>
                                     <td>
-                                        {{ $userDetail->jk == '' ? 'belum diisi' : $userDetail->jk }}
+                                        {{ ($userDetail->jk == '' ? 'belum diisi' : $userDetail->jk == 1) ? 'Laki-laki' : 'Perempuan' }}
                                     </td>
                                 </tr>
                                 <tr height="30px !important;">
-                                    <td>Tempat, Tanggal lahir</td>
+                                    <td class="bg-secondary text-white">Tempat, Tanggal lahir</td>
                                     <td>
                                         {{ $userDetail->tempat_lahir }},{{ $userDetail->tgl_lahir == '' ? 'belum diisi' : $userDetail->tgl_lahir }}
                                     </td>
                                 </tr>
                                 <tr height="30px !important;">
-                                    <td width="40%">Agama</td>
+                                    <td class="bg-secondary text-white">Agama</td>
                                     <td> {{ $userDetail->agama == '' ? 'belum diisi' : $userDetail->agama }}</td>
                                 </tr>
                                 <tr height="30px !important;">
-                                    <td>Alamat</td>
-                                    <td> {{ $userDetail->alamat == '' ? 'belum diisi' : $userDetail->alamat }}</td>
+                                    <td class="bg-secondary text-white">Alamat KTP</td>
+                                    <td> {{ $userDetail->alamat_ktp == '' ? 'belum diisi' : $userDetail->alamat_ktp }}</td>
                                 </tr>
                                 <tr height="30px !important;">
-                                    <td>Nomor hp</td>
+                                    <td class="bg-secondary text-white">Alamat Sekarang</td>
+                                    <td> {{ $userDetail->alamat_sekarang == '' ? 'belum diisi' : $userDetail->alamat_sekarang }}
+                                    </td>
+                                </tr>
+                                <tr height="30px !important;">
+                                    <td class="bg-secondary text-white">Nomor hp</td>
                                     <td> {{ $userDetail->no_hp == '' ? 'belum diisi' : $userDetail->no_hp }}</td>
                                 </tr>
                                 <tr height="30px !important;">
-                                    <td width="40%">email</td>
+                                    <td class="bg-secondary text-white">email</td>
                                     <td> {{ $userDetail->user->email == '' ? 'belum diisi' : $userDetail->user->email }}
                                     </td>
                                 </tr>
                                 <tr height="30px !important;">
-                                    <td width="40%">Ijazah Terakhir</td>
+                                    <td class="bg-secondary text-white">Ijazah Terakhir</td>
                                     <td> {{ $userDetail->pendidikan == '' ? 'belum diisi' : $userDetail->pendidikan }}</td>
                                 </tr>
                                 <tr height="30px !important;">
-                                    <td>Nama Sekolah / Universitas</td>
+                                    <td class="bg-secondary text-white">Nama Sekolah / Universitas</td>
                                     <td> {{ $userDetail->instansi == '' ? 'belum diisi' : $userDetail->instansi }}</td>
                                 </tr>
                                 <tr height="30px !important;">
-                                    <td>jurusan / Prodi</td>
+                                    <td class="bg-secondary text-white">Jurusan / Prodi</td>
                                     <td> {{ $userDetail->jurusan == '' ? 'belum diisi' : $userDetail->jurusan }}</td>
+                                </tr>
+                                <tr height="30px !important;">
+                                    <td class="bg-secondary text-white">Tahun Lulus</td>
+                                    <td> {{ $userDetail->tahun_lulus == '' ? 'belum diisi' : $userDetail->tahun_lulus }}
+                                    </td>
                                 </tr>
                             </table>
                         </div>

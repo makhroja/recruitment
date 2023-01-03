@@ -25,8 +25,8 @@
                     @endif
 
                     <form method="POST" action="{{ route('userDetails.store') }}" accept-charset="UTF-8"
-                        id="create_user_detail_form" name="create_user_detail_form" class="form-horizontal"[% upload_files
-                        %]>
+                        id="create_user_detail_form" name="create_user_detail_form" class="form-horizontal"
+                        enctype="multipart/form-data" accept="">
                         {{ csrf_field() }}
                         @include ('user_details.form', ['userDetail' => null])
 
@@ -53,6 +53,11 @@
             if ($(".select2").length) {
                 $(".select2").select2();
             }
+        });
+        $(function() {
+            'use strict';
+
+            $('.myDropify').dropify();
         });
     </script>
 @endpush

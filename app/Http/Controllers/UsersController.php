@@ -45,6 +45,12 @@ class UsersController extends Controller
                 ];
 
                 $user = User::create($data);
+
+                $user->create([
+                    'uuid' => Str::uuid()->getHex(),
+                    'user_id' => $user->id,
+                ]);
+
                 $user->assignRole($request->role);
 
                 return redirect('users.index')
