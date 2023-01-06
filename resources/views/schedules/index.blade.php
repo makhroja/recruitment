@@ -13,31 +13,28 @@
     <div>
         <h4 class="mb-3 mb-md-0">Schedule List</h4>
     </div>
+
     <div class="row">
         <div class="col-md-12 grid-margin stretch-card">
             <div class="card">
-                <div class="card-header">
-                    <h4>Pilih Lowongan</h4>
-                </div>
                 <div class="card-body">
-                    <div class="row">
-                        <div class="col-md-10">
-                            <div class="form-group {{ $errors->has('job_id') ? 'has-error' : '' }}">
-                                <select class="form-control select2 @error('job_id') is-invalid @enderror" id="job_id"
-                                    name="job_id">
-                                    <option value="" style="display: none;" selected>Pilih Lowongan</option>
-                                    @foreach ($jobs as $key => $job)
-                                        <option value="{{ $key }}">
-                                            {{ $job }}
-                                        </option>
-                                    @endforeach
-                                </select>
-                                {!! $errors->first('job_id', '<small class="invalid-feedback" role="alert">:message</small>') !!}
-                            </div>
-                        </div>
-                        <div class="col-md-2">
-                            <button type="submit" class="btn btn-primary jobSelect">Pilih</button>
-                        </div>
+                    <div class="card-title">
+                        <a href="{{ route('schedules.create') }}" class="btn btn-ico btn-success" title="Create New User">
+                            <span class="feather icon-plus" aria-hidden="true"></span>
+                        </a>
+                    </div>
+                    <div class="table-responsive">
+                        <table id="dataTable" style="width:100%" class="table table-bordered nowrap">
+                            <thead>
+                                <tr>
+                                    <th>No</th>
+                                    <th>Lowongan</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>
@@ -55,15 +52,119 @@
 @push('custom-scripts')
     <script type="text/javascript">
         $(function() {
-
-            $('body').on('click', '.jobSelect', function() {
-                var uuid = document.getElementById("job_id").value;
-                if (uuid === '') {
-                    alert('Silahkan pilih lowongan');
-                } else {
-                    var url = "{{ url('/schedules') }}" + '/' + uuid;
-                    window.open(url, "_self");
+            //ajax setup
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta [name="csrf-token"]').attr('content')
                 }
+            });
+
+            // datatable
+            var table = $('#dataTable').DataTable({
+                processing: true,
+                serverSide: true,
+                scrollY: true,
+                scrollX: true,
+                // select: true,
+                // select: 'single',
+                ajax: "{{ url('/schedules/getScheduleJson') }}",
+                order: [
+                    [1, 'asc']
+                ],
+                columnDefs: [{
+                    targets: "_all",
+                    orderable: false
+                }, {
+                    width: "2%",
+                    targets: [0, 2]
+                }, {
+                    //buat wrap text
+                    render: function(data, type, full, meta) {
+                        return "<div class='text-wrap width-200'>" + data + "</div>";
+                    },
+                    targets: [1]
+                }, ],
+                dom: 'lBfrtip',
+                buttons: [
+                    'excel', 'pdf', 'print'
+                ],
+                columns: [{
+                        data: 'DT_RowIndex',
+                        name: 'DT_RowIndex'
+                    },
+                    {
+                        data: 'tahapan',
+                        name: 'tahapan'
+                    },
+                    {
+                        data: 'action',
+                        name: 'action',
+                        orderable: false,
+                        searchable: false
+                    },
+                ],
+            });
+
+            table.on('click', '.edit', function() {
+                var uuid = $(this).data("id");
+                var url = "{{ url('/schedules') }}" + '/' + uuid + '/edit/';
+                window.open(url, "_self")
+            });
+
+            // table.on('click', '.show', function() {
+            //     var uuid = $(this).data("id");
+            //     var url = "{{ url('/schedules') }}" + '/' + '' + uuid;
+            //     window.open(url, "_self")
+            // });
+
+            table.on('click', '.delete', function() {
+                var name = $(this).data("name");
+                swal({
+                    title: 'Anda Yakin?',
+                    text: "Menghapus Data " + name,
+                    icon: 'warning',
+                    buttons: true,
+                    dangerMode: true,
+                    reverseButtons: false,
+                    buttons: {
+                        confirm: 'Ya',
+                        cancel: 'Tidak'
+                    },
+                }).then((willDelete) => {
+                    if (willDelete) {
+                        var uuid = $(this).data("id");
+                        var token = $("meta[name='csrf-token']").attr("content");
+                        $.ajax({
+                            url: "{{ url('/schedules') }}" +
+                                '/' +
+                                uuid,
+                            type: 'delete',
+                            dataType: "JSON",
+                            data: {
+                                "uuid": uuid,
+                                "_token": token,
+                            },
+                            success: function(data) {
+                                table.draw();
+                                console.log('Success:', data);
+                                swal({
+                                    icon: 'info',
+                                    title: data.Success
+                                });
+                            },
+                            error: function(data) {
+                                // window.location.reload()
+                                console.log('Error:', data);
+                                swal({
+                                    icon: 'info',
+                                    title: 'Something went wrong!'
+                                });
+                            }
+                        });
+                    } else {
+                        // 
+                    }
+                });
             });
 
             //Select2

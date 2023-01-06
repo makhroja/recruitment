@@ -1,6 +1,22 @@
 <?php
+
+function berkasLamar($uuid)
+{
+
+  $jobs = App\Models\Job::whereUuid($uuid)->first();
+
+  $date = strtotime(date('Y-m-d'));
+  $start_date = strtotime($jobs->tgl_mulai);
+  $end_date = strtotime($jobs->tgl_akhir);
+  return $date >= $start_date && $date <= $end_date;
+}
+
+function posNama($id)
+{
+  return App\Models\Position::findOrFail($id)->nama;
+}
 //membuat jadwal
-function storeSchedule($job_id)
+function storeSchedule()
 {
   $nama_tahap = [
     1 => 'Pengumpulan Berkas Lamaran',
@@ -17,19 +33,19 @@ function storeSchedule($job_id)
     12 => 'Tes Kesehatan',
     13 => 'Pengumuman Tes Kesehatan & Tahap Akhir',
   ];
-  for ($i = 1; $i < 14; $i++) {
-    # code...
-    $schedule = App\Models\Schedule::create([
-      'uuid' => \Str::uuid()->getHex(),
-      'job_id' => $job_id,
-      'tahap' => $i,
-      'nama_tahap' => $nama_tahap[$i],
-      'tgl_mulai' => date('Y-m-d'),
-      'status' => 1,
-    ]);
-  }
+  // for ($i = 1; $i < 14; $i++) {
+  //   # code...
+  //   $schedule = App\Models\Schedule::create([
+  //     'uuid' => \Str::uuid()->getHex(),
+  //     'job_id' => $job_id,
+  //     'tahap' => $i,
+  //     'nama_tahap' => $nama_tahap[$i],
+  //     'tgl_mulai' => date('Y-m-d'),
+  //     'status' => 1,
+  //   ]);
+  // }
 
-  return $schedule;
+  return $nama_tahap;
 }
 
 
@@ -38,10 +54,10 @@ function storeSchedule($job_id)
  */
 function userCheckApply($job_uuid)
 {
-  $jobId = Job::where('uuid', $job_uuid)->first();
+  $jobId = App\Models\Job::where('uuid', $job_uuid)->first();
   $user_id = \Auth::user()->id;
 
-  $application = Application::where('user_id', $user_id)
+  $application = App\Models\Application::where('user_id', $user_id)
     ->where('job_id', $jobId->id)->exists();
 
   return $application;
@@ -103,4 +119,9 @@ function getJobId($uuid)
 function getUnitId($uuid)
 {
   return App\Models\Unit::where('uuid', $uuid)->first();
+}
+
+function getPositionId($uuid)
+{
+  return App\Models\Position::where('uuid', $uuid)->first();
 }

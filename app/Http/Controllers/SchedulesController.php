@@ -19,57 +19,48 @@ class SchedulesController extends Controller
     public function index()
     {
         $schedules = Schedule::with('job')->paginate(25);
-        $jobs = Job::pluck('judul', 'uuid')->all();
 
-        return view('schedules.index', compact('schedules', 'jobs'));
+        return view('schedules.index', compact('schedules'));
     }
 
     public function create()
     {
-        $jobs = Job::pluck('uuid', 'id')->all();
-
-        return view('schedules.create', compact('jobs'));
+        $jobs = Job::pluck('judul', 'id')->all();
+        $tahap = storeSchedule();
+        return view('schedules.create', compact('jobs', 'tahap'));
     }
 
     public function store(Request $request)
     {
-        // try {
-        $request = $request->merge([
-            'uuid' => Str::uuid()->getHex(),
-            'status' => 1,
-        ]);
+        try {
+            $request = $request->merge([
+                'uuid' => Str::uuid()->getHex(),
+            ]);
+            $validator = $this->scheduleValidator($request->all());
 
-        $validator = $this->scheduleValidator($request->all());
+            if ($validator->passes()) {
 
-        if ($validator->passes()) {
-            $jobUuid = Job::findOrfail($request->job_id);
+                Schedule::create($request->all());
 
-            Schedule::create($request->all());
-
-            if ($request->method == 'fromSchedule') {
-                return redirect()->route('schedules.show', $jobUuid->uuid)
-                    ->with(['success' => 'Schedule berhasil dibuat.']);
-            } else {
                 return redirect()->route('schedules.index')
                     ->with(['success' => 'Schedule berhasil dibuat.']);
             }
-        }
-        return back()
-            ->withErrors($validator)
-            ->withInput();
-        // } catch (Exception $exception) {
+            return back()
+                ->withErrors($validator)
+                ->withInput();
+        } catch (Exception $exception) {
 
-        //     return back()->withInput()
-        //         ->withErrors(['unexpected_error' => 'Unexpected error occurred while trying to process your request.']);
-        // }
+            return back()->withInput()
+                ->withErrors(['unexpected_error' => 'Unexpected error occurred while trying to process your request.']);
+        }
     }
 
 
     public function show($uuid)
     {
-        // dd($uuid);
-        $job = Job::where('uuid', $uuid)->first();
-        return view('schedules.show', compact('job'));
+        $schedule = Schedule::with('job')->where('uuid', $uuid)->first();
+
+        return view('schedules.show', compact('schedule'));
     }
 
 
@@ -77,8 +68,8 @@ class SchedulesController extends Controller
     {
         $schedule = Schedule::where('uuid', $uuid)->first();
         $jobs = Job::pluck('judul', 'id')->all();
-        $method = 'fromSchedule';
-        return view('schedules.edit', compact('schedule', 'jobs', 'method'));
+        $tahap = storeSchedule();
+        return view('schedules.edit', compact('schedule', 'jobs', 'tahap'));
     }
 
 
@@ -88,17 +79,12 @@ class SchedulesController extends Controller
             $validator = $this->scheduleValidator($request->all());
 
             if ($validator->passes()) {
-                $jobUuid = Job::findOrfail($request->job_id);
+
                 $schedule = Schedule::where('uuid', $uuid)->first();
                 $schedule->update($request->all());
 
-                if ($request->method == 'fromSchedule') {
-                    return redirect()->route('schedules.show', $jobUuid->uuid)
-                        ->with(['success' => 'Schedule berhasil diupdate.']);
-                } else {
-                    return redirect()->route('schedules.index')
-                        ->with(['success' => 'Schedule berhasil diupdate.']);
-                }
+                return redirect()->route('schedules.index')
+                    ->with(['success' => 'Schedule berhasil simpan.']);
             }
             return back()
                 ->withErrors($validator)
@@ -127,21 +113,30 @@ class SchedulesController extends Controller
         }
     }
 
-    public function getScheduleJson($uuid = '')
+    public function getScheduleJson(Request $request)
     {
-        $schedule = Schedule::where('job_id', getJobId($uuid)->id)->get();
+        $schedule = Schedule::latest()->get();
 
         return DataTables::of($schedule)
             ->addIndexColumn()
-
+            ->addColumn('tahapan', function ($row) {
+                $html = view('schedules.show', [
+                    'job' => $row->job,
+                    'schedule' => $row,
+                    'tahap' => storeSchedule()
+                ]);
+                return $html;
+            })
             ->addColumn('action', function ($row) {
+                // $btn = '<button href="javascript:void(0)" data-id="' . $row->uuid . '" data-original-title="Show" class="btn btn-outline-primary btn-icon show"><i class="feather icon-eye"></i></button>';
+
                 $btn = ' <button href="javascript:void(0)" data-id="' . $row->uuid . '" data-original-title="Edit" class="btn btn-outline-success btn-icon edit"><i class="feather icon-edit"></i></button>';
 
                 $btn = $btn . ' <button href="javascript:void(0)" data-name="' . $row->name . '" data-id="' . $row->uuid . '" data-original-title="Delete" class="btn btn-outline-danger btn-icon delete"><i class="feather icon-trash"></i></button>';
 
                 return $btn;
             })
-            ->rawColumns(['action'])
+            ->rawColumns(['action', 'tahapan'])
             ->make(true);
     }
 
@@ -156,9 +151,20 @@ class SchedulesController extends Controller
     protected function scheduleValidator($request)
     {
         $validator =  Validator::make($request, [
-            'tahap' => 'integer|min:1|required',
-            'nama_tahap' => 'string|min:1|required',
-            'tgl_mulai' => 'date_format:Y-m-d|required',
+            'job_id' => 'required',
+            'tahap_1' => 'required',
+            'tahap_2' => 'required',
+            'tahap_3' => 'required',
+            'tahap_4' => 'required',
+            'tahap_5' => 'required',
+            'tahap_6' => 'required',
+            'tahap_7' => 'required',
+            'tahap_8' => 'required',
+            'tahap_9' => 'required',
+            'tahap_10' => 'required',
+            'tahap_11' => 'required',
+            'tahap_12' => 'required',
+            'tahap_13' => 'required',
         ]);
 
         return $validator;

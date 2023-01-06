@@ -24,7 +24,7 @@ class CreateJobDetailsTable extends Migration
             $table->integer('jk');
             $table->integer('umur');
             $table->integer('jumlah');
-            $table->string('catatan');
+            $table->text('catatan');
             $table->timestamps();
             $table->foreign('job_id')->references('id')->on('jobs')->onDelete('cascade');
         });

@@ -26,8 +26,8 @@ class PositionsController extends Controller
     public function create()
     {
         $units = Unit::pluck('nama', 'id')->all();
-
-        return view('positions.create', compact('units'));
+        $method = '';
+        return view('positions.create', compact('units', 'method'));
     }
 
     public function store(Request $request)

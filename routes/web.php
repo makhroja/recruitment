@@ -19,11 +19,8 @@ Route::get('/', function () {
      return view('index');
 });
 
-Route::get('/lowongan', function () {
-     $jobs = App\Models\Job::paginate(4);
-     return view('guest.lowongan', compact('jobs'));
-});
-
+Route::get('/lowongan', 'GuestController@lowongan');
+Route::get('/detail-lowongan/{uuid}', 'GuestController@detailLowongan');
 
 Route::group(['prefix' => 'error'], function () {
      Route::get('404', function () {
@@ -76,6 +73,12 @@ Route::group([ #peserta|
      Route::get('/dashboard', function () {
           return view('peserta.dashboard');
      })->name('peserta');
+
+     Route::get('/list-lowongan', 'PesertaController@jobList');
+     Route::get('/lowongan-detail/{uuid}', 'PesertaController@lowonganDetail')->name('lowongan.detail');
+     Route::get('/jadwal-seleksi', 'PesertaController@jadwalSeleksi')->name('jadwal.seleksi');
+
+     Route::post('/kirim-lamaran', 'PesertaController@kirimLamaran')->name('kirim.lamaran');
 });
 
 Route::group([
@@ -90,14 +93,36 @@ Route::group([
 });
 
 Route::group([
+     'prefix' => '/userDetails',
      'middleware' => [
-          'role:administrator|peserta', 'auth',
+          'auth',
      ],
 ], function () {
      Route::get('/userDetail/getUserDetailJson', 'userDetailsController@getuserDetailJson')->name('userDetail.getuserDetailJson');
 
      #Route resource dibawah
-     Route::resource('/userDetails', UserDetailsController::class);
+     // Route::resource('/userDetails', UserDetailsController::class);
+
+     Route::group(['middleware' => ['role:administrator|peserta|karu|hrd|direktur|sdm']], function () {
+          Route::get('/show/{user}', 'UserDetailsController@show')
+               ->name('userDetails.show');
+          Route::get('/{user}/edit', 'UserDetailsController@edit')
+               ->name('userDetails.edit');
+
+          Route::put('user/{user}', 'UserDetailsController@update')
+               ->name('userDetails.update');
+     });
+
+     Route::group(['middleware' => ['role:administrator|sdm']], function () {
+          Route::post('/', 'UserDetailsController@store')
+               ->name('userDetails.store');
+          Route::get('/', 'UserDetailsController@index')
+               ->name('userDetails.index');
+          Route::get('/create', 'UserDetailsController@create')
+               ->name('userDetails.create');
+          Route::delete('/user/{user}', 'UserDetailsController@destroy')
+               ->name('userDetails.destroy');
+     });
 });
 
 Route::group([
@@ -148,10 +173,11 @@ Route::group([
 
 Route::group([
      'middleware' => [
-          'role:administrator', 'auth',
+          'role:administrator|sdm',
+          'auth',
      ],
 ], function () {
-     Route::get('/schedules/getScheduleJson/{uuid}', 'SchedulesController@getScheduleJson')->name('scheduleJson');
+     Route::get('/schedules/getScheduleJson', 'SchedulesController@getScheduleJson')->name('scheduleJson');
 
      #Route resource dibawah
      Route::resource('/schedules', SchedulesController::class);
@@ -169,3 +195,24 @@ Route::group([
 });
 
 Route::get('/reload-captcha', 'UserRegisterController@reloadCaptcha');
+
+Route::group([
+     'prefix' => 'applications',
+], function () {
+     Route::get('/', 'ApplicationsController@index')
+          ->name('applications.index');
+     Route::get('/create', 'ApplicationsController@create')
+          ->name('applications.create');
+     Route::get('/show/{application}', 'ApplicationsController@show')
+          ->name('applications.show')->where('id', '[0-9]+');
+     Route::get('/{application}/edit', 'ApplicationsController@edit')
+          ->name('applications.edit')->where('id', '[0-9]+');
+     Route::post('/', 'ApplicationsController@store')
+          ->name('applications.store');
+     Route::put('/{application}', 'ApplicationsController@update')
+          ->name('applications.update')->where('id', '[0-9]+');
+     Route::delete('/{application}', 'ApplicationsController@destroy')
+          ->name('applications.destroy')->where('id', '[0-9]+');
+
+     Route::get('/getApplicationJson', 'ApplicationsController@getApplicationJson')->name('ApplicationJson');
+});

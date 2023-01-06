@@ -1,5 +1,5 @@
 @extends('layout.master')
-@section('title', 'Job Lists')
+@section('title', 'Application Lists')
 @push('plugin-styles')
     <link href="{{ asset('assets/plugins/datatables/DataTables-1.10.16/css/dataTables.bootstrap4.min.css') }}"
         rel="stylesheet" />
@@ -11,7 +11,7 @@
 
 @section('content')
     <div>
-        <h4 class="mb-3 mb-md-0">Job List</h4>
+        <h4 class="mb-3 mb-md-0">Application List</h4>
     </div>
 
     <div class="row">
@@ -19,21 +19,16 @@
             <div class="card">
                 <div class="card-body">
                     <div class="card-title">
-                        <a href="{{ route('jobs.create') }}" class="btn btn-ico btn-success" title="Create New User">
+                        <a href="{{ route('applications.create') }}" class="btn btn-ico btn-success"
+                            title="Create New User">
                             <span class="feather icon-plus" aria-hidden="true"></span>
                         </a>
                     </div>
                     <div class="table-responsive">
-                        <table id="dataTable" style="width:100%" class="table table-bordered nowrap">
+                        <table id="dataTable" style="width:100%" class=table table-bordered nowrap">
                             <thead>
                                 <tr>
                                     <th>No</th>
-                                    <th>No Surat</th>
-                                    <th>Judul</th>
-                                    <th>Tgl Mulai</th>
-                                    <th>Tgl Akhir</th>
-                                    <th>Lampiran</th>
-                                    <th>isAktif</th>
                                     <th></th>
                                 </tr>
                             </thead>
@@ -42,28 +37,6 @@
                         </table>
                     </div>
                 </div>
-            </div>
-        </div>
-    </div>
-    <!-- Modal -->
-    <div id="modalLampiran" class="modal fade" role="dialog">
-        <div class="modal-dialog modal-lg">
-
-            <!-- Modal content-->
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h5 class="modal-title">Lampiran Surat Keputusan</h5>
-                </div>
-                <div class="modal-body">
-
-                    <embed id="srcLampiran" src="" frameborder="0" width="100%" height="400px">
-
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-sm btn-danger" data-dismiss="modal">Close</button>
-                    </div>
-                </div>
-
             </div>
         </div>
     </div>
@@ -92,9 +65,9 @@
                 serverSide: true,
                 scrollY: true,
                 scrollX: true,
-                // select: true,
-                // select: 'single',
-                ajax: "{{ url('/jobs/getJobJson') }}",
+                select: true,
+                select: 'single',
+                ajax: "{{ url('/applications/getApplicationJson') }}",
                 order: [
                     [1, 'asc']
                 ],
@@ -109,39 +82,15 @@
                     render: function(data, type, full, meta) {
                         return "<div class='text-wrap width-200'>" + data + "</div>";
                     },
-                    targets: [1, 2]
+                    targets: [1]
                 }, ],
-                dom: 'Bfrtip',
+                dom: 'lBfrtip',
                 buttons: [
                     'excel', 'pdf', 'print'
                 ],
                 columns: [{
                         data: 'DT_RowIndex',
                         name: 'DT_RowIndex'
-                    },
-                    {
-                        data: 'no_surat',
-                        name: 'no_surat'
-                    },
-                    {
-                        data: 'judul',
-                        name: 'judul'
-                    },
-                    {
-                        data: 'tgl_mulai',
-                        name: 'tgl_mulai'
-                    },
-                    {
-                        data: 'tgl_akhir',
-                        name: 'tgl_akhir'
-                    },
-                    {
-                        data: 'lampiran',
-                        name: 'lampiran'
-                    },
-                    {
-                        data: 'is_aktif',
-                        name: 'is_aktif'
                     },
                     {
                         data: 'action',
@@ -154,13 +103,13 @@
 
             table.on('click', '.edit', function() {
                 var uuid = $(this).data("id");
-                var url = "{{ url('/jobs') }}" + '/' + uuid + '/edit/';
+                var url = "{{ url('/applications') }}" + '/' + uuid + '/edit/';
                 window.open(url, "_self")
             });
 
             table.on('click', '.show', function() {
                 var uuid = $(this).data("id");
-                var url = "{{ url('/jobs') }}" + '/' + '' + uuid;
+                var url = "{{ url('/applications') }}" + '/' + '' + uuid;
                 window.open(url, "_self")
             });
 
@@ -182,7 +131,7 @@
                         var uuid = $(this).data("id");
                         var token = $("meta[name='csrf-token']").attr("content");
                         $.ajax({
-                            url: "{{ url('/jobs') }}" +
+                            url: "{{ url('/applications') }}" +
                                 '/' +
                                 uuid,
                             type: 'delete',
@@ -207,7 +156,6 @@
                                     title: 'Something went wrong!'
                                 });
                             }
-
                         });
                     } else {
                         // 
@@ -215,16 +163,13 @@
                 });
             });
 
+            //Select2
+            $(function () {
+            'use strict'
 
-            table.on('click', '.srcLampiran', function() {
-                var pdf = $(this).data("pdf");
-
-                var embedElement = document.getElementById("srcLampiran");
-                embedElement.setAttribute("src", "{{ url('/assets/uploads/job-attachment') }}" + '/' +
-                    pdf);
-
-                $('#modalLampiran').modal('show');
-
+            if ($(".select2").length) {
+                $(".select2").select2();
+            }
             });
             /*
              *End Document Ready

@@ -11,7 +11,7 @@
         <div class="col-md-12 grid-margin stretch-card">
             <div class="card">
                 <div class="card-header">
-                    <a href="{{ URL::previous() }}" type="button" title="Back" class="btn btn-sm btn-dark btn-icon-text">
+                    <a href="{{ url('/dashboard') }}" type="button" title="Back" class="btn btn-sm btn-dark btn-icon-text">
                         <i class="btn-icon-prepend" data-feather="arrow-left"></i>
                         Back
                     </a>

@@ -97,34 +97,36 @@
                         </div>
                     </body>
                 </div>
-                <div class="card-footer">
-                    <div class="pull-right">
+                @hasrole('administrator|sdm')
+                    <div class="card-footer">
+                        <div class="pull-right">
 
 
-                        <div class="btn-group" role="group">
-                            <a href="{{ URL::previous() }}" class="btn btn-sm btn-outline-dark"
-                                title="Show All User Detail">
-                                <span class="feather icon-arrow-left" aria-hidden="true"></span>
-                            </a>
+                            <div class="btn-group" role="group">
+                                <a href="{{ URL::previous() }}" class="btn btn-sm btn-outline-dark"
+                                    title="Show All User Detail">
+                                    <span class="feather icon-arrow-left" aria-hidden="true"></span>
+                                </a>
 
-                            <a href="{{ route('userDetails.create') }}" class="btn btn-sm btn-outline-primary"
-                                title="Create New User Detail">
-                                <span class="feather icon-plus" aria-hidden="true"></span>
-                            </a>
+                                <a href="{{ route('userDetails.create') }}" class="btn btn-sm btn-outline-primary"
+                                    title="Create New User Detail">
+                                    <span class="feather icon-plus" aria-hidden="true"></span>
+                                </a>
 
-                            <a href="{{ route('userDetails.edit', $userDetail->uuid) }}"
-                                class="btn btn-sm btn-outline-warning" title="Edit User Detail">
-                                <span class="feather icon-edit" aria-hidden="true"></span>
-                            </a>
+                                <a href="{{ route('userDetails.edit', $userDetail->uuid) }}"
+                                    class="btn btn-sm btn-outline-warning" title="Edit User Detail">
+                                    <span class="feather icon-edit" aria-hidden="true"></span>
+                                </a>
 
-                            <a data-name="{{ $userDetail->name }}" data-id="{{ $userDetail->uuid }}"
-                                class="btn btn-sm delete btn-outline-danger" title="Delete User Detail">
-                                <span class="feather icon-trash" aria-hidden="true"></span>
-                            </a>
+                                <a data-name="{{ $userDetail->name }}" data-id="{{ $userDetail->uuid }}"
+                                    class="btn btn-sm delete btn-outline-danger" title="Delete User Detail">
+                                    <span class="feather icon-trash" aria-hidden="true"></span>
+                                </a>
+                            </div>
+
                         </div>
-
                     </div>
-                </div>
+                @endhasrole
             </div>
         </div>
     </div>

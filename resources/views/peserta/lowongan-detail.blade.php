@@ -1,4 +1,4 @@
-@extends('layout.master2')
+@extends('layout.master')
 @section('title', 'Detail lowongan')
 @push('plugin-styles')
 @endpush
@@ -219,12 +219,63 @@
                             </td>
                         </tr>
                     </table>
+                    <br>
                     <p class="text-danger">Silahkan baca/download Surat Keputusan Direktur RSU Harapan Ibu Purbalingga
                         dibawah
                     </p>
+                    <div class="modal-footer">
+                        <a href="{{ url('/assets/uploads/job-attachment') }}/{{ $jobs->lampiran }}"
+                            class="btn rounded-pill btn-dark text-white float-right">Download</a>
+                        @if (userCheckApply($jobs->uuid) == false)
+                            <a class="btn rounded-pill btn-primary text-white kirimLamaran float-right">Kirim Lamaran</a>
+                        @endif
+                    </div>
+                    <br>
+                    Lampiran SK Direktur
+                    <iframe id="lowongan" src="{{ url('/assets/uploads/job-attachment') }}/{{ $jobs->lampiran }}"
+                        frameborder="0" width="100%" height="800px"></iframe>
                 </div>
-                <div class="card-footer">
+            </div>
+        </div>
+    </div>
+    <!-- Modal Lampiran -->
+    <div id="modalLowongan" class="modal fade" role="dialog">
+        <div class="modal-dialog modal-lg ">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="card-body">
+                    <form id="applyJob" action="{{ route('kirim.lamaran') }}" method="post" accept="application/pdf"
+                        enctype="multipart/form-data">
+                        @csrf
+                        <input type="hidden" name="uuid" value="{{ $job->uuid }}">
+                        <div class="form-group {{ $errors->has('position_id') ? 'has-error' : '' }}">
+                            <label for="position_id" class="col-md-12 control-label">Pilih Posisi yang dilamar</label>
+                            <div class="col-md-10">
+                                <select style="width: 35%"
+                                    class="form-control select2 @error('position_id') is-invalid @enderror" id="position_id"
+                                    name="position_id" required>
+                                    <option value="0" style="display: none;"disabled selected>Pilih Posisi</option>
+                                    @foreach ($jobs->jobDetail as $jobD)
+                                        <option data-nama="{{ posNama($jobD->position_id) }}"
+                                            value="{{ $jobD->position->uuid }}">
+                                            {{ posNama($jobD->position_id) }}
+                                        </option>
+                                    @endforeach
+                                </select>
 
+                                {!! $errors->first('user_id', '<small class="invalid-feedback" role="alert">:message</small>') !!}
+                            </div>
+                        </div>
+                        <div class="form-group {{ $errors->has('attachments') ? 'has-error' : '' }}">
+                            <label for="attachments" class="col-md-12 control-label">Pilih Berkas Lamaran Pekerjaan</label>
+                            <div class="col-md-6">
+                                <input name="file" type="file" id="file" class="myDropify" class="border"
+                                    accept="application/pdf" required />
+                            </div>
+                        </div>
+                    </form>
+                    <button data-id="{{ $jobs->uuid }}" class="btn  badge-pill badge-danger float-right jobApply">Kirim
+                    </button>
                 </div>
             </div>
         </div>
@@ -235,4 +286,80 @@
 @endpush
 
 @push('custom-scripts')
+    <script>
+        $(function() {
+            $('body').on('click', '.kirimLamaran', function() {
+                $('#modalLowongan').modal('show');
+            })
+
+            $('body').on('click', '.closeModal', function() {
+                $('#modalLowongan').modal('hide');
+            })
+
+        });
+        @if (userCheckApply($jobs->uuid) == false)
+            $(function() {
+                //ajax setup
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta [name="csrf-token"]').attr('content')
+                    }
+                });
+
+                $('body').on('click', '.jobApply', function() {
+                    var select = document.getElementById('position_id');
+                    var file = document.getElementById('file');
+                    var text = select.options[select.selectedIndex].text;
+                    if (select.value == 0 || file.value == '') {
+                        swal({
+                            title: 'Error!',
+                            text: "Mohon cek kembali file yang diperlukan",
+                            icon: 'warning',
+                            buttons: true,
+                            dangerMode: true,
+                            reverseButtons: false,
+                            buttons: {
+                                cancel: 'Ok'
+                            },
+                        })
+                    } else {
+                        swal({
+                            title: 'Anda Yakin?',
+                            text: "Melamar lowongan {{ $jobs->judul }} dengan posisi : " + text,
+                            icon: 'warning',
+                            buttons: true,
+                            dangerMode: true,
+                            reverseButtons: false,
+                            buttons: {
+                                confirm: 'Ya',
+                                cancel: 'Tidak'
+                            },
+                        }).then((apply) => {
+                            if (apply) {
+                                document.getElementById("applyJob").submit();
+                            } else {
+                                // 
+                            }
+                        });
+                    }
+
+
+
+                });
+
+                /*
+                 *End Document Ready
+                 */
+            });
+        @endif
+    </script>
+    <script>
+        $(function() {
+            'use strict'
+
+            if ($(".select2").length) {
+                $(".select2").select2();
+            }
+        });
+    </script>
 @endpush

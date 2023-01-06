@@ -1,26 +1,28 @@
 <div class="row">
-    <div class="col-md-4">
-        <div class="form-group {{ $errors->has('user_id') ? 'has-error' : '' }}">
-            <label for="user_id" class="col-md-12 control-label">User</label>
-            <div class="col-md-12">
-                <select class="form-control select2 @error('user_id') is-invalid @enderror" id="user_id" name="user_id">
-                    <option value="" style="display: none;"
-                        {{ old('user_id', optional($userDetail)->user_id ?: '') == '' ? 'selected' : '' }} disabled
-                        selected>
-                        Select
-                        user</option>
-                    @foreach ($users as $key => $user)
-                        <option value="{{ $key }}"
-                            {{ old('user_id', optional($userDetail)->user_id) == $key ? 'selected' : '' }}>
-                            {{ $user }}
-                        </option>
-                    @endforeach
-                </select>
+    @role('administrator|sdm')
+        <div class="col-md-4">
+            <div class="form-group {{ $errors->has('user_id') ? 'has-error' : '' }}">
+                <label for="user_id" class="col-md-12 control-label">User</label>
+                <div class="col-md-12">
+                    <select class="form-control select2 @error('user_id') is-invalid @enderror" id="user_id" name="user_id">
+                        <option value="" style="display: none;"
+                            {{ old('user_id', optional($userDetail)->user_id ?: '') == '' ? 'selected' : '' }} disabled
+                            selected>
+                            Select
+                            user</option>
+                        @foreach ($users as $key => $user)
+                            <option value="{{ $key }}"
+                                {{ old('user_id', optional($userDetail)->user_id) == $key ? 'selected' : '' }}>
+                                {{ $user }}
+                            </option>
+                        @endforeach
+                    </select>
 
-                {!! $errors->first('user_id', '<small class="invalid-feedback" role="alert">:message</small>') !!}
+                    {!! $errors->first('user_id', '<small class="invalid-feedback" role="alert">:message</small>') !!}
+                </div>
             </div>
         </div>
-    </div>
+    @endrole
     <div class="col-md-6">
         <div class="form-group {{ $errors->has('nama_lengkap') ? 'has-error' : '' }}">
             <label for="nama_lengkap" class="col-md-12 control-label">Nama Lengkap</label>
@@ -266,38 +268,39 @@
     </div>
 </div>
 
-<div class="form-group {{ $errors->has('status') ? 'has-error' : '' }}">
-    <label for="status" class="col-md-12 control-label">Status</label>
-    <div class="col-md-3">
-        <select class="form-control select2 @error('status') is-invalid @enderror" id="status" name="status">
-            <option value="" style="display: none;"
-                {{ old('status', optional($userDetail)->status ?: '') == '' ? 'selected' : '' }} disabled selected>
-                Select
-                Status</option>
-            <option value="1" {{ old('status', optional($userDetail)->status) == '1' ? 'selected' : '' }}>
-                Aktif
-            </option>
-            <option value="0" {{ old('status', optional($userDetail)->status) == '0' ? 'selected' : '' }}>
-                Tidak Aktif
-            </option>
-        </select>
+@role('administrator|sdm')
+    <div class="form-group {{ $errors->has('status') ? 'has-error' : '' }}">
+        <label for="status" class="col-md-12 control-label">Status</label>
+        <div class="col-md-3">
+            <select class="form-control select2 @error('status') is-invalid @enderror" id="status" name="status">
+                <option value="" style="display: none;"
+                    {{ old('status', optional($userDetail)->status ?: '') == '' ? 'selected' : '' }} disabled selected>
+                    Select
+                    Status</option>
+                <option value="1" {{ old('status', optional($userDetail)->status) == '1' ? 'selected' : '' }}>
+                    Aktif
+                </option>
+                <option value="0" {{ old('status', optional($userDetail)->status) == '0' ? 'selected' : '' }}>
+                    Tidak Aktif
+                </option>
+            </select>
 
-        {!! $errors->first('status', '<small class="invalid-feedback" role="alert">:message</small>') !!}
-    </div>
-</div>
-
-<div class="form-group {{ $errors->has('is_aktif') ? 'has-error' : '' }}">
-    <label for="is_aktif" class="col-md-12 control-label">Is Aktif</label>
-    <div class="col-md-12">
-        <div class="checkbox">
-            <label for="is_aktif_1">
-                <input id="is_aktif_1" class=" @error('is_aktif') is-invalid @enderror" name="is_aktif"
-                    type="checkbox" value="1"
-                    {{ old('is_aktif', optional($userDetail)->is_aktif) == '1' ? 'checked' : '' }}>
-                Yes
-            </label>
+            {!! $errors->first('status', '<small class="invalid-feedback" role="alert">:message</small>') !!}
         </div>
-
-        {!! $errors->first('is_aktif', '<small class="invalid-feedback" role="alert">:message</small>') !!}
     </div>
-</div>
+    <div class="form-group {{ $errors->has('is_aktif') ? 'has-error' : '' }}">
+        <label for="is_aktif" class="col-md-12 control-label">Is Aktif</label>
+        <div class="col-md-12">
+            <div class="checkbox">
+                <label for="is_aktif_1">
+                    <input id="is_aktif_1" class=" @error('is_aktif') is-invalid @enderror" name="is_aktif"
+                        type="checkbox" value="1"
+                        {{ old('is_aktif', optional($userDetail)->is_aktif) == '1' ? 'checked' : '' }}>
+                    Yes
+                </label>
+            </div>
+
+            {!! $errors->first('is_aktif', '<small class="invalid-feedback" role="alert">:message</small>') !!}
+        </div>
+    </div>
+@endrole

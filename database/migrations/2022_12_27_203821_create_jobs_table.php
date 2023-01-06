@@ -18,7 +18,7 @@ class CreateJobsTable extends Migration
             $table->unsignedBigInteger('user_id')->index();
             $table->string('no_surat');
             $table->string('judul');
-            $table->string('informasi');
+            $table->text('informasi');
             $table->date('tgl_mulai');
             $table->date('tgl_akhir');
             $table->string('lampiran');
