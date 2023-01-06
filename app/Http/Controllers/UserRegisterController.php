@@ -4,8 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Models\Profile;
 use App\Models\User;
+use App\Models\UserDetail;
 use Illuminate\Support\Str;
 
 use Validator;
@@ -58,7 +58,7 @@ class UserRegisterController extends Controller
 
             $user->assignRole('peserta');
 
-            Profile::create([
+            UserDetail::create([
                 'user_id' => $user->id,
                 'name' => $request->name,
                 'uuid' => Str::uuid()->getHex(),

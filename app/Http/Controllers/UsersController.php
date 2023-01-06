@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use App\Models\UserDetail;
 use Illuminate\Http\Request;
 use Exception;
 use Yajra\DataTables\DataTables;
@@ -32,7 +33,12 @@ class UsersController extends Controller
     public function store(Request $request)
     {
         try {
-            $validator = $this->userValidator($request->all());
+            $validator =  Validator::make($request->all(), [
+                'name' => ['required', 'string', 'max:25'],
+                'role' => ['required', 'string'],
+                'email' => ['required', 'string', 'email', 'max:55', 'unique:users,email'],
+                'users.password' => ['confirmed', 'string', 'min:8', 'confirmed'],
+            ]);
 
             if ($validator->passes()) {
                 $data = [
@@ -46,14 +52,16 @@ class UsersController extends Controller
 
                 $user = User::create($data);
 
-                $user->create([
-                    'uuid' => Str::uuid()->getHex(),
+                $user->assignRole(Str::lower($request->role));
+
+                UserDetail::create([
                     'user_id' => $user->id,
+                    'name' => $request->name,
+                    'uuid' => Str::uuid()->getHex(),
                 ]);
 
-                $user->assignRole($request->role);
 
-                return redirect('users.index')
+                return redirect()->route('users.index')
                     ->with(['success' => 'User berhasil ditambah.']);
             }
             return back()
@@ -108,7 +116,7 @@ class UsersController extends Controller
 
                 $user->update($request->all());
 
-                return redirect('users.index')
+                return redirect()->route('users.index')
                     ->withSuccess('User berhasil diubah.');
             }
             return back()
