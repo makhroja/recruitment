@@ -70,7 +70,7 @@
                 scrollX: true,
                 // select: true,
                 // select: 'single',
-                ajax: "{{ url('/userDetail/getUserDetailJson') }}",
+                ajax: "{{ url('/userDetails/getUserDetailJson') }}",
                 order: [
                     [1, 'asc']
                 ],
@@ -85,7 +85,7 @@
                     render: function(data, type, full, meta) {
                         return "<div class='text-wrap width-200'>" + data + "</div>";
                     },
-                    targets: [1]
+                    targets: [0]
                 }, ],
                 dom: 'Bfrtip',
                 buttons: [

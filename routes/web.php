@@ -98,7 +98,7 @@ Route::group([
           'auth',
      ],
 ], function () {
-     Route::get('/userDetail/getUserDetailJson', 'userDetailsController@getuserDetailJson')->name('userDetail.getuserDetailJson');
+     Route::get('/getUserDetailJson', 'userDetailsController@getuserDetailJson')->name('userDetail.getuserDetailJson');
 
      #Route resource dibawah
      // Route::resource('/userDetails', UserDetailsController::class);
