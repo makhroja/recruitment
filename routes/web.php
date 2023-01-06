@@ -65,6 +65,14 @@ Route::group([ #sdm|
      Route::get('/sdm', function () {
           return view('sdm.dashboard');
      })->name('sdm');
+
+     Route::get('/administration', 'SdmController@index');
+
+     Route::put('administration/status/{uuid}', 'SdmController@statusUpdate')->name('admin.statusUpdate');
+
+     Route::get('/administration/getAdministrationJson/{uuid}', 'SdmController@getAdministrationJson');
+     // Route::get('/administration/getAdmParticipantJson/{uuid}', 'SdmController@getAdmParticipantJson');
+
 });
 
 Route::group([ #karu|
