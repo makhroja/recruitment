@@ -97,6 +97,52 @@
                     </a>
                 </li>
             @endrole
+            @role('sdm')
+                <li class="nav-item nav-category">Main</li>
+                <li class="nav-item {{ active_class(['/home']) }}">
+                    <a href="{{ url('/home') }}" class="nav-link">
+                        <i class="link-icon" data-feather="box"></i>
+                        <span class="link-title">Dashboard</span>
+                    </a>
+                </li>
+                <li class="nav-item {{ active_class(['units']) }}">
+                    <a href="{{ url('/units') }}" class="nav-link">
+                        <i class="link-icon" data-feather="hard-drive"></i>
+                        <span class="link-title">Data Unit</span>
+                    </a>
+                </li>
+                <li class="nav-item {{ active_class(['positions']) }}">
+                    <a href="{{ url('/positions') }}" class="nav-link">
+                        <i class="link-icon" data-feather="users"></i>
+                        <span class="link-title">Data Posisi</span>
+                    </a>
+                </li>
+                <li class="nav-item {{ active_class(['jobs']) }}">
+                    <a href="{{ url('/jobs') }}" class="nav-link">
+                        <i class="link-icon" data-feather="file-text"></i>
+                        <span class="link-title">Data Lowongan</span>
+                    </a>
+                </li>
+                <li class="nav-item {{ active_class(['schedules']) }}">
+                    <a href="{{ url('/schedules') }}" class="nav-link">
+                        <i class="link-icon" data-feather="calendar"></i>
+                        <span class="link-title">Jadwal Seleksi</span>
+                    </a>
+                </li>
+                <li class="nav-item {{ active_class(['announcements']) }}">
+                    <a href="{{ url('/announcements') }}" class="nav-link">
+                        <i class="link-icon" data-feather="framer"></i>
+                        <span class="link-title">Pengumuman</span>
+                    </a>
+                </li>
+                <li class="nav-item nav-category">Seleksi Administrasi</li>
+                <li class="nav-item {{ active_class(['administration']) }}">
+                    <a href="{{ url('/administration') }}" class="nav-link">
+                        <i class="link-icon" data-feather="framer"></i>
+                        <span class="link-title">Seleksi Administrasi</span>
+                    </a>
+                </li>
+            @endrole
         </ul>
     </div>
 </nav>

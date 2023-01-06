@@ -59,6 +59,14 @@ Route::group([ #admin|
      Route::get('/admin', 'AdminController@dashboard')->name('admin');
 });
 
+Route::group([ #sdm|
+     'middleware' => ['role:sdm', 'auth',],
+], function () {
+     Route::get('/sdm', function () {
+          return view('sdm.dashboard');
+     })->name('sdm');
+});
+
 Route::group([ #karu|
      'middleware' => ['role:karu', 'auth',],
 ], function () {
