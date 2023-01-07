@@ -78,16 +78,22 @@
                         <span class="link-title">Daftar Lowongan</span>
                     </a>
                 </li>
-                <li class="nav-item {{ active_class(['announcement']) }}">
-                    <a href="{{ url('/announcement') }}" class="nav-link">
-                        <i class="link-icon" data-feather="file-text"></i>
-                        <span class="link-title">Pengumuman</span>
-                    </a>
-                </li>
                 <li class="nav-item {{ active_class(['jadwal-seleksi']) }}">
                     <a href="{{ url('/jadwal-seleksi') }}" class="nav-link">
                         <i class="link-icon" data-feather="calendar"></i>
                         <span class="link-title">Jadwal Seleksi</span>
+                    </a>
+                </li>
+                <li class="nav-item {{ active_class(['hasil-seleksi']) }}">
+                    <a href="{{ url('/hasil-seleksi') }}" class="nav-link">
+                        <i class="link-icon" data-feather="file-text"></i>
+                        <span class="link-title">Hasil Seleksi</span>
+                    </a>
+                </li>
+                <li class="nav-item {{ active_class(['announcement']) }}">
+                    <a href="{{ url('/announcement') }}" class="nav-link">
+                        <i class="link-icon" data-feather="file-text"></i>
+                        <span class="link-title">Pengumuman</span>
                     </a>
                 </li>
                 <li class="nav-item {{ active_class(['guide']) }}">

@@ -90,6 +90,11 @@ Route::group([ #peserta|
           return view('peserta.dashboard');
      })->name('peserta');
 
+
+     Route::get('/hasil-seleksi', 'PesertaController@hasilSeleksi')->name('hasilSeleksi');
+     Route::get('/detail-seleksi/{uuid}', 'PesertaController@detailSeleksi')->name('hasilSeleksi.detail');
+     Route::get('/hasil-seleksi/getApplicationJson', 'PesertaController@getApplicationJson')->name('peserta.getApplicationJson');
+
      Route::get('/list-lowongan', 'PesertaController@jobList');
      Route::get('/lowongan-detail/{uuid}', 'PesertaController@lowonganDetail')->name('lowongan.detail');
      Route::get('/jadwal-seleksi', 'PesertaController@jadwalSeleksi')->name('jadwal.seleksi');

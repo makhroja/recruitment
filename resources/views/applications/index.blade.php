@@ -164,12 +164,12 @@
             });
 
             //Select2
-            $(function () {
-            'use strict'
+            $(function() {
+                'use strict'
 
-            if ($(".select2").length) {
-                $(".select2").select2();
-            }
+                if ($(".select2").length) {
+                    $(".select2").select2();
+                }
             });
             /*
              *End Document Ready

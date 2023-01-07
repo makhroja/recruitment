@@ -224,16 +224,16 @@
                         dibawah
                     </p>
                     <div class="modal-footer">
-                        <a href="{{ url('/assets/uploads/job-attachment') }}/{{ $jobs->lampiran }}"
+                        <a href="{{ url('/assets/uploads/job-attachment') }}/{{ $jobs->lampiran }}" target="_blank"
                             class="btn rounded-pill btn-dark text-white float-right">Download</a>
                         @if (userCheckApply($jobs->uuid) == false)
                             <a class="btn rounded-pill btn-primary text-white kirimLamaran float-right">Kirim Lamaran</a>
                         @endif
                     </div>
                     <br>
-                    Lampiran SK Direktur
+                    {{-- Lampiran SK Direktur
                     <iframe id="lowongan" src="{{ url('/assets/uploads/job-attachment') }}/{{ $jobs->lampiran }}"
-                        frameborder="0" width="100%" height="800px"></iframe>
+                        frameborder="0" width="100%" height="800px"></iframe> --}}
                 </div>
             </div>
         </div>

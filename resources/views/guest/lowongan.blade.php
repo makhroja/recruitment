@@ -46,7 +46,8 @@
                                 {!! substr(strip_tags($n->informasi), 0, 150) !!}...
                             </p>
                             <button data-pdf="{{ $n->lampiran }}" data-uuid="{{ $n->uuid }}"
-                                class="btn btn-sm rounded-pill py-1 px-4 btn-warning text-white readMore">Lihat
+                                class="btn btn-sm rounded-pill py-1 px-4 btn-warning text-white readMore"
+                                data-toggle="modal" data-target="#exampleModal">Lihat
                                 Detail</button>
 
                         </div>
@@ -56,55 +57,32 @@
                     </div>
                     <!-- End single blog archive -->
                 </div>
-                @if (berkasLamar($n->uuid))
-                    <!-- Modal Lampiran -->
-                    <div id="modalLowongan" class="modal fade" role="dialog">
-                        <div class="modal-dialog modal-xl">
+                <!-- Modal Hasil Seleksi -->
+                <div id="modalLowongan" class="modal fade modal-fullscreen" tabindex="-1" role="dialog"
+                    aria-hidden="true">
+                    <div class="modal-dialog" role="document">
 
-                            <!-- Modal content-->
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <button type="button" class="btn btn-sm close bg-dark text-white closeModal"
-                                        data-dismiss="modal">&times;
-                                        Batal</button>
-                                    <h5 class="modal-title">Detail Lowongan</h5>
-                                </div>
-                                <div class="modal-body">
+                        <!-- Modal content-->
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="btn btn-sm close bg-dark text-white closeModal"
+                                    data-dismiss="modal">
+                                    Tutup</button>
+                                <h5 class="modal-title">Detail Lowongan</h5>
+                            </div>
+                            <div class="modal-body">
 
-                                    <embed id="detailLowongan" src="" frameborder="0" width="100%" height="800px">
-                                    <iframe id="lowongan" src="" frameborder="0" width="100%"
-                                        height="800px"></iframe>
-                                </div>
-                                <div class="modal-footer">
-                                    <a href="{{ url('/assets/uploads/job-attachment') }}/{{ $n->lampiran }}"
-                                        class="float-md-right btn-sm bg-warning text-white rounded-pill py-1 px-4"
-                                        target="_blank">Download</a>
-                                    <a href="{{ route('register') }}"
-                                        class="float-md-right btn-sm bg-primary text-white rounded-pill py-1 px-4">Registrasi</a>
-                                </div>
+                                <iframe id="detailLowongan" src="" frameborder="0" width="100%"
+                                    height="100%"></iframe>
+                                {{-- <iframe id="lowongan" src="" frameborder="0" width="100%"
+                                    height="800px"></iframe> --}}
+                            </div>
+                            <div class="modal-footer">
 
                             </div>
                         </div>
                     </div>
-                @else
-                    <!-- Modal Lampiran -->
-                    <div id="modalLowongan" class="modal fade" role="dialog">
-                        <div class="modal-dialog modal-xl ">
-                            <!-- Modal content-->
-                            <div class="modal-content bg-primary">
-                                <div class="alert alert-danger " role="alert">
-                                    <h4 class="alert-heading">INFORMASI</h4>
-                                    <p>Mohon maaf lowongan {{ Str::ucFirst($n->judul) }} belum dibuka atau sudah ditutup.
-                                    </p>
-                                    <p class="mb-0">Silahkan akses laman sesuai tanggal yang sudah ditentukan terimakasih.
-                                    </p>
-                                    <hr>
-                                    <p class="mb-0">Ttd SDM RSU Harapan Ibu Purbalingga.</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                @endif
+                </div>
             @endforeach
             <div class="wow fadeInLeft">
                 {!! $jobs->render() !!}
@@ -127,9 +105,9 @@
                     embedElement.setAttribute("src", "{{ url('/detail-lowongan') }}" + '/' +
                         uuid);
 
-                    var embedElement = document.getElementById("lowongan");
-                    embedElement.setAttribute("src", "{{ url('/assets/uploads/job-attachment') }}" + '/' +
-                        pdf);
+                    // var embedElement = document.getElementById("lowongan");
+                    // embedElement.setAttribute("src", "{{ url('/assets/uploads/job-attachment') }}" + '/' +
+                    //     pdf);
 
 
                     $('#modalLowongan').modal('show');

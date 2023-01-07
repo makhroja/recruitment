@@ -11,6 +11,7 @@ use App\Models\UserDetail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
+use Yajra\DataTables\DataTables;
 
 class PesertaController extends Controller
 {
@@ -96,5 +97,34 @@ class PesertaController extends Controller
         $schedules = Schedule::whereIn('id', $jobId)->paginate(4);
         $tahap = storeSchedule();
         return view('peserta.jadwal-seleksi', compact('schedules', 'tahap'));
+    }
+
+    public function hasilSeleksi()
+    {
+        return view('peserta.hasil-seleksi');
+    }
+
+    public function detailSeleksi($uuid)
+    {
+        $application = Application::whereUuid($uuid)->first();
+        $tahap = storeSchedule();
+        return view('peserta.detail-seleksi', compact('application', 'tahap'));
+    }
+
+    public function getApplicationJson(Request $request)
+    {
+        $application = Application::whereUser_id(\Auth::user()->id)->latest()->get();
+
+        return DataTables::of($application)
+            ->addIndexColumn()
+            ->addColumn('job', function ($row) {
+                $job = '<a href="#" data-uuid="' . $row->uuid . '" class="hasil-seleksi">' . $row->job->judul . '</a>';
+                return $job;
+            })
+            ->addColumn('posisi', function ($row) {
+                return $row->position->nama;
+            })
+            ->rawColumns(['job', 'posisi'])
+            ->make(true);
     }
 }
