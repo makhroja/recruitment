@@ -20,6 +20,8 @@
     <script src="{{ asset('assets//plugins/sweetalert2/sweetalert.min.js') }}"></script>
     <link href="{{ asset('assets/plugins/select2/select2.min.css') }}" rel="stylesheet" />
     <link href="{{ asset('assets/plugins/dropify/css/dropify.min.css') }}" rel="stylesheet" />
+    <link href="{{ asset('assets/plugins/bootstrap4-fullscreen-modal/bootstrap4-modal-fullscreen.min.css') }}"
+        rel="stylesheet" />
     <!-- end plugin css -->
 
     @stack('plugin-styles')
