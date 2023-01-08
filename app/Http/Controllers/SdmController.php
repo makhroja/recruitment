@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Application;
 use App\Models\Job;
+use App\Models\PhaseOne;
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
 use Illuminate\Support\Facades\Response;
@@ -35,6 +36,13 @@ class SdmController extends Controller
         // }
 
         $application->update(['administrasi' => $request->status]);
+
+        $phase_one = PhaseOne::updateOrCreate([
+            'application_id' => getAppId($uuid)->id,
+        ], [
+            'uuid' => \Str::uuid()->getHex(),
+            'application_id' => getAppId($uuid)->id
+        ]);
 
         if ($application->administrasi == 2) {
             return Response::json([
