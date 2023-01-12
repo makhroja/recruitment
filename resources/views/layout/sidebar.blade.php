@@ -149,6 +149,15 @@
                     </a>
                 </li>
             @endrole
+            @role('karu')
+                <li class="nav-item nav-category">Ka. Ruang/Koordinator</li>
+                <li class="nav-item {{ active_class(['input-nilai']) }}">
+                    <a href="{{ url('/input-nilai') }}" class="nav-link">
+                        <i class="link-icon" data-feather="file-text"></i>
+                        <span class="link-title">Input Nilai</span>
+                    </a>
+                </li>
+            @endrole
         </ul>
     </div>
 </nav>

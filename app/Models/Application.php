@@ -99,4 +99,18 @@ class Application extends Model
     {
         return $this->belongsTo('App\Models\Position', 'position_id');
     }
+
+    /**
+     * Get the user associated with the Application
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function phase1()
+    {
+        return $this->hasOne('App\Models\Phase1');
+    }
+    public function phase2()
+    {
+        return $this->hasOne('App\Models\Phase2');
+    }
 }

@@ -1,30 +1,26 @@
 [
     {
-        "model-name": "Position",
-        "resource-file": "positions.json"
+        "model-name": "Phase4",
+        "resource-file": "phase4s.json"
     },
     {
-        "model-name": "Unit",
-        "resource-file": "units.json"
+        "model-name": "Phase5",
+        "resource-file": "phase5s.json"
     },
     {
-        "model-name": "UserDetail",
-        "resource-file": "user_details.json"
+        "model-name": "Phase6",
+        "resource-file": "phase6s.json"
     },
     {
-        "model-name": "Job",
-        "resource-file": "jobs.json"
+        "model-name": "Phase7",
+        "resource-file": "phase7s.json"
     },
     {
-        "model-name": "JobDetail",
-        "resource-file": "job_details.json"
+        "model-name": "Phase8",
+        "resource-file": "phase8s.json"
     },
     {
-        "model-name": "Schedule",
-        "resource-file": "schedules.json"
-    },
-    {
-        "model-name": "Application",
-        "resource-file": "applications.json"
+        "model-name": "Phase9",
+        "resource-file": "phase9s.json"
     }
 ]

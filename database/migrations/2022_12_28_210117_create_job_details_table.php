@@ -17,8 +17,8 @@ class CreateJobDetailsTable extends Migration
             $table->id('id');
             $table->uuid('uuid');
             $table->unsignedBigInteger('job_id')->index();
-            $table->json('unit_id')->index();
-            $table->json('position_id')->index();
+            $table->unsignedBigInteger('unit_id')->index();
+            $table->unsignedBigInteger('position_id')->index();
             $table->string('pendidikan');
             $table->string('jurusan');
             $table->integer('jk');

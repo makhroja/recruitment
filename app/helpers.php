@@ -1,5 +1,15 @@
 <?php
 
+use App\Models\Phase1;
+use App\Models\Phase2;
+use App\Models\Phase3;
+use App\Models\Phase4;
+use App\Models\Phase5;
+use App\Models\Phase6;
+use App\Models\Phase7;
+use App\Models\Phase8;
+use App\Models\Phase9;
+
 function berkasLamar($uuid)
 {
 
@@ -48,6 +58,102 @@ function storeSchedule()
   return $nama_tahap;
 }
 
+function phaseName($p)
+{
+  $phase = [
+    'phase1' => 'Seleksi Administrasi',
+    'phase2' => 'Tes Tertulis',
+    'phase3' => 'Wawancara Unit',
+    'phase4' => 'Praktek',
+    'phase5' => 'Wawancara HRD',
+    'phase6' => 'Tes Psikotes',
+    'phase7' => 'Wawancara Performance',
+    'phase8' => 'Tes Kesehatan',
+    'phase9' => 'Tahap Akhir',
+  ];
+
+  foreach ($phase as $key => $value) {
+    if ($p == $key) {
+      return $value;
+    }
+  }
+}
+
+function phaseStatus($p, $uuid)
+{
+  $id =  getAppId($uuid)->id;
+  switch ($p) {
+    case 'phase1':
+      return Phase1::where('application_id', $id)->first();
+      break;
+    case 'phase2':
+      return Phase2::where('application_id', $id)->first();
+      break;
+    case 'phase3':
+      return Phase3::where('application_id', $id)->first();
+      break;
+    case 'phase4':
+      return Phase4::where('application_id', $id)->first();
+      break;
+    case 'phase5':
+      return Phase5::where('application_id', $id)->first();
+      break;
+    case 'phase6':
+      return Phase6::where('application_id', $id)->first();
+      break;
+    case 'phase7':
+      return Phase7::where('application_id', $id)->first();
+      break;
+    case 'phase8':
+      return Phase8::where('application_id', $id)->first();
+      break;
+    case 'phase9':
+      return Phase9::where('application_id', $id)->first();
+      break;
+
+    default:
+      return 'Something Went Wrong!';
+      break;
+  }
+}
+
+function phaseData($p, $uuid)
+{
+  $id = getAppId($uuid)->id;
+  switch ($p) {
+    case 'phase1':
+      return Phase1::where('application_id', $id)->first();
+      break;
+    case 'phase2':
+      return Phase2::where('application_id', $id)->first();
+      break;
+    case 'phase3':
+      return Phase3::where('application_id', $id)->first();
+      break;
+    case 'phase4':
+      return Phase4::where('application_id', $id)->first();
+      break;
+    case 'phase5':
+      return Phase5::where('application_id', $id)->first();
+      break;
+    case 'phase6':
+      return Phase6::where('application_id', $id)->first();
+      break;
+    case 'phase7':
+      return Phase7::where('application_id', $id)->first();
+      break;
+    case 'phase8':
+      return Phase8::where('application_id', $id)->first();
+      break;
+    case 'phase9':
+      return Phase9::where('application_id', $id)->first();
+      break;
+
+    default:
+      return 'Something Went Wrong!';
+      break;
+  }
+}
 
 /**
  * Cek user if already apply job
@@ -124,4 +230,9 @@ function getUnitId($uuid)
 function getPositionId($uuid)
 {
   return App\Models\Position::where('uuid', $uuid)->first();
+}
+
+function getAppId($uuid)
+{
+  return App\Models\Application::where('uuid', $uuid)->first();
 }
