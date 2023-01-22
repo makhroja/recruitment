@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Schedule extends Model
 {
-    
+
 
     /**
      * The database table used by the model.
@@ -16,10 +16,10 @@ class Schedule extends Model
     protected $table = 'schedules';
 
     /**
-    * The database primary key value.
-    *
-    * @var string
-    */
+     * The database primary key value.
+     *
+     * @var string
+     */
     protected $primaryKey = 'id';
 
     /**
@@ -28,25 +28,11 @@ class Schedule extends Model
      * @var array
      */
     protected $fillable = [
-                  'uuid',
-                  'job_id',
-                  'tahap_1',
-                  'tahap_2',
-                  'tahap_3',
-                  'tahap_4',
-                  'tahap_5',
-                  'tahap_6',
-                  'tahap_7',
-                  'tahap_8',
-                  'tahap_9',
-                  'tahap_10',
-                  'tahap_11',
-                  'tahap_12',
-                  'tahap_13',
-                  'tahap_14',
-                  'tahap_15',
-                  'status'
-              ];
+        'uuid',
+        'job_id',
+        'jadwal',
+        'status'
+    ];
 
     /**
      * The attributes that should be mutated to dates.
@@ -54,14 +40,14 @@ class Schedule extends Model
      * @var array
      */
     protected $dates = [];
-    
+
     /**
      * The attributes that should be cast to native types.
      *
      * @var array
      */
     protected $casts = [];
-    
+
     /**
      * Get the job for this model.
      *
@@ -69,9 +55,6 @@ class Schedule extends Model
      */
     public function job()
     {
-        return $this->belongsTo('App\Models\Job','job_id');
+        return $this->belongsTo('App\Models\Job');
     }
-
-
-
 }

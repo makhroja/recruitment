@@ -34,14 +34,14 @@ class Application extends Model
         'unit_id',
         'position_id',
         'administrasi',
-        'tertulis',
-        'wawancara_unit',
-        'praktek',
-        'wawancara_hrd',
-        'psikotes',
-        'wawancara_performance',
-        'kesehatan',
-        'tahap_akhir',
+        'phase2s',
+        'phase3s',
+        'phase4s',
+        'phase5s',
+        'phase6s',
+        'phase7s',
+        'phase8s',
+        'phase9s',
         'status',
         'pdf'
     ];
@@ -112,5 +112,33 @@ class Application extends Model
     public function phase2()
     {
         return $this->hasOne('App\Models\Phase2');
+    }
+    public function phase3()
+    {
+        return $this->hasOne('App\Models\Phase3');
+    }
+    public function phase4()
+    {
+        return $this->hasOne('App\Models\Phase4');
+    }
+    public function phase5()
+    {
+        return $this->hasOne('App\Models\Phase5');
+    }
+    public function phase6()
+    {
+        return $this->hasOne('App\Models\Phase6');
+    }
+    public function phase7()
+    {
+        return $this->hasOne('App\Models\Phase7');
+    }
+    public function phase8()
+    {
+        return $this->hasOne('App\Models\Phase8');
+    }
+    public function phase9()
+    {
+        return $this->hasOne('App\Models\Phase9');
     }
 }

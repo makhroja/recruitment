@@ -3,7 +3,6 @@
 @push('plugin-styles')
     <link href="{{ asset('assets/plugins/datatables/DataTables-1.10.16/css/dataTables.bootstrap4.min.css') }}"
         rel="stylesheet" />
-    <link href="{{ asset('assets/plugins/datatables/DataTables-1.10.16/css/styling-dataTables.css') }}" rel="stylesheet" />
     <link href="{{ asset('assets/plugins/datatables/datatables.min.css') }}" rel="stylesheet" />
     <link href="{{ asset('assets/plugins/datatables/Select-1.2.4/css/select.bootstrap4.min.css') }}" rel="stylesheet" />
 @endpush
@@ -22,21 +21,6 @@
                         <div class="btn-group" role="group">
                             <a href="{{ URL::previous() }}" class="btn btn-sm btn-outline-dark" title="Show All Unit">
                                 <span class="feather icon-arrow-left" aria-hidden="true"></span>
-                            </a>
-
-                            <a href="{{ route('units.create') }}" class="btn btn-sm btn-outline-primary"
-                                title="Create New Unit">
-                                <span class="feather icon-plus" aria-hidden="true"></span>
-                            </a>
-
-                            <a href="{{ route('units.edit', $unit->uuid) }}" class="btn btn-sm btn-outline-warning"
-                                title="Edit Unit">
-                                <span class="feather icon-edit" aria-hidden="true"></span>
-                            </a>
-
-                            <a data-name="{{ $unit->name }}" data-id="{{ $unit->uuid }}"
-                                class="btn btn-sm deleteShow btn-outline-danger" title="Delete Unit">
-                                <span class="feather icon-trash" aria-hidden="true"></span>
                             </a>
                         </div>
 
@@ -148,7 +132,7 @@
                     },
                     targets: [1]
                 }, ],
-                dom: 'Blfrtip',
+                dom: 'lBfrtip',
                 buttons: [
                     'excel', 'pdf', 'print'
                 ],
@@ -236,7 +220,7 @@
                             }
                         });
                     } else {
-                        // 
+                        //
                     }
                 });
             });
@@ -304,7 +288,7 @@
                             }
                         });
                     } else {
-                        // 
+                        //
                     }
                 });
             });

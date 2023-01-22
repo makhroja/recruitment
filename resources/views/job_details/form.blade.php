@@ -1,12 +1,11 @@
         <input type="hidden" value="{{ $method }}" name="method">
         <div class="form-group {{ $errors->has('job_id') ? 'has-error' : '' }}">
-            <label for="job_id" class="col-md-2 control-label">Job</label>
+            <label for="job_id" class="col-md-2 control-label">Lowongan</label>
             <div class="col-md-10">
                 <select class="form-control select2 @error('job_id') is-invalid @enderror" id="job_id" name="job_id">
                     <option value="" style="display: none;"
                         {{ old('job_id', optional($jobDetail)->job_id ?: '') == '' ? 'selected' : '' }} disabled
-                        selected>Pilih
-                        job</option>
+                        selected>Pilih Lowongan</option>
                     @foreach ($jobs as $key => $job)
                         <option value="{{ $key }}"
                             {{ old('job_id', optional($jobDetail)->job_id) == $key ? 'selected' : '' }}>
@@ -41,13 +40,13 @@
         </div>
 
         <div class="form-group {{ $errors->has('position_id') ? 'has-error' : '' }}">
-            <label for="position_id" class="col-md-2 control-label">Position</label>
+            <label for="position_id" class="col-md-2 control-label">Posisi</label>
             <div class="col-md-10">
                 <select class="form-control select2 @error('position_id') is-invalid @enderror" id="position_id"
                     name="position_id">
                     <option value="" style="display: none;"
                         {{ old('position_id', optional($jobDetail)->position_id ?: '') == '' ? 'selected' : '' }}
-                        disabled selected>Pilih position</option>
+                        disabled selected>Pilih posisi</option>
                     @foreach ($positions as $key => $position)
                         <option value="{{ $key }}"
                             {{ old('position_id', optional($jobDetail)->position_id) == $key ? 'selected' : '' }}>
@@ -154,7 +153,7 @@
         </div>
 
         <div class="form-group {{ $errors->has('catatan') ? 'has-error' : '' }}">
-            <label for="catatan" class="col-md-2 control-label">Catatan</label>
+            <label for="catatan" class="col-md-2 control-label">Syarat</label>
             <div class="col-md-10">
                 <small class="text-danger"> Gunakan tanda koma ',' jika persyaratan lebih dari satu.</small>
                 <textarea class="form-control  @error('catatan') is-invalid @enderror" name="catatan" type="text" id="catatan"

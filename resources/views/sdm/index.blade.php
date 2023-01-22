@@ -49,8 +49,8 @@
                                         <th>Pendidikan</th>
                                         <th>Instansi</th>
                                         <th>Posisi Di Lamar</th>
-                                        <th colspan="2">Administrasi</th>
-                                        <th>Surat Lamaran</th>
+                                        <th colspan="2" style="width: 0%">Administrasi</th>
+                                        <th>Lamaran</th>
                                     </tr>
                                     <tr>
                                         <th></th>
@@ -58,9 +58,9 @@
                                         <th></th>
                                         <th></th>
                                         <th></th>
-                                        <th></th>
-                                        <th></th>
-                                        <th></th>
+                                        <th style="width: 0%"></th>
+                                        <th style="width: 0%"></th>
+                                        <th style="width: 0%"></th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -80,7 +80,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h5 class="modal-title">Lampiran Surat Keputusan</h5>
+                    <h5 class="modal-title">Lampiran</h5>
                 </div>
                 <div class="modal-body">
 
@@ -134,7 +134,7 @@
                     orderable: false
                 }, {
                     width: "2%",
-                    targets: [4, 3, 0]
+                    targets: [0]
                 }],
                 dom: 'Bfrtip',
                 buttons: [

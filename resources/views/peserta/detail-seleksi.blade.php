@@ -25,30 +25,31 @@
                                 <td>Seleksi Administrasi</td>
                                 <td style="text-align: center">
                                     @if (!empty($application->administrasi))
-                                        @if ($application->administrasi == 1)
-                                            <span class="badge badge-success">Lolos </span>
+                                        @if ($application->administrasi != null)
+                                            <h5><span class="badge badge-success">Lolos </span></h5>
                                         @else
-                                            <span class="badge badge-secondary">Tidak Lolos </span>
+                                            <h5><span class="badge badge-secondary">Tidak Lolos </span></h5>
                                         @endif
                                     @else
-                                        <span class="badge badge-primary">Belum Tersedia</span>
+                                        <h5><span class="badge badge-primary">Belum Tersedia</span></h5>
                                     @endif
                                 </td>
                             </tr>
                             {{-- ================== --}}
                             {{-- Tahap 2 --}}
                             <tr>
+
                                 <td>2.</td>
                                 <td>Tes Tertulis</td>
                                 <td style="text-align: center">
                                     @if (!empty($application->tertulis))
-                                        @if ($application->tertulis == 1)
-                                            <span class="badge badge-success">Lolos </span>
+                                        @if ($application->phase2->status == 1)
+                                            <h5><span class="badge badge-success">Lolos </span></h5>
                                         @else
-                                            <span class="badge badge-secondary">Tidak Lolos </span>
+                                            <h5><span class="badge badge-secondary">Tidak Lolos </span></h5>
                                         @endif
                                     @else
-                                        <span class="badge badge-primary">Belum Tersedia</span>
+                                        <h5><span class="badge badge-primary">Belum Tersedia</span></h5>
                                     @endif
                                 </td>
                             </tr>
@@ -58,14 +59,14 @@
                                 <td>3.</td>
                                 <td>Wawancara Unit</td>
                                 <td style="text-align: center">
-                                    @if (!empty($application->wawancara_unit))
-                                        @if ($application->wawancara_unit == 1)
-                                            <span class="badge badge-success">Lolos </span>
+                                    @if (!empty($application->w_unit))
+                                        @if ($application->phase3->status == 1)
+                                            <h5><span class="badge badge-success">Lolos </span></h5>
                                         @else
-                                            <span class="badge badge-secondary">Tidak Lolos </span>
+                                            <h5><span class="badge badge-secondary">Tidak Lolos </span></h5>
                                         @endif
                                     @else
-                                        <span class="badge badge-primary">Belum Tersedia</span>
+                                        <h5><span class="badge badge-primary">Belum Tersedia</span></h5>
                                     @endif
                                 </td>
                             </tr>
@@ -76,13 +77,13 @@
                                 <td>Tes Praktek</td>
                                 <td style="text-align: center">
                                     @if (!empty($application->praktek))
-                                        @if ($application->praktek == 1)
-                                            <span class="badge badge-success">Lolos </span>
+                                        @if ($application->phase4->status == 1)
+                                            <h5><span class="badge badge-success">Lolos </span></h5>
                                         @else
-                                            <span class="badge badge-secondary">Tidak Lolos </span>
+                                            <h5><span class="badge badge-secondary">Tidak Lolos </span></h5>
                                         @endif
                                     @else
-                                        <span class="badge badge-primary">Belum Tersedia</span>
+                                        <h5><span class="badge badge-primary">Belum Tersedia</span></h5>
                                     @endif
                                 </td>
                             </tr>
@@ -92,14 +93,14 @@
                                 <td>5.</td>
                                 <td>Wawancara HRD</td>
                                 <td style="text-align: center">
-                                    @if (!empty($application->tertulis))
-                                        @if ($application->administrasi == 1)
-                                            <span class="badge badge-success">Lolos </span>
+                                    @if (!empty($application->w_hrd))
+                                        @if ($application->phase5->status == 1)
+                                            <h5><span class="badge badge-success">Lolos </span></h5>
                                         @else
-                                            <span class="badge badge-secondary">Tidak Lolos </span>
+                                            <h5><span class="badge badge-secondary">Tidak Lolos </span></h5>
                                         @endif
                                     @else
-                                        <span class="badge badge-primary">Belum Tersedia</span>
+                                        <h5><span class="badge badge-primary">Belum Tersedia</span></h5>
                                     @endif
                                 </td>
                             </tr>
@@ -110,13 +111,13 @@
                                 <td>Tes Psikotes</td>
                                 <td style="text-align: center">
                                     @if (!empty($application->psikotes))
-                                        @if ($application->psikotes == 1)
-                                            <span class="badge badge-success">Lolos </span>
+                                        @if ($application->phase6->status == 1)
+                                            <h5><span class="badge badge-success">Lolos </span></h5>
                                         @else
-                                            <span class="badge badge-secondary">Tidak Lolos </span>
+                                            <h5><span class="badge badge-secondary">Tidak Lolos </span></h5>
                                         @endif
                                     @else
-                                        <span class="badge badge-primary">Belum Tersedia</span>
+                                        <h5><span class="badge badge-primary">Belum Tersedia</span></h5>
                                     @endif
                                 </td>
                             </tr>
@@ -126,14 +127,14 @@
                                 <td>7.</td>
                                 <td>Wawancara Performance</td>
                                 <td style="text-align: center">
-                                    @if (!empty($application->wawancara_performance))
-                                        @if ($application->wawancara_performance == 1)
-                                            <span class="badge badge-success">Lolos </span>
+                                    @if (!empty($application->w_performance))
+                                        @if ($application->phase7->status == 1)
+                                            <h5><span class="badge badge-success">Lolos </span></h5>
                                         @else
-                                            <span class="badge badge-secondary">Tidak Lolos </span>
+                                            <h5><span class="badge badge-secondary">Tidak Lolos </span></h5>
                                         @endif
                                     @else
-                                        <span class="badge badge-primary">Belum Tersedia</span>
+                                        <h5><span class="badge badge-primary">Belum Tersedia</span></h5>
                                     @endif
                                 </td>
                             </tr>
@@ -144,13 +145,13 @@
                                 <td>Tes Kesehatan</td>
                                 <td style="text-align: center">
                                     @if (!empty($application->kesehatan))
-                                        @if ($application->kesehatan == 1)
-                                            <span class="badge badge-success">Lolos </span>
+                                        @if ($application->phase8->status == 1)
+                                            <h5><span class="badge badge-success">Lolos </span></h5>
                                         @else
-                                            <span class="badge badge-secondary">Tidak Lolos </span>
+                                            <h5><span class="badge badge-secondary">Tidak Lolos </span></h5>
                                         @endif
                                     @else
-                                        <span class="badge badge-primary">Belum Tersedia</span>
+                                        <h5><span class="badge badge-primary">Belum Tersedia</span></h5>
                                     @endif
                                 </td>
                             </tr>
@@ -161,13 +162,13 @@
                                 <td>Tahap Akhir</td>
                                 <td style="text-align: center">
                                     @if (!empty($application->tahap_akhir))
-                                        @if ($application->tahap_akhir == 1)
-                                            <span class="badge badge-success">Lolos </span>
+                                        @if ($application->phase9->status == 1)
+                                            <h5><span class="badge badge-success">Lolos </span></h5>
                                         @else
-                                            <span class="badge badge-secondary">Tidak Lolos </span>
+                                            <h5><span class="badge badge-secondary">Tidak Lolos </span></h5>
                                         @endif
                                     @else
-                                        <span class="badge badge-primary">Belum Tersedia</span>
+                                        <h5><span class="badge badge-primary">Belum Tersedia</span></h5>
                                     @endif
                                 </td>
                             </tr>

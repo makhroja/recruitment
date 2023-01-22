@@ -35,7 +35,7 @@ class PesertaController extends Controller
                 'tahap' => storeSchedule()
             ]);
         }
-        return View::make('guest.closed', compact('jobs'));
+        return view('peserta.closed', compact('jobs'));
     }
 
     public function kirimLamaran(Request $request)
@@ -107,6 +107,7 @@ class PesertaController extends Controller
     public function detailSeleksi($uuid)
     {
         $application = Application::whereUuid($uuid)->first();
+
         $tahap = storeSchedule();
         return view('peserta.detail-seleksi', compact('application', 'tahap'));
     }

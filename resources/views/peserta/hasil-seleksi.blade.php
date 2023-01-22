@@ -1,7 +1,10 @@
 @extends('layout.master')
 
 @push('plugin-styles')
-    <link href="{{ asset('assets/plugins/datatables-net/dataTables.bootstrap4.css') }}" rel="stylesheet" />
+    <link href="{{ asset('assets/plugins/datatables/DataTables-1.10.16/css/dataTables.bootstrap4.min.css') }}"
+        rel="stylesheet" />
+    <link href="{{ asset('assets/plugins/datatables/datatables.min.css') }}" rel="stylesheet" />
+    <link href="{{ asset('assets/plugins/datatables/Select-1.2.4/css/select.bootstrap4.min.css') }}" rel="stylesheet" />
 @endpush
 
 @section('content')
@@ -48,7 +51,9 @@
 
 @push('plugin-scripts')
     <script src="{{ asset('assets/plugins/datatables-net/jquery.dataTables.js') }}"></script>
-    <script src="{{ asset('assets/plugins/datatables-net-bs4/dataTables.bootstrap4.js') }}"></script>
+    <script src="{{ asset('assets/plugins/datatables/DataTables-1.10.16/js/dataTables.bootstrap4.min.js') }}"></script>
+    <script src="{{ asset('assets/plugins/datatables/datatables.min.js') }}"></script>
+    <script src="{{ asset('assets/plugins/datatables/Select-1.2.4/js/dataTables.select.min.js') }}"></script>
 @endpush
 
 @push('custom-scripts')
@@ -91,7 +96,7 @@
                     },
                     targets: [1]
                 }, ],
-                dom: 'lBfrtip',
+                dom: 'lfprti',
                 buttons: [
                     'excel', 'pdf', 'print'
                 ],

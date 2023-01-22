@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Announcement;
 use App\Models\Job;
 use App\Models\JobDetail;
 use Illuminate\Http\Request;
@@ -29,5 +30,11 @@ class GuestController extends Controller
             ]);
         }
         return View::make('guest.closed', compact('jobs'));
+    }
+
+    public function pengumuman()
+    {
+        $announcements = Announcement::whereStatus(1)->paginate(4);
+        return view('guest.pengumuman', compact('announcements'));
     }
 }

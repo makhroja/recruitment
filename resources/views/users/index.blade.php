@@ -3,7 +3,6 @@
 @push('plugin-styles')
     <link href="{{ asset('assets/plugins/datatables/DataTables-1.10.16/css/dataTables.bootstrap4.min.css') }}"
         rel="stylesheet" />
-    <link href="{{ asset('assets/plugins/datatables/DataTables-1.10.16/css/styling-dataTables.css') }}" rel="stylesheet" />
     <link href="{{ asset('assets/plugins/datatables/datatables.min.css') }}" rel="stylesheet" />
     <link href="{{ asset('assets/plugins/datatables/Select-1.2.4/css/select.bootstrap4.min.css') }}" rel="stylesheet" />
 @endpush
@@ -12,7 +11,7 @@
 
 @section('content')
     <div>
-        <h4 class="mb-3 mb-md-0">Users List</h4>
+        <h4 class="mb-3 mb-md-0">List User</h4>
     </div>
 
     <div class="row">
@@ -40,6 +39,16 @@
                             </tbody>
                         </table>
                     </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="userDetailModal" class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog"
+        aria-labelledby="myLargeModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <iframe id="userDetail" src="" frameborder="0" width="100%" height="600px"></iframe>
                 </div>
             </div>
         </div>
@@ -88,7 +97,7 @@
                     },
                     targets: [1]
                 }, ],
-                dom: 'Blfrtip',
+                dom: 'lBfrtip',
 
                 buttons: [
                     'excel', 'pdf', 'print'
@@ -130,8 +139,12 @@
 
             table.on('click', '.show', function() {
                 var uuid = $(this).data("id");
-                var url = "{{ url('/users') }}" + '/' + '' + uuid;
-                window.open(url, "_self")
+
+                var embedElement = document.getElementById("userDetail");
+                embedElement.setAttribute("src", "{{ url('/users') }}" + '/' +
+                    uuid);
+
+                $('#userDetailModal').modal('show');
             });
 
             table.on('click', '.delete', function() {
@@ -179,7 +192,7 @@
                             }
                         });
                     } else {
-                        // 
+                        //
                     }
                 });
             });

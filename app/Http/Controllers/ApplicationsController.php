@@ -21,40 +21,39 @@ class ApplicationsController extends Controller
 
     public function index()
     {
-        $applications = Application::with('job','user','unit','position')->paginate(25);
+        $applications = Application::with('job', 'user', 'unit', 'position')->paginate(25);
 
         return view('applications.index', compact('applications'));
     }
 
     public function create()
     {
-        $jobs = Job::pluck('uuid','id')->all();
-$users = User::pluck('name','id')->all();
-$units = Unit::pluck('uuid','id')->all();
-$positions = Position::pluck('uuid','id')->all();
-        
-        return view('applications.create', compact('jobs','users','units','positions'));
+        $jobs = Job::pluck('uuid', 'id')->all();
+        $users = User::pluck('name', 'id')->all();
+        $units = Unit::pluck('uuid', 'id')->all();
+        $positions = Position::pluck('uuid', 'id')->all();
+
+        return view('applications.create', compact('jobs', 'users', 'units', 'positions'));
     }
 
     public function store(Request $request)
     {
         try {
-         $request = $request->merge([
-            'uuid' => Str::uuid()->getHex(),
-        ]);
-        $validator = $this->applicationValidator($request->all());
+            $request = $request->merge([
+                'uuid' => Str::uuid()->getHex(),
+            ]);
+            $validator = $this->applicationValidator($request->all());
 
-        if ($validator->passes()) {
+            if ($validator->passes()) {
 
-             Application::create($request->all());
+                Application::create($request->all());
 
-            return redirect()->route('applications.index')
-                ->with(['success' => 'Application berhasil dibuat.']);
-        }
-        return back()
-            ->withErrors($validator)
-            ->withInput();
-
+                return redirect()->route('applications.index')
+                    ->with(['success' => 'Application berhasil dibuat.']);
+            }
+            return back()
+                ->withErrors($validator)
+                ->withInput();
         } catch (Exception $exception) {
 
             return back()->withInput()
@@ -65,7 +64,7 @@ $positions = Position::pluck('uuid','id')->all();
 
     public function show($uuid)
     {
-        $application = Application::with('job','user','unit','position')->where('uuid', $uuid)->first();
+        $application = Application::with('job', 'user', 'unit', 'position')->where('uuid', $uuid)->first();
 
         return view('applications.show', compact('application'));
     }
@@ -74,12 +73,12 @@ $positions = Position::pluck('uuid','id')->all();
     public function edit($uuid)
     {
         $application = Application::where('uuid', $uuid)->first();
-        $jobs = Job::pluck('uuid','id')->all();
-$users = User::pluck('name','id')->all();
-$units = Unit::pluck('uuid','id')->all();
-$positions = Position::pluck('uuid','id')->all();
+        $jobs = Job::pluck('uuid', 'id')->all();
+        $users = User::pluck('name', 'id')->all();
+        $units = Unit::pluck('uuid', 'id')->all();
+        $positions = Position::pluck('uuid', 'id')->all();
 
-        return view('applications.edit', compact('application','jobs','users','units','positions'));
+        return view('applications.edit', compact('application', 'jobs', 'users', 'units', 'positions'));
     }
 
 
@@ -99,12 +98,11 @@ $positions = Position::pluck('uuid','id')->all();
             return back()
                 ->withErrors($validator)
                 ->withInput();
-
         } catch (Exception $exception) {
 
             return back()->withInput()
                 ->withErrors(['unexpected_error' => 'Unexpected error occurred while trying to process your request.']);
-        }        
+        }
     }
 
 
@@ -117,7 +115,6 @@ $positions = Position::pluck('uuid','id')->all();
             return Response::json([
                 'Success' => 'Application was successfully deleted.'
             ]);
-
         } catch (Exception $exception) {
 
             return back()->withInput()
@@ -131,8 +128,32 @@ $positions = Position::pluck('uuid','id')->all();
 
         return DataTables::of($application)
             ->addIndexColumn()
-
-            ->addColumn('action', function ($row) { 
+            ->addColumn('nama_lengkap', function ($row) {
+                return $row->user->userDetail->nama_lengkap;
+            })
+            ->addColumn('posisi', function ($row) {
+                return $row->position->nama;
+            })
+            ->addColumn('pendidikan', function ($row) {
+                return $row->user->userDetail->pendidikan . ' ' . $row->user->userDetail->jurusan;
+            })
+            ->addColumn('instansi', function ($row) {
+                return $row->user->userDetail->instansi;
+            })
+            ->addColumn('tahun', function ($row) {
+                return $row->user->userDetail->tahun_lulus;
+            })
+            ->addColumn('jk', function ($row) {
+                if ($row->user->userDetail->jk == 1) {
+                    return 'Laki-laki';
+                } else {
+                    return 'Perempuan';
+                }
+            })
+            ->addColumn('umur', function ($row) {
+                return umur($row->user->userDetail->tgl_lahir);
+            })
+            ->addColumn('action', function ($row) {
                 $btn = '<button href="javascript:void(0)" data-id="' . $row->uuid . '" data-original-title="Show" class="btn btn-outline-primary btn-icon show"><i class="feather icon-eye"></i></button>';
 
                 $btn = $btn . ' <button href="javascript:void(0)" data-id="' . $row->uuid . '" data-original-title="Edit" class="btn btn-outline-success btn-icon edit"><i class="feather icon-edit"></i></button>';
@@ -141,16 +162,16 @@ $positions = Position::pluck('uuid','id')->all();
 
                 return $btn;
             })
-            ->rawColumns(['action'])
+            ->rawColumns(['action', 'nama_lengkap', 'pendidikan', 'instansi', 'tahun', 'jk', 'umur', 'posisi'])
             ->make(true);
     }
-    
 
-    
+
+
     /**
      * Get the request's data from the request.
      *
-     * @param Illuminate\Http\Request\Request $request 
+     * @param Illuminate\Http\Request\Request $request
      * @return array
      */
     protected function applicationValidator($request)
@@ -170,16 +191,9 @@ $positions = Position::pluck('uuid','id')->all();
             'wawancara_performance' => 'string|min:1|nullable',
             'kesehatan' => 'string|min:1|nullable',
             'tahap_akhir' => 'string|min:1|nullable',
-            'status' => 'string|min:1|nullable', 
+            'status' => 'string|min:1|nullable',
         ]);
 
         return $validator;
-
-
-
-
     }
-
-
-
 }

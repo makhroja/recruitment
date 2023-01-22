@@ -105,7 +105,10 @@
                     <h4 class="text-center">
                         Tahapan Seleksi Calon Karyawan RSU HI Purbalingga
                     </h4>
-                    <table class="table table-bordered table-hover">
+                    <div align="center" class="table-responsive table-jadwal">
+                        {!! $jobs->schedule->jadwal !!}
+                    </div>
+                    {{-- <table class="table table-bordered table-hover">
                         <tr class="bg-secondary text-white">
                             <th>
                                 Tahapan Seleksi
@@ -218,7 +221,7 @@
                                 {{ isset($schedule->tahap_1) ? Carbon\Carbon::parse($schedule->tahap_13)->translatedFormat('d F Y') : 'Belum ditentukan' }}
                             </td>
                         </tr>
-                    </table>
+                    </table> --}}
                     <br>
                     <p class="text-danger">Silahkan baca/download Surat Keputusan Direktur RSU Harapan Ibu Purbalingga
                         dibawah
@@ -295,7 +298,7 @@
             $('body').on('click', '.closeModal', function() {
                 $('#modalLowongan').modal('hide');
             })
-
+            $('table').addClass('table table-bordered table-hover ');
         });
         @if (userCheckApply($jobs->uuid) == false)
             $(function() {
@@ -338,7 +341,7 @@
                             if (apply) {
                                 document.getElementById("applyJob").submit();
                             } else {
-                                // 
+                                //
                             }
                         });
                     }

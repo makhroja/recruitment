@@ -5,7 +5,7 @@
 
 @section('content')
     <div>
-        <h4 class="mb-3 mb-md-0">UserDetail Edit</h4>
+        <h4 class="mb-3 mb-md-0">Ubah Detail Pengguna</h4>
     </div>
     <div class="row">
         <div class="col-md-12 grid-margin stretch-card">
@@ -13,7 +13,7 @@
                 <div class="card-header">
                     <a href="{{ url('/dashboard') }}" type="button" title="Back" class="btn btn-sm btn-dark btn-icon-text">
                         <i class="btn-icon-prepend" data-feather="arrow-left"></i>
-                        Back
+                        Kembali
                     </a>
                 </div>
                 <div class="card-body">

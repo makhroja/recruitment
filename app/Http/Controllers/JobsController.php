@@ -130,15 +130,11 @@ class JobsController extends Controller
             }
             /**End Image Function */
 
-            $job->update($request->all());
-
             if ($request['file'] == null) {
                 $fileName = $job->lampiran;
             }
 
-            $request = $request->merge([
-                'pdf' => $fileName
-            ]);
+            $job->update($request->all());
 
             return redirect()->route('jobs.index')
                 ->with(['success' => 'Job berhasil simpan.']);
@@ -158,6 +154,17 @@ class JobsController extends Controller
     {
         try {
             $job = Job::where('uuid', $uuid)->first();
+
+            $file = public_path('/assets/uploads/job-attachment/') . $job->pdf;
+
+            if (\File::exists($file)) {
+
+                \File::delete($file);
+            } else {
+                return back()
+                    ->withErrors(['Error' => 'File tidak ditemukan']);
+            }
+
             $job->delete();
 
             return Response::json([

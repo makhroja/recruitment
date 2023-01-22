@@ -3,7 +3,6 @@
 @push('plugin-styles')
     <link href="{{ asset('assets/plugins/datatables/DataTables-1.10.16/css/dataTables.bootstrap4.min.css') }}"
         rel="stylesheet" />
-    <link href="{{ asset('assets/plugins/datatables/DataTables-1.10.16/css/styling-dataTables.css') }}" rel="stylesheet" />
     <link href="{{ asset('assets/plugins/datatables/datatables.min.css') }}" rel="stylesheet" />
     <link href="{{ asset('assets/plugins/datatables/Select-1.2.4/css/select.bootstrap4.min.css') }}" rel="stylesheet" />
 @endpush
@@ -29,6 +28,13 @@
                             <thead>
                                 <tr>
                                     <th>No</th>
+                                    <th>Nama Lengkap</th>
+                                    <th>Pendidikan</th>
+                                    <th>Instansi</th>
+                                    <th>Tahun Lulus</th>
+                                    <th>Jenis Kelamin</th>
+                                    <th>Umur</th>
+                                    <th>Posisi Dilamar</th>
                                     <th></th>
                                 </tr>
                             </thead>
@@ -91,6 +97,34 @@
                 columns: [{
                         data: 'DT_RowIndex',
                         name: 'DT_RowIndex'
+                    },
+                    {
+                        data: 'nama_lengkap',
+                        name: 'nama_lengkap'
+                    },
+                    {
+                        data: 'pendidikan',
+                        name: 'pendidikan'
+                    },
+                    {
+                        data: 'instansi',
+                        name: 'instansi'
+                    },
+                    {
+                        data: 'tahun',
+                        name: 'tahun'
+                    },
+                    {
+                        data: 'jk',
+                        name: 'jk'
+                    },
+                    {
+                        data: 'umur',
+                        name: 'umur'
+                    },
+                    {
+                        data: 'posisi',
+                        name: 'posisi'
                     },
                     {
                         data: 'action',
@@ -158,7 +192,7 @@
                             }
                         });
                     } else {
-                        // 
+                        //
                     }
                 });
             });

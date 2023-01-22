@@ -11,7 +11,7 @@
 
     @if (count($check_app->get()) == 0)
         <div class="text-center alert alert-danger" role="alert">
-            Belum ada peserta mendaftar di Lowongan ini
+            Belum ada peserta pada tahapan ini.
         </div>
         <div class="card">
             <div class="card-body">
@@ -47,7 +47,7 @@
                                 <tr>
                                     <th style="width: 0%">No</th>
                                     <th>Nama Lengkap</th>
-                                    <th style="width: 0%">Nilai</th>
+                                    <th style="width: 0%;text-align:center">Nilai</th>
                                     <th style="width: 0%">Input</th>
                                 </tr>
                             </thead>
@@ -58,20 +58,22 @@
                                             <td>{{ $i++ }}</td>
                                             <td>{{ $ap->user->userDetail->nama_lengkap }}
                                             </td>
-                                            <td>
+                                            <td style="text-align: center">
                                                 @if (phaseStatus($phase, $ap->uuid)->nilai_akhir != null)
-                                                    <h5>
-                                                        <span
-                                                            class="badge bg-success text-white">{{ phaseStatus($phase, $ap->uuid)->nilai_akhir }}
-                                                        </span>
+                                                    <h5 class="badge bg-success text-white">
+                                                        {{ phaseStatus($phase, $ap->uuid)->nilai_akhir }}
                                                     </h5>
-                                                    <i class="feather icon-check text-white"></i>
                                                 @endif
                                             </td>
                                             <td>
-                                                <a data-phase="{{ $phase }}" data-id="{{ $ap->uuid }}"
-                                                    class="btn btn-sm btn-warning mt-1 mb-2 text-white inputNilai"
-                                                    value="">Input</a>
+                                                @if (phaseStatus($phase, $ap->uuid)->status == 1)
+                                                    <button class="btn btn-sm btn-warning mt-1 mb-2 text-white"
+                                                        value="" disabled>Input</button>
+                                                @else
+                                                    <a data-phase="{{ $phase }}" data-id="{{ $ap->uuid }}"
+                                                        class="btn btn-sm btn-warning mt-1 mb-2 text-white inputNilai"
+                                                        value="">Input</a>
+                                                @endif
                                             </td>
                                         </tr>
                                     @else
@@ -79,8 +81,8 @@
                                 @endforeach
                                 @if (is_null(phaseStatus($phase, $apps->first()->uuid)))
                                     <tr class="table-info">
-                                        <td colspan="3" class="text-center">
-                                            Input Nilai belum diperbolehkan, nilai tes sebelumnya belum diinputkan.
+                                        <td colspan="4" class="text-center">
+                                            Input nilai belum diperbolehkan, hasil seleksi belum keluar.
                                         </td>
                                     </tr>
                                 @endif
@@ -158,7 +160,18 @@
                         $('#modalInputNilai').modal('show');
                     },
                     error: function(data) {
-                        console.log('Error:', data);
+                        console.log('Error:', data.responseJSON.error);
+                        swal({
+                            title: 'Error!',
+                            text: data.responseJSON.error,
+                            icon: 'error',
+                            buttons: true,
+                            dangerMode: true,
+                            reverseButtons: false,
+                            buttons: {
+                                cancel: 'Ok'
+                            },
+                        })
                     }
                 });
             })

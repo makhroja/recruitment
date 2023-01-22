@@ -3,6 +3,8 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Response;
+use Yajra\DataTables\DataTables;
 
 class Phase2 extends Model
 {
@@ -48,11 +50,123 @@ class Phase2 extends Model
      */
     protected $casts = [];
 
-    /**
-     * Get the application for this model.
-     *
-     * @return App\Models\Application
-     */
+    public static function getPhase2Json($job_uuid = '')
+    {
+        $job = Job::where('uuid', $job_uuid)->first();
+        $application = Application::where('job_id', $job->id);
+
+        return DataTables::of($application)
+            ->addIndexColumn()
+            ->addColumn('user', function ($row) {
+                return $row->user->userDetail->nama_lengkap;
+            })
+            ->addColumn('nilai', function ($row) {
+                if (!empty($row->phase2->nilai_akhir)) {
+                    $nilai = $row->phase2->nilai_akhir;
+                } else {
+                    $nilai = 'Belum di Nilai';
+                }
+                $html = '<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#bd-' . $row->phase2->id . '">' . $nilai . '</button>
+                <div id="bd-' . $row->phase2->id . '" class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+                  <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                        Hasil Nilai Tes Tertulis
+                        </div>
+                        <div class="modal-body">
+                        ' . view('sdm.nilai.n_phase2', compact('row'))->render() . '
+                        </div>
+                        <div class="modal-footer">
+                        <input type="button" class="btn btn-primary btn-sm" data-dismiss="modal"
+                        onclick="reDraw()" value="Tutup">
+                        </div>
+                    </div>
+                  </div>
+                </div>';
+                return $html;
+                // return $row->phase2->nilai_akhir;
+            })
+            ->addColumn('lampiran', function ($row) {
+                $btn = '<button data-pdf="' . $row->pdf . '" class="btn btn-sm btn-outline-warning srcLampiran">Lihat</button>';
+                return $btn;
+            })
+            ->addColumn('lolos', function ($row) {
+                if ($row->phase2->status == 1) {
+                    $ya = 'checked';
+                    $tidak = '';
+                } elseif ($row->phase2->status == 2) {
+                    $ya = '';
+                    $tidak = 'checked';
+                } else {
+                    $ya = '';
+                    $tidak = '';
+                }
+
+                if (empty($row->phase2->nilai_akhir)) {
+                    return '-';
+                }
+
+                $btn = '
+                <div class="form-check form-check-inline">
+                <label class="form-check-label">Ya
+                <input id="checkbox-' . $row->id . '" href="javascript:void(0)" name="status' . $row->id . '" type="checkbox" ' . $ya . ' data-name="' . $row->user->name . '" data-id="' . $row->uuid . '"  data-status = "1" class="form-check-input status"><i class="input-frame"></i>
+                </label>
+                </div>
+
+                ';
+                return $btn;
+            })
+            ->addColumn('tidak_lolos', function ($row) {
+                if ($row->phase2->status == 1) {
+                    $ya = '';
+                    $tidak = 'checked';
+                } elseif ($row->phase2->status == 2) {
+                    $ya = 'checked';
+                    $tidak = '';
+                } else {
+                    $ya = '';
+                    $tidak = '';
+                }
+                if (empty($row->phase2->nilai_akhir)) {
+                    return '-';
+                }
+
+                $btn = '
+                <div class="form-check form-check-inline">
+                <label class="form-check-label">Tidak
+                <input id="checkbox-' . $row->id . '" href="javascript:void(0)" name="status' . $row->id . '" type="checkbox" ' . $ya . ' data-name="' . $row->user->name . '" data-id="' . $row->uuid . '"  data-status = "2" class="form-check-input status"><i class="input-frame"></i>
+                </label>
+                </div>
+                ';
+                return $btn;
+            })
+            ->rawColumns(['lolos', 'tidak_lolos', 'lampiran', 'user', 'nilai'])
+            ->make(true);
+    }
+
+    public static function statusPhase2($request, $uuid)
+    {
+        $phase = Phase2::where('application_id', getAppId($uuid)->id)->first();
+
+        $app = Application::findOrFail($phase->application_id);
+
+        $app->update([
+            'phase2s' => $phase->nilai_akhir
+        ]);
+
+        $phase->update(['status' => $request->status]);
+
+        if ($phase->administrasi == 2) {
+            return Response::json([
+                'success' => 'Nama : ' . $phase->application->user->userDetail->nama_lengkap . 'Tidak lolos tes tertulis'
+            ]);
+        }
+
+        return Response::json([
+            'success' => 'Nama : ' . $phase->application->user->userDetail->nama_lengkap . ' lolos tes tertulis'
+        ]);
+    }
+
     public function application()
     {
         return $this->belongsTo('App\Models\Application', 'application_id');

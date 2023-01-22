@@ -10,7 +10,7 @@
 
 @section('content')
     <div>
-        <h4 class="mb-3 mb-md-0">Job Detail</h4>
+        <h4 class="mb-3 mb-md-0">Detail Lowongan</h4>
     </div>
 
     <div class="row">
@@ -70,7 +70,7 @@
                                     <tr>
                                         <th>No</th>
                                         <th>Unit</th>
-                                        <th>Position</th>
+                                        <th>Posisi</th>
                                         <th>Pendidikan</th>
                                         <th>Jurusan</th>
                                         <th>JK</th>
@@ -307,7 +307,7 @@
                             }
                         });
                     } else {
-                        // 
+                        //
                     }
                 });
             });
@@ -375,7 +375,7 @@
                             }
                         });
                     } else {
-                        // 
+                        //
                     }
                 });
             });

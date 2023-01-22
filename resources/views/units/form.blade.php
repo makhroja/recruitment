@@ -1,3 +1,11 @@
+<div class="form-group {{ $errors->has('nama') ? 'has-error' : '' }}">
+    <label for="nama" class="col-md-2 control-label">Nama</label>
+    <div class="col-md-10">
+        <input class="form-control  @error('nama') is-invalid @enderror" name="nama" type="text" id="nama"
+            value="{{ old('nama', optional($unit)->nama) }}" minlength="1" placeholder="Enter nama here...">
+        {!! $errors->first('nama', '<small class="invalid-feedback" role="alert">:message</small>') !!}
+    </div>
+</div>
 <div class="form-group {{ $errors->has('user_id') ? 'has-error' : '' }}">
     <label for="user_id" class="col-md-2 control-label">User</label>
     <div class="col-md-10">
@@ -14,15 +22,6 @@
         </select>
 
         {!! $errors->first('user_id', '<small class="invalid-feedback" role="alert">:message</small>') !!}
-    </div>
-</div>
-
-<div class="form-group {{ $errors->has('nama') ? 'has-error' : '' }}">
-    <label for="nama" class="col-md-2 control-label">Nama</label>
-    <div class="col-md-10">
-        <input class="form-control  @error('nama') is-invalid @enderror" name="nama" type="text" id="nama"
-            value="{{ old('nama', optional($unit)->nama) }}" minlength="1" placeholder="Enter nama here...">
-        {!! $errors->first('nama', '<small class="invalid-feedback" role="alert">:message</small>') !!}
     </div>
 </div>
 

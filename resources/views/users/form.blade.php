@@ -1,5 +1,5 @@
 <div class="form-group {{ $errors->has('name') ? 'has-error' : '' }}">
-    <label for="name" class="col-md-2 control-label">Name</label>
+    <label for="name" class="col-md-2 control-label">Nama</label>
     <div class="col-md-10">
         <input class="form-control  @error('name') is-invalid @enderror" required name="name" type="text"
             id="name" value="{{ old('name', optional($user)->name) }}" minlength="1" maxlength="255"

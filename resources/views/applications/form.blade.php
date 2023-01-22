@@ -4,7 +4,7 @@
         <select class="form-control select2 @error('job_id') is-invalid @enderror" id="job_id" name="job_id">
             <option value="" style="display: none;"
                 {{ old('job_id', optional($application)->job_id ?: '') == '' ? 'selected' : '' }} disabled selected>
-                Pilih job</option>
+                Pilih Lowongan</option>
             @foreach ($jobs as $key => $job)
                 <option value="{{ $key }}"
                     {{ old('job_id', optional($application)->job_id) == $key ? 'selected' : '' }}>
@@ -62,7 +62,7 @@
             name="position_id">
             <option value="" style="display: none;"
                 {{ old('position_id', optional($application)->position_id ?: '') == '' ? 'selected' : '' }} disabled
-                selected>Pilih position</option>
+                selected>Pilih posisi</option>
             @foreach ($positions as $key => $position)
                 <option value="{{ $key }}"
                     {{ old('position_id', optional($application)->position_id) == $key ? 'selected' : '' }}>
@@ -98,82 +98,78 @@
     </div>
 </div>
 
-<div class="form-group {{ $errors->has('tertulis') ? 'has-error' : '' }}">
-    <label for="tertulis" class="col-md-12 control-label">Tertulis</label>
+<div class="form-group {{ $errors->has('phase2s') ? 'has-error' : '' }}">
+    <label for="phase2s" class="col-md-12 control-label">Tertulis</label>
     <div class="col-md-10">
-        <input class="form-control  @error('tertulis') is-invalid @enderror" name="tertulis" type="text"
-            id="tertulis" value="{{ old('tertulis', optional($application)->tertulis) }}"
-            placeholder="Isikan tertulis disini...">
-        {!! $errors->first('tertulis', '<small class="invalid-feedback" role="alert">:message</small>') !!}
+        <input class="form-control  @error('phase2s') is-invalid @enderror" name="phase2s" type="text" id="phase2s"
+            value="{{ old('phase2s', optional($application)->tertulis) }}" placeholder="Isikan tertulis disini...">
+        {!! $errors->first('phase2s', '<small class="invalid-feedback" role="alert">:message</small>') !!}
     </div>
 </div>
 
-<div class="form-group {{ $errors->has('wawancara_unit') ? 'has-error' : '' }}">
-    <label for="wawancara_unit" class="col-md-12 control-label">Wawancara Unit</label>
+<div class="form-group {{ $errors->has('phase3s') ? 'has-error' : '' }}">
+    <label for="phase3s" class="col-md-12 control-label">Wawancara Unit</label>
     <div class="col-md-10">
-        <input class="form-control  @error('wawancara_unit') is-invalid @enderror" name="wawancara_unit" type="text"
-            id="wawancara_unit" value="{{ old('wawancara_unit', optional($application)->wawancara_unit) }}"
+        <input class="form-control  @error('phase3s') is-invalid @enderror" name="phase3s" type="text" id="phase3s"
+            value="{{ old('phase3s', optional($application)->phase3s) }}"
             placeholder="Isikan wawancara unit disini...">
-        {!! $errors->first('wawancara_unit', '<small class="invalid-feedback" role="alert">:message</small>') !!}
+        {!! $errors->first('phase3s', '<small class="invalid-feedback" role="alert">:message</small>') !!}
     </div>
 </div>
 
-<div class="form-group {{ $errors->has('praktek') ? 'has-error' : '' }}">
-    <label for="praktek" class="col-md-12 control-label">Praktek</label>
+<div class="form-group {{ $errors->has('phase4s') ? 'has-error' : '' }}">
+    <label for="phase4s" class="col-md-12 control-label">Praktek</label>
     <div class="col-md-10">
-        <input class="form-control  @error('praktek') is-invalid @enderror" name="praktek" type="text" id="praktek"
-            value="{{ old('praktek', optional($application)->praktek) }}" placeholder="Isikan praktek disini...">
-        {!! $errors->first('praktek', '<small class="invalid-feedback" role="alert">:message</small>') !!}
+        <input class="form-control  @error('phase4s') is-invalid @enderror" name="phase4s" type="text" id="phase4s"
+            value="{{ old('phase4s', optional($application)->praktek) }}" placeholder="Isikan praktek disini...">
+        {!! $errors->first('phase4s', '<small class="invalid-feedback" role="alert">:message</small>') !!}
     </div>
 </div>
 
-<div class="form-group {{ $errors->has('wawancara_hrd') ? 'has-error' : '' }}">
-    <label for="wawancara_hrd" class="col-md-12 control-label">Wawancara Hrd</label>
+<div class="form-group {{ $errors->has('phase5s') ? 'has-error' : '' }}">
+    <label for="phase5s" class="col-md-12 control-label">Wawancara Hrd</label>
     <div class="col-md-10">
-        <input class="form-control  @error('wawancara_hrd') is-invalid @enderror" name="wawancara_hrd" type="text"
-            id="wawancara_hrd" value="{{ old('wawancara_hrd', optional($application)->wawancara_hrd) }}"
-            placeholder="Isikan wawancara hrd disini...">
-        {!! $errors->first('wawancara_hrd', '<small class="invalid-feedback" role="alert">:message</small>') !!}
+        <input class="form-control  @error('phase5s') is-invalid @enderror" name="phase5s" type="text" id="phase5s"
+            value="{{ old('phase5s', optional($application)->phase5s) }}" placeholder="Isikan wawancara hrd disini...">
+        {!! $errors->first('phase5s', '<small class="invalid-feedback" role="alert">:message</small>') !!}
     </div>
 </div>
 
-<div class="form-group {{ $errors->has('psikotes') ? 'has-error' : '' }}">
-    <label for="psikotes" class="col-md-12 control-label">Psikotes</label>
+<div class="form-group {{ $errors->has('phase6s') ? 'has-error' : '' }}">
+    <label for="phase6s" class="col-md-12 control-label">Psikotes</label>
     <div class="col-md-10">
-        <input class="form-control  @error('psikotes') is-invalid @enderror" name="psikotes" type="text"
-            id="psikotes" value="{{ old('psikotes', optional($application)->psikotes) }}"
-            placeholder="Isikan psikotes disini...">
-        {!! $errors->first('psikotes', '<small class="invalid-feedback" role="alert">:message</small>') !!}
+        <input class="form-control  @error('phase6s') is-invalid @enderror" name="phase6s" type="text" id="phase6s"
+            value="{{ old('phase6s', optional($application)->phase6s) }}" placeholder="Isikan psikotes disini...">
+        {!! $errors->first('phase6s', '<small class="invalid-feedback" role="alert">:message</small>') !!}
     </div>
 </div>
 
-<div class="form-group {{ $errors->has('wawancara_performance') ? 'has-error' : '' }}">
-    <label for="wawancara_performance" class="col-md-12 control-label">Wawancara Performance</label>
+<div class="form-group {{ $errors->has('phase7s') ? 'has-error' : '' }}">
+    <label for="phase7s" class="col-md-12 control-label">Wawancara Performance</label>
     <div class="col-md-10">
-        <input class="form-control  @error('wawancara_performance') is-invalid @enderror"
-            name="wawancara_performance" type="text" id="wawancara_performance"
-            value="{{ old('wawancara_performance', optional($application)->wawancara_performance) }}"
+        <input class="form-control  @error('phase7s') is-invalid @enderror" name="phase7s" type="text"
+            id="phase7s" value="{{ old('phase7s', optional($application)->phase7s) }}"
             placeholder="Isikan wawancara performance disini...">
-        {!! $errors->first('wawancara_performance', '<small class="invalid-feedback" role="alert">:message</small>') !!}
+        {!! $errors->first('phase7s', '<small class="invalid-feedback" role="alert">:message</small>') !!}
     </div>
 </div>
 
-<div class="form-group {{ $errors->has('kesehatan') ? 'has-error' : '' }}">
-    <label for="kesehatan" class="col-md-12 control-label">Kesehatan</label>
+<div class="form-group {{ $errors->has('phase8s') ? 'has-error' : '' }}">
+    <label for="phase8s" class="col-md-12 control-label">Kesehatan</label>
     <div class="col-md-10">
-        <input class="form-control  @error('kesehatan') is-invalid @enderror" name="kesehatan" type="text"
-            id="kesehatan" value="{{ old('kesehatan', optional($application)->kesehatan) }}"
+        <input class="form-control  @error('phase8s') is-invalid @enderror" name="phase8s" type="text"
+            id="phase8s" value="{{ old('phase8s', optional($application)->phase8s) }}"
             placeholder="Isikan kesehatan disini...">
-        {!! $errors->first('kesehatan', '<small class="invalid-feedback" role="alert">:message</small>') !!}
+        {!! $errors->first('phase8s', '<small class="invalid-feedback" role="alert">:message</small>') !!}
     </div>
 </div>
 
-<div class="form-group {{ $errors->has('tahap_akhir') ? 'has-error' : '' }}">
-    <label for="tahap_akhir" class="col-md-12 control-label">Tahap Akhir</label>
+<div class="form-group {{ $errors->has('phase9s') ? 'has-error' : '' }}">
+    <label for="phase9s" class="col-md-12 control-label">Tahap Akhir</label>
     <div class="col-md-10">
-        <input class="form-control  @error('tahap_akhir') is-invalid @enderror" name="tahap_akhir" type="text"
-            id="tahap_akhir" value="{{ old('tahap_akhir', optional($application)->tahap_akhir) }}"
+        <input class="form-control  @error('phase9s') is-invalid @enderror" name="phase9s" type="text"
+            id="phase9s" value="{{ old('phase9s', optional($application)->phase9s) }}"
             placeholder="Isikan tahap akhir disini...">
-        {!! $errors->first('tahap_akhir', '<small class="invalid-feedback" role="alert">:message</small>') !!}
+        {!! $errors->first('phase9s', '<small class="invalid-feedback" role="alert">:message</small>') !!}
     </div>
 </div>

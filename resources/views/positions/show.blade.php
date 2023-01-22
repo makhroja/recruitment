@@ -30,26 +30,10 @@
                 </div>
                 <div class="card-footer">
                     <div class="pull-right">
-
-
                         <div class="btn-group" role="group">
                             <a href="{{ URL::previous() }}" class="btn btn-sm btn-outline-dark" title="Show All Position">
                                 <span class="feather icon-arrow-left" aria-hidden="true"></span>
-                            </a>
-
-                            <a href="{{ route('positions.create') }}" class="btn btn-sm btn-outline-primary"
-                                title="Create New Position">
-                                <span class="feather icon-plus" aria-hidden="true"></span>
-                            </a>
-
-                            <a href="{{ route('positions.edit', $position->uuid) }}" class="btn btn-sm btn-outline-warning"
-                                title="Edit Position">
-                                <span class="feather icon-edit" aria-hidden="true"></span>
-                            </a>
-
-                            <a data-name="{{ $position->name }}" data-id="{{ $position->uuid }}"
-                                class="btn btn-sm delete btn-outline-danger" title="Delete Position">
-                                <span class="feather icon-trash" aria-hidden="true"></span>
+                            </a>pan class="feather icon-trash" aria-hidden="true"></span>
                             </a>
                         </div>
 
@@ -122,7 +106,7 @@
                             }
                         });
                     } else {
-                        // 
+                        //
                     }
                 });
             });

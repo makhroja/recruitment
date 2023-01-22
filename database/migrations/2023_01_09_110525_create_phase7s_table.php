@@ -18,6 +18,8 @@ class CreatePhase7sTable extends Migration
             $table->unsignedBigInteger('application_id')->index();
             $table->integer('nilai_akhir')->nullable();
             $table->integer('status')->default(0);
+            $table->longText('catatan')->nullable();
+            $table->string('rekomendasi')->nullable();
             $table->timestamps();
         });
     }

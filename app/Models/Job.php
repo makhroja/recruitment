@@ -71,7 +71,7 @@ class Job extends Model
      */
     public function unit()
     {
-        return $this->belongsTo('App\Models\Unit', 'unit_id');
+        return $this->belongsTo('App\Models\Unit');
     }
 
     /**
@@ -81,16 +81,16 @@ class Job extends Model
      */
     public function position()
     {
-        return $this->belongsTo('App\Models\Position', 'position_id');
+        return $this->belongsTo('App\Models\Position');
     }
 
     public function jobDetail()
     {
-        return $this->hasMany('App\Models\JobDetail', 'job_id');
+        return $this->hasMany('App\Models\JobDetail');
     }
 
     public function schedule()
     {
-        return $this->hasMany('App\Models\Schedule', 'job_id');
+        return $this->hasOne('App\Models\Schedule');
     }
 }

@@ -34,7 +34,7 @@ class UsersController extends Controller
     {
         try {
             $validator =  Validator::make($request->all(), [
-                'name' => ['required', 'string', 'max:25'],
+                'name' => ['required', 'string'],
                 'role' => ['required', 'string'],
                 'email' => ['required', 'string', 'email', 'max:55', 'unique:users,email'],
                 'users.password' => ['confirmed', 'string', 'min:8', 'confirmed'],
@@ -171,13 +171,13 @@ class UsersController extends Controller
     /**
      * Get the request's data from the request.
      *
-     * @param Illuminate\Http\Request\Request $request 
+     * @param Illuminate\Http\Request\Request $request
      * @return array
      */
     protected function userValidator($request)
     {
         $validator =  Validator::make($request, [
-            'name' => ['required', 'string', 'max:25'],
+            'name' => ['required', 'string'],
             'role' => ['required', 'string'],
             'email' => ['required', 'string', 'email', 'max:55', 'unique:users,email,' . $request['id']],
             'users.password' => ['confirmed', 'string', 'min:8', 'confirmed'],

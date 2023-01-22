@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8">
-    <title>Klinik - Clinic Website Template</title>
+    <title>RSU Harapan Ibu Purbalingga</title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="" name="keywords">
     <meta content="" name="description">
@@ -60,7 +60,7 @@
                 </div>
                 <div class="h-100 d-inline-flex align-items-center py-3">
                     <small class="far fa-clock text-primary me-2"></small>
-                    <small>Mon - Fri : 09.00 AM - 09.00 PM</small>
+                    <small id="timestamp"></small>
                 </div>
             </div>
             <div class="col-lg-5 px-5 text-end">
@@ -138,15 +138,16 @@
             <div class="copyright">
                 <div class="row">
                     <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
-                        &copy; <a class="border-bottom" href="#">RSU - Harapan Ibu</a>, All Right Reserved.
+                        &copy; {{ date('Y') }} <a class="border-bottom" href="#">RSU - Harapan Ibu</a>, All
+                        Right Reserved.
                     </div>
                     <div class="col-md-6 text-center text-md-end">
                         <!--/*** This template is free as long as you keep the footer author’s credit link/attribution link/backlink. If you'd like to use the template without the footer author’s credit link/attribution link/backlink, you can purchase the Credit Removal License from "https://htmlcodex.com/credit-removal". Thank you for your support. ***/-->
                         Made With &hearts; By <a class="border-bottom" href="https://htmlcodex.com">IT RSU-HI</a></br>
-                        Designed By <a class="border-bottom" href="https://htmlcodex.com">HTML Codex</a>
+                        {{-- Designed By <a class="border-bottom" href="https://htmlcodex.com">HTML Codex</a>
                         </br>
                         Distributed By <a class="border-bottom" href="https://themewagon.com"
-                            target="_blank">ThemeWagon</a>
+                            target="_blank">ThemeWagon</a> --}}
                     </div>
                 </div>
             </div>
@@ -179,5 +180,21 @@
 
     @stack('js')
 </body>
+<script>
+    // Function ini dijalankan ketika Halaman ini dibuka pada browser
+    $(function() {
+        setInterval(timestamp, 1000); //fungsi yang dijalan setiap detik, 1000 = 1 detik
+    });
+
+    //Fungi ajax untuk Menampilkan Jam dengan mengakses File ajax_timestamp.php
+    function timestamp() {
+        $.ajax({
+            url: '{{ route('timestamp') }}',
+            success: function(data) {
+                $('#timestamp').html(data);
+            },
+        });
+    }
+</script>
 
 </html>

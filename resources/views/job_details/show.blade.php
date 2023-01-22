@@ -17,13 +17,11 @@
             <div class="card">
                 <div class="card-body">
                     <dl class="dl-horizontal">
-                        <dt>Uuid</dt>
-                        <dd>{{ $jobDetail->uuid }}</dd>
-                        <dt>Job</dt>
+                        <dt>Lowongan</dt>
                         <dd>{{ optional($jobDetail->job)->uuid }}</dd>
                         <dt>Unit</dt>
                         <dd>{{ optional($jobDetail->unit)->uuid }}</dd>
-                        <dt>Position</dt>
+                        <dt>Posisi</dt>
                         <dd>{{ optional($jobDetail->position)->uuid }}</dd>
                         <dt>Pendidikan</dt>
                         <dd>{{ $jobDetail->pendidikan }}</dd>
@@ -35,37 +33,18 @@
                         <dd>{{ $jobDetail->umur }}</dd>
                         <dt>Jumlah</dt>
                         <dd>{{ $jobDetail->jumlah }}</dd>
-                        <dt>Catatan</dt>
+                        <dt>Syarat</dt>
                         <dd>{{ $jobDetail->catatan }}</dd>
 
                     </dl>
                 </div>
                 <div class="card-footer">
                     <div class="pull-right">
-
-
                         <div class="btn-group" role="group">
-                            <a href="{{ URL::previous() }}" class="btn btn-sm btn-outline-dark"
-                                title="Show All Job Detail">
+                            <a href="{{ URL::previous() }}" class="btn btn-sm btn-outline-dark" title="Show All Job Detail">
                                 <span class="feather icon-arrow-left" aria-hidden="true"></span>
                             </a>
-
-                            <a href="{{ route('jobDetails.create') }}" class="btn btn-sm btn-outline-primary"
-                                title="Create New Job Detail">
-                                <span class="feather icon-plus" aria-hidden="true"></span>
-                            </a>
-
-                            <a href="{{ route('jobDetails.edit', $jobDetail->uuid) }}"
-                                class="btn btn-sm btn-outline-warning" title="Edit Job Detail">
-                                <span class="feather icon-edit" aria-hidden="true"></span>
-                            </a>
-
-                            <a data-name="{{ $jobDetail->name }}" data-id="{{ $jobDetail->uuid }}"
-                                class="btn btn-sm delete btn-outline-danger" title="Delete Job Detail">
-                                <span class="feather icon-trash" aria-hidden="true"></span>
-                            </a>
                         </div>
-
                     </div>
                 </div>
             </div>
@@ -135,7 +114,7 @@
                             }
                         });
                     } else {
-                        // 
+                        //
                     }
                 });
             });

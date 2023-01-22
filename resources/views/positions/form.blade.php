@@ -1,12 +1,12 @@
-<input type="text" value="{{ $method }}" name="method">
+<input type="hidden" value="{{ $method }}" name="method">
 <div class="form-group {{ $errors->has('unit_id') ? 'has-error' : '' }}">
     <label for="unit_id" class="col-md-2 control-label">Unit</label>
     <div class="col-md-10">
         <select class="form-control select2 @error('unit_id') is-invalid @enderror" id="unit_id" name="unit_id">
             <option value="" style="display: none;"
                 {{ old('unit_id', optional($position)->unit_id ?: '') == '' ? 'selected' : '' }} disabled selected>
-                Select
-                unit</option>
+                Pilih Unit
+            </option>
             @foreach ($units as $key => $unit)
                 <option value="{{ $key }}"
                     {{ old('unit_id', optional($position)->unit_id) == $key ? 'selected' : '' }}>

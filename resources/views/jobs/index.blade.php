@@ -3,7 +3,6 @@
 @push('plugin-styles')
     <link href="{{ asset('assets/plugins/datatables/DataTables-1.10.16/css/dataTables.bootstrap4.min.css') }}"
         rel="stylesheet" />
-    <link href="{{ asset('assets/plugins/datatables/DataTables-1.10.16/css/styling-dataTables.css') }}" rel="stylesheet" />
     <link href="{{ asset('assets/plugins/datatables/datatables.min.css') }}" rel="stylesheet" />
     <link href="{{ asset('assets/plugins/datatables/Select-1.2.4/css/select.bootstrap4.min.css') }}" rel="stylesheet" />
 @endpush
@@ -111,7 +110,7 @@
                     },
                     targets: [1, 2]
                 }, ],
-                dom: 'Bfrtip',
+                dom: 'lBfrtip',
                 buttons: [
                     'excel', 'pdf', 'print'
                 ],
@@ -210,7 +209,7 @@
 
                         });
                     } else {
-                        // 
+                        //
                     }
                 });
             });

@@ -2,7 +2,7 @@
 @section('title', 'Units Create')
 @section('content')
     <div>
-        <h4 class="mb-3 mb-md-0">Unit Edit</h4>
+        <h4 class="mb-3 mb-md-0">Unit Create</h4>
     </div>
 
     <div class="row">
@@ -11,7 +11,7 @@
                 <div class="card-header">
                     <a href="{{ URL::previous() }}" type="button" title="Back" class="btn btn-sm btn-dark btn-icon-text">
                         <i class="btn-icon-prepend" data-feather="arrow-left"></i>
-                        Back
+                        Kembali
                     </a>
                 </div>
 

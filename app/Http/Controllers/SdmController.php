@@ -5,6 +5,13 @@ namespace App\Http\Controllers;
 use App\Models\Application;
 use App\Models\Job;
 use App\Models\Phase2;
+use App\Models\Phase3;
+use App\Models\Phase4;
+use App\Models\Phase5;
+use App\Models\Phase6;
+use App\Models\Phase7;
+use App\Models\Phase8;
+use App\Models\Phase9;
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
 use Illuminate\Support\Facades\Response;
@@ -41,7 +48,8 @@ class SdmController extends Controller
             'application_id' => getAppId($uuid)->id,
         ], [
             'uuid' => \Str::uuid()->getHex(),
-            'application_id' => getAppId($uuid)->id
+            'application_id' => getAppId($uuid)->id,
+            'status' => 3 //status 3 artinya nilai sudah di input, tapi belum di seleksi lg oleh sdm
         ]);
 
         if ($application->administrasi == 2) {
@@ -91,7 +99,7 @@ class SdmController extends Controller
                 } elseif ($row->administrasi == 2) {
                     $ya = '';
                     $tidak = 'checked';
-                } elseif ($row->administrasi == '') {
+                } else {
                     $ya = '';
                     $tidak = '';
                 }
@@ -102,7 +110,7 @@ class SdmController extends Controller
                 <input id="checkbox-' . $row->id . '" href="javascript:void(0)" name="status' . $row->id . '" type="checkbox" ' . $ya . ' data-name="' . $row->user->name . '" data-id="' . $row->uuid . '"  data-status = "1" class="form-check-input status"><i class="input-frame"></i>
                 </label>
                 </div>
-                
+
                 ';
                 return $btn;
             })
@@ -113,7 +121,7 @@ class SdmController extends Controller
                 } elseif ($row->administrasi == 2) {
                     $ya = 'checked';
                     $tidak = '';
-                } elseif ($row->administrasi == '') {
+                } else {
                     $ya = '';
                     $tidak = '';
                 }
@@ -129,5 +137,133 @@ class SdmController extends Controller
             })
             ->rawColumns(['action', 'user', 'position', 'lampiran', 'lolos', 'tidak_lolos', 'pendidikan', 'instansi'])
             ->make(true);
+    }
+
+    //Phase3
+    public function getPhase2Json(Request $request, $job_uuid = '')
+    {
+        if ($request->ajax()) {
+            return Phase2::getPhase2Json($job_uuid);
+        }
+
+        $jobs = Job::pluck('judul', 'uuid')->all();
+        return view('sdm.phase.phase2', compact('jobs'));
+    }
+
+    public function statusPhase2(Request $request, $uuid)
+    {
+        return Phase2::statusPhase2($request, $uuid);
+    }
+
+    // Phase3
+    public function getPhase3Json(Request $request, $job_uuid = '')
+    {
+        if ($request->ajax()) {
+            return Phase3::getPhase3Json($job_uuid);
+        }
+
+        $jobs = Job::pluck('judul', 'uuid')->all();
+        return view('sdm.phase.phase3', compact('jobs'));
+    }
+
+    public function statusPhase3(Request $request, $uuid)
+    {
+        return Phase3::statusPhase3($request, $uuid);
+    }
+
+    // Phase4
+    public function getPhase4Json(Request $request, $job_uuid = '')
+    {
+        if ($request->ajax()) {
+            return Phase4::getPhase4Json($job_uuid);
+        }
+
+        $jobs = Job::pluck('judul', 'uuid')->all();
+        return view('sdm.phase.phase4', compact('jobs'));
+    }
+
+    public function statusPhase4(Request $request, $uuid)
+    {
+        return Phase4::statusPhase4($request, $uuid);
+    }
+
+    // Phase5
+    public function getPhase5Json(Request $request, $job_uuid = '')
+    {
+        if ($request->ajax()) {
+            return Phase5::getPhase5Json($job_uuid);
+        }
+
+        $jobs = Job::pluck('judul', 'uuid')->all();
+        return view('sdm.phase.phase5', compact('jobs'));
+    }
+
+    public function statusPhase5(Request $request, $uuid)
+    {
+        return Phase5::statusPhase5($request, $uuid);
+    }
+
+    // Phase6
+    public function getPhase6Json(Request $request, $job_uuid = '')
+    {
+        if ($request->ajax()) {
+            return Phase6::getPhase6Json($job_uuid);
+        }
+
+        $jobs = Job::pluck('judul', 'uuid')->all();
+        return view('sdm.phase.phase6', compact('jobs'));
+    }
+
+    public function statusPhase6(Request $request, $uuid)
+    {
+        return Phase6::statusPhase6($request, $uuid);
+    }
+
+    // Phase7
+    public function getPhase7Json(Request $request, $job_uuid = '')
+    {
+        if ($request->ajax()) {
+            return Phase7::getPhase7Json($job_uuid);
+        }
+
+        $jobs = Job::pluck('judul', 'uuid')->all();
+        return view('sdm.phase.phase7', compact('jobs'));
+    }
+
+    public function statusPhase7(Request $request, $uuid)
+    {
+        return Phase7::statusPhase7($request, $uuid);
+    }
+
+    // Phase8
+    public function getPhase8Json(Request $request, $job_uuid = '')
+    {
+        if ($request->ajax()) {
+            return Phase8::getPhase8Json($job_uuid);
+        }
+
+        $jobs = Job::pluck('judul', 'uuid')->all();
+        return view('sdm.phase.phase8', compact('jobs'));
+    }
+
+    public function statusPhase8(Request $request, $uuid)
+    {
+        return Phase8::statusPhase8($request, $uuid);
+    }
+
+    // Phase9
+    public function getPhase9Json(Request $request, $job_uuid = '')
+    {
+        if ($request->ajax()) {
+            return Phase9::getPhase9Json($job_uuid);
+        }
+
+        $jobs = Job::pluck('judul', 'uuid')->all();
+        return view('sdm.phase.phase9', compact('jobs'));
+    }
+
+    public function statusPhase9(Request $request, $uuid)
+    {
+        return Phase9::statusPhase9($request, $uuid);
     }
 }

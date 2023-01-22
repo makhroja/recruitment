@@ -45,16 +45,16 @@ class JobDetail extends Model
 
     public function job()
     {
-        return $this->belongsTo('App\Models\Job', 'id');
+        return $this->belongsTo('App\Models\Job');
     }
 
     public function unit()
     {
-        return $this->belongsTo('App\Models\Unit', 'id');
+        return $this->belongsTo('App\Models\Unit');
     }
 
     public function position()
     {
-        return $this->belongsTo('App\Models\Position', 'id');
+        return $this->belongsTo('App\Models\Position');
     }
 }

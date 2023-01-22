@@ -3,7 +3,6 @@
 @push('plugin-styles')
     <link href="{{ asset('assets/plugins/datatables/DataTables-1.10.16/css/dataTables.bootstrap4.min.css') }}"
         rel="stylesheet" />
-    <link href="{{ asset('assets/plugins/datatables/DataTables-1.10.16/css/styling-dataTables.css') }}" rel="stylesheet" />
     <link href="{{ asset('assets/plugins/datatables/datatables.min.css') }}" rel="stylesheet" />
     <link href="{{ asset('assets/plugins/datatables/Select-1.2.4/css/select.bootstrap4.min.css') }}" rel="stylesheet" />
 @endpush
@@ -11,7 +10,7 @@
 
 @section('content')
     <div>
-        <h4 class="mb-3 mb-md-0">UserDetail List</h4>
+        <h4 class="mb-3 mb-md-0">List Detail Pengguna</h4>
     </div>
 
     <div class="row">
@@ -28,7 +27,9 @@
                             <thead>
                                 <tr>
                                     <th>No</th>
+                                    <th>Nama</th>
                                     <th>Nama Lengkap</th>
+                                    <th>Email</th>
                                     <th>Tgl Lahir</th>
                                     <th>Pendidikan</th>
                                     <th>Instansi</th>
@@ -87,7 +88,7 @@
                     },
                     targets: [0]
                 }, ],
-                dom: 'Bfrtip',
+                dom: 'lBfrtip',
                 buttons: [
                     'excel', 'pdf', 'print'
                 ],
@@ -96,8 +97,16 @@
                         name: 'DT_RowIndex'
                     },
                     {
+                        data: 'nama',
+                        name: 'nama'
+                    },
+                    {
                         data: 'nama_lengkap',
                         name: 'nama_lengkap'
+                    },
+                    {
+                        data: 'email',
+                        name: 'email'
                     },
                     {
                         data: 'tgl_lahir',
@@ -177,7 +186,7 @@
                             }
                         });
                     } else {
-                        // 
+                        //
                     }
                 });
             });

@@ -59,7 +59,6 @@ class UserDetailsController extends Controller
     public function show($uuid)
     {
         $userDetail = UserDetail::with('user')->where('uuid', $uuid)->first();
-
         return view('user_details.show', compact('userDetail'));
     }
 
@@ -150,7 +149,12 @@ class UserDetailsController extends Controller
 
         return DataTables::of($userDetail)
             ->addIndexColumn()
-
+            ->addColumn('nama', function ($row) {
+                return $row->user->name;
+            })
+            ->addColumn('email', function ($row) {
+                return $row->user->email;
+            })
             ->addColumn('action', function ($row) {
                 $btn = '<button href="javascript:void(0)" data-id="' . $row->uuid . '" data-original-title="Show" class="btn btn-outline-primary btn-icon show"><i class="feather icon-eye"></i></button>';
 
@@ -160,7 +164,7 @@ class UserDetailsController extends Controller
 
                 return $btn;
             })
-            ->rawColumns(['action'])
+            ->rawColumns(['action', 'nama', 'email'])
             ->make(true);
     }
 
@@ -169,7 +173,7 @@ class UserDetailsController extends Controller
     /**
      * Get the request's data from the request.
      *
-     * @param Illuminate\Http\Request\Request $request 
+     * @param Illuminate\Http\Request\Request $request
      * @return array
      */
     protected function userDetailValidator($request)

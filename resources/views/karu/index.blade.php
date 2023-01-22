@@ -17,7 +17,6 @@
     <div>
         <h4 class="mb-3 mb-md-0">List Lowongan</h4>
     </div>
-
     <div class="row">
         <div class="col-md-12 grid-margin stretch-card">
             <div class="card">
@@ -30,13 +29,12 @@
                                 <select class="form-control select2 @error('job_id') is-invalid @enderror" id="job_id"
                                     name="job_id">
                                     <option value="" style="display: none;"
-                                        {{ old('job_id', optional($jobs)->uuid ?: '') == '' ? 'selected' : '' }} disabled
-                                        selected>Pilih
+                                        {{ old('job_id') == '' ? 'selected' : '' }} disabled selected>Pilih
                                         job</option>
-                                    @foreach ($jobs as $key => $job)
-                                        <option value="{{ $key }}"
-                                            {{ old('job_id', optional($jobs)->uuid) == $key ? 'selected' : '' }}>
-                                            {{ $job }}
+                                    @foreach ($details as $d)
+                                        <option value="{{ $d->job->uuid }}"
+                                            {{ old('job_id') == $d->job->uuid ? 'selected' : '' }}>
+                                            {{ $d->job->judul }}
                                         </option>
                                     @endforeach
                                 </select>
@@ -54,28 +52,28 @@
                                     <option disabled>
                                         1. Seleksi Administrasi
                                     </option>
-                                    <option value="phase2">
+                                    <option value="phase2" {{ old('phase') == 'phase2' ? 'selected' : '' }}>
                                         2. Tes Tertulis
                                     </option>
-                                    <option value="phase3">
+                                    <option value="phase3" {{ old('phase') == 'phase3' ? 'selected' : '' }}>
                                         3. Wawancara Unit
                                     </option>
-                                    <option value="phase4">
+                                    <option value="phase4" {{ old('phase') == 'phase4' ? 'selected' : '' }}>
                                         4. Tes Praktek
                                     </option>
-                                    <option value="phase5">
+                                    <option value="phase5" {{ old('phase') == 'phase5' ? 'selected' : '' }}>
                                         5. Wawancara HRD
                                     </option>
-                                    <option value="phase6">
+                                    <option value="phase6" {{ old('phase') == 'phase6' ? 'selected' : '' }}>
                                         6. Tes Psikotes
                                     </option>
-                                    <option value="phase7">
+                                    <option value="phase7" {{ old('phase') == 'phase7' ? 'selected' : '' }}>
                                         7. Wawancara Performance
                                     </option>
-                                    <option value="phase8">
+                                    <option value="phase8" {{ old('phase') == 'phase8' ? 'selected' : '' }}>
                                         8. Tes Kesehatan
                                     </option>
-                                    <option value="phase9">
+                                    <option disabled>
                                         9. Tahap Akhir
                                     </option>
                                 </select>
@@ -89,7 +87,6 @@
             </div>
         </div>
     </div>
-    <!-- Modal -->
 @endsection
 
 @push('plugin-scripts')

@@ -81,7 +81,6 @@
                                 <tbody>
                                     <input type="hidden" name="uuid" value="{{ $phase->uuid }}">
                                     <input type="hidden" name="phase" value="{{ $method }}">
-                                    <input type="hidden" name="status" value="1">
                                     <tr>
                                         <td>
                                             1.

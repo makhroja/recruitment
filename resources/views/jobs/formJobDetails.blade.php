@@ -31,11 +31,11 @@
         </div>
 
         <div class="form-group {{ $errors->has('position_id') ? 'has-error' : '' }}">
-            <label for="position_id" class="col-md-2 control-label">Position</label>
+            <label for="position_id" class="col-md-2 control-label">Posisi</label>
             <div class="col-md-12">
                 <select style="width:100%" class="form-control select2 @error('position_id') is-invalid @enderror"
                     id="position_id" name="position_id">
-                    <option value="" style="display: none;" disabled selected>Pilih position</option>
+                    <option value="" style="display: none;" disabled selected>Pilih Posisi</option>
                     @foreach ($positions as $key => $position)
                         <option value="{{ $key }}" {{ old('position_id') }}>
                             {{ $position }}
@@ -89,7 +89,7 @@
         </div>
 
         <div class="form-group {{ $errors->has('jk') ? 'has-error' : '' }}">
-            <label for="jk" class="col-md-2 control-label">Jk</label>
+            <label for="jk" class="col-md-2 control-label">Jenis Kelamin</label>
             <div class="col-md-12">
                 <select style="width:100%" class="form-control select2 @error('jk') is-invalid @enderror" id="jk"
                     name="jk" required>

@@ -3,15 +3,24 @@
 @push('plugin-styles')
     <link href="{{ asset('assets/plugins/datatables/DataTables-1.10.16/css/dataTables.bootstrap4.min.css') }}"
         rel="stylesheet" />
-    <link href="{{ asset('assets/plugins/datatables/DataTables-1.10.16/css/styling-dataTables.css') }}" rel="stylesheet" />
     <link href="{{ asset('assets/plugins/datatables/datatables.min.css') }}" rel="stylesheet" />
     <link href="{{ asset('assets/plugins/datatables/Select-1.2.4/css/select.bootstrap4.min.css') }}" rel="stylesheet" />
+    <style>
+        .table-jadwal.td {
+            white-space: normal !important;
+            word-wrap: break-word;
+        }
+
+        .table-jadwal.table {
+            table-layout: fixed;
+        }
+    </style>
 @endpush
 
 
 @section('content')
     <div>
-        <h4 class="mb-3 mb-md-0">Schedule List</h4>
+        <h4 class="mb-3 mb-md-0">Jadwal</h4>
     </div>
 
     <div class="row">
@@ -29,6 +38,7 @@
                                 <tr>
                                     <th>No</th>
                                     <th>Lowongan</th>
+                                    <th></th>
                                     <th></th>
                                 </tr>
                             </thead>
@@ -59,6 +69,8 @@
                 }
             });
 
+            $('table').addClass('table table-bordered table-hover ');
+            $('th.td').removeAttr('style')
             // datatable
             var table = $('#dataTable').DataTable({
                 processing: true,
@@ -76,7 +88,7 @@
                     orderable: false
                 }, {
                     width: "2%",
-                    targets: [0, 2]
+                    targets: [0]
                 }, {
                     //buat wrap text
                     render: function(data, type, full, meta) {
@@ -93,8 +105,12 @@
                         name: 'DT_RowIndex'
                     },
                     {
-                        data: 'tahapan',
-                        name: 'tahapan'
+                        data: 'lowongan',
+                        name: 'lowongan'
+                    },
+                    {
+                        data: 'jadwal',
+                        name: 'jadwal'
                     },
                     {
                         data: 'action',
@@ -162,7 +178,7 @@
                             }
                         });
                     } else {
-                        // 
+                        //
                     }
                 });
             });

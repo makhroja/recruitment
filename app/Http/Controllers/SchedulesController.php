@@ -43,7 +43,7 @@ class SchedulesController extends Controller
                 Schedule::create($request->all());
 
                 return redirect()->route('schedules.index')
-                    ->with(['success' => 'Schedule berhasil dibuat.']);
+                    ->with(['success' => 'Jadwal berhasil dibuat.']);
             }
             return back()
                 ->withErrors($validator)
@@ -84,7 +84,7 @@ class SchedulesController extends Controller
                 $schedule->update($request->all());
 
                 return redirect()->route('schedules.index')
-                    ->with(['success' => 'Schedule berhasil simpan.']);
+                    ->with(['success' => 'Jadwal berhasil simpan.']);
             }
             return back()
                 ->withErrors($validator)
@@ -104,7 +104,7 @@ class SchedulesController extends Controller
             $schedule->delete();
 
             return Response::json([
-                'Success' => 'Schedule was successfully deleted.'
+                'Success' => 'Jadwal was successfully deleted.'
             ]);
         } catch (Exception $exception) {
 
@@ -119,13 +119,12 @@ class SchedulesController extends Controller
 
         return DataTables::of($schedule)
             ->addIndexColumn()
-            ->addColumn('tahapan', function ($row) {
-                $html = view('schedules.show', [
-                    'job' => $row->job,
-                    'schedule' => $row,
-                    'tahap' => storeSchedule()
-                ]);
-                return $html;
+            ->addColumn('lowongan', function ($row) {
+                return $row->job->judul;
+            })
+            ->addColumn('jadwal', function ($row) {
+                $jadwal = $row->jadwal;
+                return view('schedules.show', compact('jadwal'))->render();
             })
             ->addColumn('action', function ($row) {
                 // $btn = '<button href="javascript:void(0)" data-id="' . $row->uuid . '" data-original-title="Show" class="btn btn-outline-primary btn-icon show"><i class="feather icon-eye"></i></button>';
@@ -136,7 +135,7 @@ class SchedulesController extends Controller
 
                 return $btn;
             })
-            ->rawColumns(['action', 'tahapan'])
+            ->rawColumns(['action', 'lowongan', 'jadwal'])
             ->make(true);
     }
 
@@ -145,26 +144,14 @@ class SchedulesController extends Controller
     /**
      * Get the request's data from the request.
      *
-     * @param Illuminate\Http\Request\Request $request 
+     * @param Illuminate\Http\Request\Request $request
      * @return array
      */
     protected function scheduleValidator($request)
     {
         $validator =  Validator::make($request, [
             'job_id' => 'required',
-            'tahap_1' => 'required',
-            'tahap_2' => 'required',
-            'tahap_3' => 'required',
-            'tahap_4' => 'required',
-            'tahap_5' => 'required',
-            'tahap_6' => 'required',
-            'tahap_7' => 'required',
-            'tahap_8' => 'required',
-            'tahap_9' => 'required',
-            'tahap_10' => 'required',
-            'tahap_11' => 'required',
-            'tahap_12' => 'required',
-            'tahap_13' => 'required',
+            'jadwal' => 'required',
         ]);
 
         return $validator;

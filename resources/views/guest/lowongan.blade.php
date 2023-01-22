@@ -14,12 +14,6 @@
     <!-- Appointment Start -->
     <div class="container-xxl py-5">
         <div class="container">
-            <div class="row g-5">
-                <div class="col-lg-12 wow fadeInDown" data-wow-delay="0.1s">
-                    <p class="d-inline-block border bg-dark text-white rounded-pill py-1 px-4">Lowongan
-                    </p>
-                </div>
-            </div>
             @if (count($jobs) == 0)
                 <div class="panel-body text-center">
                     <h4>Tidak ada lowongan</h4>
@@ -37,27 +31,25 @@
                             <div class="card-header bg-white">
                                 <div class="row">
                                     <div class="col-md-6">
-                                        <label class="text-dark" style="font-size: 10pt">Tanggal Mulai : <i
+                                        <small style="font-size: 10pt">Tanggal Mulai : <i
                                                 class="fa fa-calendar"></i>&nbsp;{{ carbon\carbon::parse($n->tgl_mulai)->translatedFormat('d F Y') }}
-                                        </label> |
-                                        <label class="text-dark" style="font-size: 10pt">Berakhir s.d : <i
+                                        </small> |
+                                        <small style="font-size: 10pt">Berakhir s.d : <i
                                                 class="fa fa-calendar"></i>&nbsp;{{ carbon\carbon::parse($n->tgl_akhir)->translatedFormat('d F Y') }}
-                                        </label>
+                                        </small>
                                     </div>
                                 </div>
                             </div>
                             <div class="card-body">
-                                <p class="text-dark" style="text-align: justify;font-size: 11pt">
+                                <small style="text-align: justify;font-size: 11pt">
                                     {!! substr(strip_tags($n->informasi), 0, 150) !!}...
-                                </p>
+                                </small>
+                            </div>
+                            <div class="card-footer bg-white">
                                 <button data-pdf="{{ $n->lampiran }}" data-uuid="{{ $n->uuid }}"
-                                    class="btn btn-sm rounded-pill py-1 px-4 btn-warning text-white readMore"
+                                    class="btn badge btn-sm rounded-pill py-1 px-4 btn-primary text-white readMore"
                                     data-toggle="modal" data-target="#exampleModal">Lihat
                                     Detail</button>
-
-                            </div>
-                            <div class="card-footer">
-
                             </div>
                         </div>
                         <!-- End single blog archive -->
@@ -70,7 +62,7 @@
                             <!-- Modal content-->
                             <div class="modal-content">
                                 <div class="modal-header">
-                                    <button type="button" class="btn btn-sm close bg-dark text-white closeModal"
+                                    <button type="button" class="btn badge btn-sm close bg-dark text-white closeModal"
                                         data-dismiss="modal">
                                         Tutup</button>
                                     <h5 class="modal-title">Detail Lowongan</h5>
@@ -99,37 +91,31 @@
 @endsection
 
 @push('js')
-    @if (count($jobs) == 0)
+    {{-- @if (count($jobs) == 0)
         <script>
             console.log('nothing happen')
         </script>
     @else
-        @if (berkasLamar($n->uuid))
-            <script>
-                $(function() {
-                    $('body').on('click', '.readMore', function() {
-                        var pdf = $(this).data("pdf");
-                        var uuid = $(this).data("uuid");
+        @if (berkasLamar($n->uuid)) --}}
+    <script>
+        $(function() {
+            $('body').on('click', '.readMore', function() {
+                var pdf = $(this).data("pdf");
+                var uuid = $(this).data("uuid");
 
+                var embedElement = document.getElementById("detailLowongan");
+                embedElement.setAttribute("src", "{{ url('/detail-lowongan') }}" + '/' +
+                    uuid);
 
-                        var embedElement = document.getElementById("detailLowongan");
-                        embedElement.setAttribute("src", "{{ url('/detail-lowongan') }}" + '/' +
-                            uuid);
+                $('#modalLowongan').modal('show');
+            })
 
-                        // var embedElement = document.getElementById("lowongan");
-                        // embedElement.setAttribute("src", "{{ url('/assets/uploads/job-attachment') }}" + '/' +
-                        //     pdf);
-
-
-                        $('#modalLowongan').modal('show');
-                    })
-
-                    $('body').on('click', '.closeModal', function() {
-                        $('#modalLowongan').modal('hide');
-                    })
-                });
-            </script>
-        @else
+            $('body').on('click', '.closeModal', function() {
+                $('#modalLowongan').modal('hide');
+            })
+        });
+    </script>
+    {{-- @else
             <script>
                 $(function() {
                     $('body').on('click', '.readMore', function() {
@@ -145,5 +131,5 @@
                 });
             </script>
         @endif
-    @endif
+    @endif --}}
 @endpush

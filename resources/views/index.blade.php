@@ -133,7 +133,7 @@
                         <p>Clita clita tempor justo dolor ipsum amet kasd amet duo justo duo duo labore sed sed. Magna
                             ut diam sit et amet stet eos sed clita erat magna elitr erat sit sit erat at rebum justo sea
                             clita.</p>
-                        <h5 class="mb-1">Patient Name</h5>
+                        <h5 class="mb-1">Nama Karyawan</h5>
                         <span class="fst-italic">Profession</span>
                     </div>
                 </div>
@@ -144,7 +144,7 @@
                         <p>Clita clita tempor justo dolor ipsum amet kasd amet duo justo duo duo labore sed sed. Magna
                             ut diam sit et amet stet eos sed clita erat magna elitr erat sit sit erat at rebum justo sea
                             clita.</p>
-                        <h5 class="mb-1">Patient Name</h5>
+                        <h5 class="mb-1">Nama Karyawan</h5>
                         <span class="fst-italic">Profession</span>
                     </div>
                 </div>
@@ -155,7 +155,7 @@
                         <p>Clita clita tempor justo dolor ipsum amet kasd amet duo justo duo duo labore sed sed. Magna
                             ut diam sit et amet stet eos sed clita erat magna elitr erat sit sit erat at rebum justo sea
                             clita.</p>
-                        <h5 class="mb-1">Patient Name</h5>
+                        <h5 class="mb-1">Nama Karyawan</h5>
                         <span class="fst-italic">Profession</span>
                     </div>
                 </div>
