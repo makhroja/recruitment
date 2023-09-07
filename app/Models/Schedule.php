@@ -30,7 +30,10 @@ class Schedule extends Model
     protected $fillable = [
         'uuid',
         'job_id',
-        'jadwal',
+        'tahapan_id',
+        'title',
+        'start',
+        'end',
         'status'
     ];
 

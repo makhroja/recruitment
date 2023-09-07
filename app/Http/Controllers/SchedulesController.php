@@ -10,107 +10,76 @@ use Exception;
 use Yajra\DataTables\DataTables;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Str;
+use Symfony\Polyfill\Intl\Idn\Idn;
 use Validator;
 
 class SchedulesController extends Controller
 {
 
-
-    public function index()
+    public function getEvent(Request $request)
     {
-        $schedules = Schedule::with('job')->paginate(25);
+        // if ($request->ajax()) {
+        //     return response()->json($request->all());
+        //     $start = (!empty($request->start)) ? ($request->start) : ('');
+        //     $end = (!empty($request->end)) ? ($request->end) : ('');
+        //     $events = Schedule::whereDate('start', '>=', $start)->whereDate('end',   '<=', $end)
+        //         ->where('job_id', $request->customID)
+        //         ->get(['id', 'job_id', 'tahapan_id', 'title', 'start', 'end']);
+        //     return response()->json($events);
+        // }
 
-        return view('schedules.index', compact('schedules'));
+        $arrayNoKey = storeSchedule();
+        $arrayKey = [];
+
+        foreach ($arrayNoKey as $key => $value) {
+            $arrayKey[] = ['id' => $key, 'title' => $value];
+        }
+
+        $jobs = Job::all();
+
+        return view('schedules.index', [
+            'titles' => $arrayKey,
+            'jobs' => $jobs
+        ]);
     }
 
-    public function create()
+    public function getSchedules(Request $request, $id)
     {
-        $jobs = Job::pluck('judul', 'id')->all();
-        $tahap = storeSchedule();
-        return view('schedules.create', compact('jobs', 'tahap'));
-    }
-
-    public function store(Request $request)
-    {
-        try {
-            $request = $request->merge([
-                'uuid' => Str::uuid()->getHex(),
-            ]);
-            $validator = $this->scheduleValidator($request->all());
-
-            if ($validator->passes()) {
-
-                Schedule::create($request->all());
-
-                return redirect()->route('schedules.index')
-                    ->with(['success' => 'Jadwal berhasil dibuat.']);
-            }
-            return back()
-                ->withErrors($validator)
-                ->withInput();
-        } catch (Exception $exception) {
-
-            return back()->withInput()
-                ->withErrors(['unexpected_error' => 'Unexpected error occurred while trying to process your request.']);
+        if ($request->ajax()) {
+            $start = (!empty($request->start)) ? ($request->start) : ('');
+            $end = (!empty($request->end)) ? ($request->end) : ('');
+            $events = Schedule::whereDate('start', '>=', $start)->whereDate('end',   '<=', $end)
+                ->where('job_id', $id)
+                ->get(['id', 'job_id', 'tahapan_id', 'title', 'start', 'end']);
+            return response()->json($events);
         }
     }
 
-
-    public function show($uuid)
+    public function createEvent(Request $request)
     {
-        $schedule = Schedule::with('job')->where('uuid', $uuid)->first();
+        $data = $request->except('_token');
 
-        return view('schedules.show', compact('schedule'));
+        // Generate a UUID for the event
+        $data['uuid'] = \Illuminate\Support\Str::uuid();
+        $data['job_id'] = $request->job_id;
+        $event = Schedule::create($data);
+
+        return response()->json($data);
     }
 
-
-    public function edit($uuid)
+    public function updateEvent(Request $request)
     {
-        $schedule = Schedule::where('uuid', $uuid)->first();
-        $jobs = Job::pluck('judul', 'id')->all();
-        $tahap = storeSchedule();
-        return view('schedules.edit', compact('schedule', 'jobs', 'tahap'));
+        $data = $request->except('_token');
+
+        $event = Schedule::where('id', $request->id)->update($data);
+
+        return response()->json($data);
     }
 
-
-    public function update($uuid, Request $request)
+    public function deleteEvent(Request $request)
     {
-        try {
-            $validator = $this->scheduleValidator($request->all());
-
-            if ($validator->passes()) {
-
-                $schedule = Schedule::where('uuid', $uuid)->first();
-                $schedule->update($request->all());
-
-                return redirect()->route('schedules.index')
-                    ->with(['success' => 'Jadwal berhasil simpan.']);
-            }
-            return back()
-                ->withErrors($validator)
-                ->withInput();
-        } catch (Exception $exception) {
-
-            return back()->withInput()
-                ->withErrors(['unexpected_error' => 'Unexpected error occurred while trying to process your request.']);
-        }
-    }
-
-
-    public function destroy($uuid)
-    {
-        try {
-            $schedule = Schedule::where('uuid', $uuid)->first();
-            $schedule->delete();
-
-            return Response::json([
-                'Success' => 'Jadwal was successfully deleted.'
-            ]);
-        } catch (Exception $exception) {
-
-            return back()->withInput()
-                ->withErrors(['unexpected_error' => 'Unexpected error occurred while trying to process your request.']);
-        }
+        $event = Schedule::find($request->id);
+        return $event->delete();
     }
 
     public function getScheduleJson(Request $request)
@@ -150,8 +119,13 @@ class SchedulesController extends Controller
     protected function scheduleValidator($request)
     {
         $validator =  Validator::make($request, [
+            'uuid' => 'required',
             'job_id' => 'required',
-            'jadwal' => 'required',
+            'tahapan_id' => 'required',
+            'title' => 'required',
+            'start' => 'required',
+            'end' => 'required',
+            'status' => 'required'
         ]);
 
         return $validator;

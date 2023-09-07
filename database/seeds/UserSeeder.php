@@ -28,6 +28,21 @@ class UserSeeder extends Seeder
 
         $admin->assignRole('administrator');
 
+        $sdm = User::create([
+            'uuid' => Str::uuid()->getHex(),
+            'name' => 'SDM',
+            'email' => 'sdm@mail.com',
+            'password' => bcrypt('123'),
+            'role' => 'SDM',
+            'status' => 1,
+            'email_verified_at' => null,
+            'remember_token' => null,
+            'created_at' => date('Y-m-d'),
+            'updated_at' => date('Y-m-d')
+        ]);
+
+        $sdm->assignRole('sdm');
+
         $ipcn = User::create([
             'uuid' => Str::uuid()->getHex(),
             'name' => 'Okta Setiawati',

@@ -74,5 +74,12 @@ class UserDetailSeeder extends Seeder
             'created_at' => date('Y-m-d'),
             'updated_at' => date('Y-m-d')
         ]);
+
+        UserDetail::create([
+            'uuid' => Str::uuid()->getHex(),
+            'user_id' => 10,
+            'created_at' => date('Y-m-d'),
+            'updated_at' => date('Y-m-d')
+        ]);
     }
 }

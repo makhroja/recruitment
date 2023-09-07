@@ -16,8 +16,11 @@ class CreateSchedulesTable extends Migration
             $table->id('id');
             $table->uuid('uuid');
             $table->unsignedBigInteger('job_id')->index();
-            $table->longText('jadwal');
-            $table->integer('status')->default(0);
+            $table->unsignedBigInteger('tahapan_id')->index();
+            $table->string('title');
+            $table->dateTime('start');
+            $table->dateTime('end');
+            $table->integer('status')->default(1);
             $table->timestamps();
         });
     }

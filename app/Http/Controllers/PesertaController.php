@@ -87,16 +87,19 @@ class PesertaController extends Controller
 
     public function jadwalSeleksi()
     {
-        $jobs = Application::where('user_id', \Auth::user()->id)->select('job_id')->get();
+        $app = Application::where('user_id', \Auth::user()->id)->select('job_id')->get();
 
         $jobId = [];
-        for ($i = 0; $i < count($jobs); $i++) {
-            $jobId[] = $jobs[$i]->job_id;
+        for ($i = 0; $i < count($app); $i++) {
+            $jobId[] = $app[$i]->job_id;
         }
 
-        $schedules = Schedule::whereIn('id', $jobId)->paginate(4);
+        $jobs = Job::whereIn('id', $jobId)->orderBy('id', 'ASC')->paginate(4);
+
+        $schedules = Schedule::whereIn('job_id', $jobId)->orderBy('tahapan_id', 'ASC')->paginate(4);
+
         $tahap = storeSchedule();
-        return view('peserta.jadwal-seleksi', compact('schedules', 'tahap'));
+        return view('peserta.jadwal-seleksi', compact('jobs','schedules', 'tahap'));
     }
 
     public function hasilSeleksi()

@@ -191,8 +191,14 @@ Route::group([
 ], function () {
     Route::get('/schedules/getScheduleJson', 'SchedulesController@getScheduleJson')->name('scheduleJson');
 
-    #Route resource dibawah
-    Route::resource('/schedules', SchedulesController::class);
+    // #Route resource dibawah
+    // Route::resource('/schedules', SchedulesController::class);
+
+    Route::get('/schedules', 'SchedulesController@getEvent');
+    Route::get('/get-schedules/{id}', 'SchedulesController@getSchedules')->name('getevent');
+    Route::post('/createevent','SchedulesController@createEvent')->name('createevent');
+    Route::post('/updateevent','SchedulesController@updateEvent')->name('updateevent');
+    Route::post('/deleteevent','SchedulesController@deleteEvent')->name('deleteevent');
 });
 
 Route::group([

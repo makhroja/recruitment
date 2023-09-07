@@ -1,21 +1,14 @@
-@extends('layout.master2')
+@extends('layout.guest')
 
 @section('content')
-    <div class="page-content d-flex align-items-center justify-content-center">
-
+    <div class="page-content d-flex align-items-center justify-content-center mt-4">
         <div class="row w-100 mx-0 auth-page">
-            <div class="col-md-8 col-xl-6 mx-auto">
+            <div class="col-md-4 mx-auto">
                 <div class="card">
                     <div class="row">
-                        <div class="col-md-4 pr-md-0">
-                            <div class="auth-left-wrapper"
-                                style="background-image: url({{ url('https://via.placeholder.com/219x452') }})">
-
-                            </div>
-                        </div>
-                        <div class="col-md-8 pl-md-0">
+                        <div class="col-md-12 pl-md-0">
                             <div class="auth-form-wrapper px-4 py-5">
-                                <a href="#" class="noble-ui-logo d-block mb-2">RSU<span>HI</span></a>
+                                <!-- <a href="#" class="noble-ui-logo d-block mb-2">RSU<span>HI</span></a> -->
                                 <h5 class="text-muted font-weight-normal mb-4">Selamat datang kembali.</h5>
                                 <form class="forms-sample" method="POST" action="{{ route('login') }}">
                                     @csrf
@@ -46,7 +39,7 @@
                                     <div class="form-group">
                                         <label for="exampleInputPassword1">Masukan Captcha</label></br>
                                         <div class="media d-block d-sm-flex captcha">
-                                            <button type="button" class="btn btn-lg bg-danger text-white" class="reload"
+                                            <button type="button" class="btn bg-danger text-white" class="reload"
                                                 id="reload">
                                                 &#x21bb;
                                             </button>
@@ -57,6 +50,7 @@
                                             </div>
                                         </div>
                                     </div>
+                                    <br>
                                     <div class="form-check form-check-flat form-check-primary">
                                         <label class="form-check-label">
                                             <input type="checkbox" class="form-check-input" name="remember" id="remember"

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Announcement;
 use App\Models\Job;
 use App\Models\JobDetail;
+use App\Models\Schedule;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\View;
 
@@ -20,12 +21,14 @@ class GuestController extends Controller
     {
         $jobs = Job::whereUuid($uuid)->first();
 
+        $schedules = Schedule::where('job_id', $jobs->id)->orderBy('tahapan_id', 'ASC')->get();
+
         // return $stat;
         if (berkasLamar($uuid)) {
             return view('guest.detail_lowongan', [
                 'jobs' => $jobs,
                 'job' => $jobs,
-                'schedule' => $jobs->schedule->first(),
+                'schedules' => $schedules,
                 'tahap' => storeSchedule()
             ]);
         }
